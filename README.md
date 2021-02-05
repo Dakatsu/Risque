@@ -1,6 +1,7 @@
 # Risque
 Game project for SOEN 6441 Winter 2021 at Concordia University
-Kyle Taylor Lange et. al.
+
+By: Kyle Taylor Lange et. al.
 
 ## Model-View-Controller Pattern:
 * Model: the core will likely be the GameEngine class that will manage most phases of the game, from gameplay to map editing.
