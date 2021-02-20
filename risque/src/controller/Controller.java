@@ -57,6 +57,50 @@ public class Controller extends Thread {
 		d_console = p_console;
 	}
 	
+	public void editcontinent() {
+	//TODO
+	}
+
+	public void editcountry() {
+	//TODO
+	}
+
+	public void editneighbor() {
+	//TODO
+	}
+
+	public void showmap() {
+	//TODO
+	}
+
+	public void savemap() {
+	//TODO
+	}
+
+	public void editmap() {
+	//TODO
+	}
+
+	public void validatemap() {
+	//TODO
+	}
+
+	public void loadmap() {
+	//TODO
+	}
+
+	public void gameplayer() {
+	//TODO
+	}
+
+	public void assigncountries() {
+	//TODO
+	}
+
+	public void deploy() {
+	//TODO
+	}
+
 	/**
 	 * Starts the process for terminating the whole program.
 	 */
