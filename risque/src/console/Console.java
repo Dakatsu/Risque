@@ -90,6 +90,50 @@ public class Console extends Thread {
 		return true;
 	}
 	
+	public void execEditcontinent() {
+	//TODO
+	}
+
+	public void execEditcountry() {
+	//TODO
+	}
+
+	public void execEditneighbor() {
+	//TODO
+	}
+
+	public void execShowmap() {
+	//TODO
+	}
+
+	public void execSavemap() {
+	//TODO
+	}
+
+	public void execEditmap() {
+	//TODO
+	}
+
+	public void execValidatemap() {
+	//TODO
+	}
+
+	public void execLoadmap() {
+	//TODO
+	}
+
+	public void execGameplayer() {
+	//TODO
+	}
+
+	public void execAssigncountries() {
+	//TODO
+	}
+
+	public void execDeploy() {
+	//TODO
+	}
+
 	/**
 	 * Has the controller execute the "quit" command.
 	 */
