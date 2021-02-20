@@ -90,48 +90,49 @@ public class Console extends Thread {
 		return true;
 	}
 	
+
 	public void execEditcontinent() {
-	//TODO
+	//d_controller.editcontinent();
 	}
 
 	public void execEditcountry() {
-	//TODO
+	//d_controller.editcountry();
 	}
 
 	public void execEditneighbor() {
-	//TODO
+	//d_controller.editneighbor();
 	}
 
 	public void execShowmap() {
-	//TODO
+	//d_controller.showmap();
 	}
 
 	public void execSavemap() {
-	//TODO
+	//d_controller.savemap();
 	}
 
 	public void execEditmap() {
-	//TODO
+	//d_controller.editmap();
 	}
 
 	public void execValidatemap() {
-	//TODO
+	//d_controller.validatemap();
 	}
 
 	public void execLoadmap() {
-	//TODO
+	//d_controller.loadmap();
 	}
 
 	public void execGameplayer() {
-	//TODO
+	//d_controller.gameplayer();
 	}
 
 	public void execAssigncountries() {
-	//TODO
+	//d_controller.assigncountries();
 	}
 
 	public void execDeploy() {
-	//TODO
+	//d_controller.deploy();
 	}
 
 	/**
