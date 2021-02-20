@@ -90,47 +90,79 @@ public class Console extends Thread {
 		return true;
 	}
 	
-
+	/**
+	*Controller to execute "editcontinent" command.
+	*/
 	public void execEditcontinent() {
 	//d_controller.editcontinent();
 	}
 
+	/**
+	*Controller to execute "editcountry" command.
+	*/
 	public void execEditcountry() {
 	//d_controller.editcountry();
 	}
 
+	/**
+	*Controller to execute "editneighbor" command.
+	*/
 	public void execEditneighbor() {
 	//d_controller.editneighbor();
 	}
 
+	/**
+	*Controller to execute "showmap" command.
+	*/
 	public void execShowmap() {
 	//d_controller.showmap();
 	}
 
+	/**
+	*Controller to execute "savemap" command.
+	*/
 	public void execSavemap() {
 	//d_controller.savemap();
 	}
 
+	/**
+	*Controller to execute "editmap" command.
+	*/
 	public void execEditmap() {
 	//d_controller.editmap();
 	}
 
+	/**
+	*Controller to execute "validate" command.
+	*/
 	public void execValidatemap() {
 	//d_controller.validatemap();
 	}
 
+	/**
+	*Controller to execute "loadmap" command.
+	*/
 	public void execLoadmap() {
 	//d_controller.loadmap();
 	}
 
+	/**
+	*Controller to execute "gameplayer" command.
+	*/
 	public void execGameplayer() {
 	//d_controller.gameplayer();
 	}
 
+	/**
+	*Controller to execute "assigncountries" command.
+	*/
 	public void execAssigncountries() {
 	//d_controller.assigncountries();
 	}
 
+	/**
+	*Controller to execute "deploy" command.
+	*/
 	public void execDeploy() {
 	//d_controller.deploy();
 	}
