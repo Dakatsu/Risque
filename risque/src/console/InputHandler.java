@@ -50,37 +50,37 @@ public class InputHandler extends Thread {
 				input = reader.readLine();
 				
 				if (input=="editcontinent"){
-			 //TODO}
+			 //getOwner().execEditcontinent()}
 				
 				if (input=="editcountry"){
-			 //TODO}
+			 //getOwner().execEditcountry()}
 
                                 if (input=="editneighbor"){
-			 //TODO}
+			 //getOwner().execEditneighbor()}
 
                                 if (input=="showmap"){
-			 //TODO}
+			 //getOwner().execShowmap()}
 
 				if (input=="savemap"){
-			 //TODO}
+			 //getOwner().execSavemap()}
 
 				if (input=="editmap"){
-			 //TODO}
+			 //getOwner().execEditmap()}
 
  				if (input=="validatemap"){
-			 //TODO}
+			 //getOwner().execValidatemap()}
 				
 				if (input=="loadmap"){
-			 //TODO}
+			 //getOwner().execLoadmap()}
 
 				if (input=="gameplayer"){
-			 //TODO}
+			 //getOwner().execGameplayer()}
 
 				if (input=="assigncountries"){
-			 //TODO}
+			 //getOwner().execAssigncountries()}
 
 				if (input=="deploy"){
-			 //TODO}
+			 //getOwner().execDeploy()}
 
 			}
 		} catch (IOException e) {
