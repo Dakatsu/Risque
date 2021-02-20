@@ -49,37 +49,37 @@ public class InputHandler extends Thread {
 			while (!input.trim().equalsIgnoreCase("quit")) {
 				input = reader.readLine();
 				
-				if (input=="showmap"){
+				if (input=="editcontinent"){
 			 //TODO}
 				
-				if (input=="showmap"){
+				if (input=="editcountry"){
+			 //TODO}
+
+                                if (input=="editneighbor"){
 			 //TODO}
 
                                 if (input=="showmap"){
 			 //TODO}
 
-                                if (input=="showmap"){
+				if (input=="savemap"){
 			 //TODO}
 
-				if (input=="showmap"){
+				if (input=="editmap"){
 			 //TODO}
 
-				if (input=="showmap"){
-			 //TODO}
-
- 				if (input=="showmap"){
+ 				if (input=="validatemap"){
 			 //TODO}
 				
-				if (input=="showmap"){
+				if (input=="loadmap"){
 			 //TODO}
 
-				if (input=="showmap"){
+				if (input=="gameplayer"){
 			 //TODO}
 
-				if (input=="showmap"){
+				if (input=="assigncountries"){
 			 //TODO}
 
-				if (input=="showmap"){
+				if (input=="deploy"){
 			 //TODO}
 
 			}
