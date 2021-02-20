@@ -58,6 +58,83 @@ public class Controller extends Thread {
 	}
 	
 	/**
+	*Will start the process for executing "editcontinent" command.
+	*/
+	public void editcontinent() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "editcountry" command.
+	*/
+	public void editcountry() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "editneighbor" command.
+	*/
+	public void editneighbor() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "showmap" command.
+	*/
+	public void showmap() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "savemap" command.
+	*/
+	public void savemap() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "editmap" command.
+	*/
+	public void editmap() {
+	//TODO
+	}
+	
+	/**
+	*Will start the process for executing "validatemap" command.
+	*/
+	public void validatemap() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "loadmap" command.
+	*/
+	public void loadmap() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "gameplayer" command.
+	*/
+	public void gameplayer() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "assigncountries" command.
+	*/
+	public void assigncountries() {
+	//TODO
+	}
+
+	/**
+	*Will start the process for executing "deploy" command.
+	*/
+	public void deploy() {
+	//TODO
+	}
+
+	/**
 	 * Starts the process for terminating the whole program.
 	 */
 	public void quit() {
