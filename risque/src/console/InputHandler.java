@@ -48,6 +48,40 @@ public class InputHandler extends Thread {
 			String input = "";
 			while (!input.trim().equalsIgnoreCase("quit")) {
 				input = reader.readLine();
+				
+				if (input=="showmap"){
+			 //TODO}
+				
+				if (input=="showmap"){
+			 //TODO}
+
+                                if (input=="showmap"){
+			 //TODO}
+
+                                if (input=="showmap"){
+			 //TODO}
+
+				if (input=="showmap"){
+			 //TODO}
+
+				if (input=="showmap"){
+			 //TODO}
+
+ 				if (input=="showmap"){
+			 //TODO}
+				
+				if (input=="showmap"){
+			 //TODO}
+
+				if (input=="showmap"){
+			 //TODO}
+
+				if (input=="showmap"){
+			 //TODO}
+
+				if (input=="showmap"){
+			 //TODO}
+
 			}
 		} catch (IOException e) {
 			// Just print error and go continue to the exit portion if we encounter an error.
