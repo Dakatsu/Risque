@@ -51,37 +51,37 @@ public class InputHandler extends Thread {
 				
 			//calling corresponding functions from console class according to the input 
 				if (input=="editcontinent"){
-			 getOwner().execEditcontinent()}
+			 getOwner().execEditcontinent();}
 				
 				if (input=="editcountry"){
-			 getOwner().execEditcountry()}
+			 getOwner().execEditcountry();}
 
                                 if (input=="editneighbor"){
-			 getOwner().execEditneighbor()}
+			 getOwner().execEditneighbor();}
 
                                 if (input=="showmap"){
-			 getOwner().execShowmap()}
+			 getOwner().execShowmap();}
 
 				if (input=="savemap"){
-			 getOwner().execSavemap()}
+			 getOwner().execSavemap();}
 
 				if (input=="editmap"){
-			 getOwner().execEditmap()}
+			 getOwner().execEditmap();}
 
  				if (input=="validatemap"){
-			 getOwner().execValidatemap()}
+			 getOwner().execValidatemap();}
 				
 				if (input=="loadmap"){
-			 getOwner().execLoadmap()}
+			 getOwner().execLoadmap();}
 
 				if (input=="gameplayer"){
-			 getOwner().execGameplayer()}
+			 getOwner().execGameplayer();}
 
 				if (input=="assigncountries"){
-			 getOwner().execAssigncountries()}
+			 getOwner().execAssigncountries();}
 
 				if (input=="deploy"){
-			 getOwner().execDeploy()}
+			 getOwner().execDeploy();}
 
 			}
 		} catch (IOException e) {
