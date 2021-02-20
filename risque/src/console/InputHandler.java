@@ -43,11 +43,46 @@ public class InputHandler extends Thread {
         try {
         	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		
-			// Just keep looping and reading input for now until we use the quit command.
+			// keep looping and reading input and converting them to function calls.
 			// So far we have just one command: quit
 			String input = "";
 			while (!input.trim().equalsIgnoreCase("quit")) {
 				input = reader.readLine();
+				
+			//calling corresponding functions from console class according to the input 
+				if (input=="editcontinent"){
+			 getOwner().execEditcontinent();}
+				
+				if (input=="editcountry"){
+			 getOwner().execEditcountry();}
+
+                                if (input=="editneighbor"){
+			 getOwner().execEditneighbor();}
+
+                                if (input=="showmap"){
+			 getOwner().execShowmap();}
+
+				if (input=="savemap"){
+			 getOwner().execSavemap();}
+
+				if (input=="editmap"){
+			 getOwner().execEditmap();}
+
+ 				if (input=="validatemap"){
+			 getOwner().execValidatemap();}
+				
+				if (input=="loadmap"){
+			 getOwner().execLoadmap();}
+
+				if (input=="gameplayer"){
+			 getOwner().execGameplayer();}
+
+				if (input=="assigncountries"){
+			 getOwner().execAssigncountries();}
+
+				if (input=="deploy"){
+			 getOwner().execDeploy();}
+
 			}
 		} catch (IOException e) {
 			// Just print error and go continue to the exit portion if we encounter an error.
