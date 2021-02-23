@@ -22,6 +22,6 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Generate Javadoc with Maven
-      run: mvn site
+      run: mvn site --file risque/pom.xml
     - name: Run tests with Maven
       run: mvn -B test --file risque/pom.xml
