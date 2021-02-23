@@ -1,5 +1,7 @@
 package main.game;
 
+import java.util.LinkedList;
+
 import main.console.Console;
 import main.controller.Controller;
 
@@ -31,11 +33,14 @@ public class GameEngine extends Thread {
 	 */
 	private Map d_map;
 	
+	private LinkedList<Player> d_players;
+	
 	/**
 	 * Default constructor for the GameEngine.
 	 */
 	public GameEngine() {
-		// Do something?
+		d_players = new LinkedList<>();
+		d_map = new Map();
 	}
 	
 	/**
@@ -68,6 +73,14 @@ public class GameEngine extends Thread {
 	 */
 	public void setConsole(Console p_console) {
 		d_console = p_console;
+	}
+	
+	/**
+	 * Gets the current map.
+	 * @return The current map.
+	 */
+	public Map getMap() {
+		return d_map;
 	}
 	
 	/**

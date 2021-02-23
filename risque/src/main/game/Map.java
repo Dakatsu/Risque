@@ -264,13 +264,12 @@ public class Map {
 		if (getNumTerritories() <= 1) {
 			return false;
 		}
-		System.out.println("Got to A");
+		
 		// Make sure we have at least one continent.
 		if (getNumContinents() == 0) {
 			return false;
 		}
 		
-		System.out.println("Got to B");
 		// Validate that every territory belongs to a continent.
 		for (Territory l_territory : d_territories) {
 			if (l_territory.getContinent() == null) {
@@ -278,7 +277,6 @@ public class Map {
 			}
 		}
 		
-		System.out.println("Got to C");
 		// Validate that each continent is a connected graph in itself.
 		for (Continent l_continent : d_continents) {
 			if (!validateContinent(l_continent)) {
@@ -286,14 +284,13 @@ public class Map {
 			}
 		}
 		
-		/* TODO: Replace this nasty algorithm with three nested for-loops with a better graph-traversing one.
+		/* TODO: Replace this nasty algorithm containing three nested for-loops with a better graph-traversing one.
 		 * Validate that each continent is connected to the rest.
 		 * Firstly, consider first continent as a connected (there may be only one).
 		 * Then, traverse every territory in that continent and add any continents that have bordering territories with ours.
 		 * Return true if we have added every continent to the list of connected continents.
 		 * 
 		 */
-		System.out.println("Got to D");
 		LinkedList<Continent> l_connectedContinents = new LinkedList<>();
 		l_connectedContinents.add(getContinent(1));
 		for (int l_idx = 0; l_idx < l_connectedContinents.size(); l_idx++) {

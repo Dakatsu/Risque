@@ -20,4 +20,11 @@ public class Player {
 	 * The territories this player owns.
 	 */
 	LinkedList<Territory> d_ownedTerritories;
+	
+	/**
+	 * Default constructor for player.
+	 */
+	public Player() {
+		d_ownedTerritories = new LinkedList<>();
+	}
 }
