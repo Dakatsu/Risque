@@ -11,9 +11,12 @@ import main.game.Player;
  */
 public class PlayerTest {
 
+	/**
+	 * Simple test to ensure we can instantiate this class. Placeholder until we have better tests.
+	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testNotNull() {
+		Player l_player = new Player();
+		assertNotNull(l_player);
 	}
-
 }
