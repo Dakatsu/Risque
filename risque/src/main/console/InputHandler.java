@@ -50,38 +50,49 @@ public class InputHandler extends Thread {
 				input = reader.readLine();
 				
 			//calling corresponding functions from console class according to the input 
-				if (input=="editcontinent"){
-			 getOwner().execEditcontinent();}
+				if (input=="editcontinent") {
+					getOwner().execEditcontinent();
+				}
 				
-				if (input=="editcountry"){
-			 getOwner().execEditcountry();}
+				if (input=="editcountry") {
+			 		getOwner().execEditcountry();
+				}
 
-                                if (input=="editneighbor"){
-			 getOwner().execEditneighbor();}
+                                if (input=="editneighbor") {
+					getOwner().execEditneighbor();
+				}
 
-                                if (input=="showmap"){
-			 getOwner().execShowmap();}
+                                if (input=="showmap") {
+			 		getOwner().execShowmap();
+				}
 
-				if (input=="savemap"){
-			 getOwner().execSavemap();}
+				if (input=="savemap") {
+			 		getOwner().execSavemap();
+				}
 
-				if (input=="editmap"){
-			 getOwner().execEditmap();}
+				if (input=="editmap") {
+					getOwner().execEditmap();
+				}
 
- 				if (input=="validatemap"){
-			 getOwner().execValidatemap();}
+ 				if (input=="validatemap") {
+			 		getOwner().execValidatemap();
+				}
 				
-				if (input=="loadmap"){
-			 getOwner().execLoadmap();}
+				if (input=="loadmap") {
+			 		getOwner().execLoadmap();
+				}
 
-				if (input=="gameplayer"){
-			 getOwner().execGameplayer();}
+				if (input=="gameplayer") {
+			 		getOwner().execGameplayer();
+				}
 
-				if (input=="assigncountries"){
-			 getOwner().execAssigncountries();}
+				if (input=="assigncountries") {
+			 		getOwner().execAssigncountries();
+				}
 
-				if (input=="deploy"){
-			 getOwner().execDeploy();}
+				if (input=="deploy") {
+			 		getOwner().execDeploy();
+				}
 
 			}
 		} catch (IOException e) {
