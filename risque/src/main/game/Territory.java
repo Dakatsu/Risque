@@ -1,6 +1,4 @@
-package game;
-
-import java.util.LinkedList;
+package main.game;
 
 /**
  * A territory on the map, also known as a country.
@@ -20,6 +18,7 @@ public class Territory {
 	/**
 	 * Constructs a new territory with a human name and no continent.
 	 * @param p_name The human-readable name of the territory.
+	 * @param p_continent The continent this territory is part of.
 	 */
 	public Territory(String p_name, Continent p_continent) {
 		setName(p_name);

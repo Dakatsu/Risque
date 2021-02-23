@@ -1,7 +1,7 @@
-package core;
-import console.Console;
-import controller.Controller;
-import game.GameEngine;
+package main.core;
+import main.console.Console;
+import main.controller.Controller;
+import main.game.GameEngine;
 
 /**
  * The entry point for the program that starts the other modules.

@@ -1,7 +1,7 @@
-package controller;
+package main.controller;
 
-import console.Console;
-import game.GameEngine;
+import main.console.Console;
+import main.game.GameEngine;
 
 /**
  * Class to handle calling commands on different game elements.

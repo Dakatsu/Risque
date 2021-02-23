@@ -1,4 +1,4 @@
-package game;
+package main.game;
 
 import java.util.LinkedList;
 
@@ -35,6 +35,18 @@ public class Map {
 				d_tIDs[0] = p_firstID;
 				d_tIDs[1] = p_secondID;
 			}
+		}
+		
+		/**
+		 * Does this border pair includes this ID?
+		 * @param p_tID The ID to test for.
+		 * @return Whether the border pair includes the ID.
+		 */
+		public boolean includes(int p_tID) {
+			if (d_tIDs[0] == p_tID || d_tIDs[1] == p_tID) {
+				return true;
+			}
+			return false;
 		}
 		
 		/**
@@ -85,9 +97,15 @@ public class Map {
 	 * @return whether the map is valid.
 	 */
 	public boolean validateMap() {
-		// TODO: Validate the territories consist of a connected graph.
+		// TODO: Proper error messages.
 		// TODO: Validate each continent is itself a connected graph.
-		// TODO: Validate that every territory belongs to a continent.
+		// TODO: Validate each continent is connected to all others (therefore confirming the whole map is connected).
+		// Validate that every territory belongs to a continent.
+		for (Territory l_territory : d_territories) {
+			if (l_territory.getContinent() == null) {
+				return false;
+			}
+		}
 		return false;
 	}
 }

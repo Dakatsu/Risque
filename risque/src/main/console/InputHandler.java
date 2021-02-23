@@ -1,4 +1,4 @@
-package console;
+package main.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;

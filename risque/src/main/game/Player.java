@@ -1,4 +1,7 @@
-package game;
+package main.game;
+
+import java.util.LinkedList;
+
 /**
  * There must be a Player class that must hold (among other things):
  * a list of Country objects that are owned by the Player 
@@ -12,6 +15,9 @@ package game;
  * @author Kyle
  *
  */
-public class Player {
-
+public class Player {	
+	/**
+	 * The territories this player owns.
+	 */
+	LinkedList<Territory> d_ownedTerritories;
 }

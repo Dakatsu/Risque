@@ -1,7 +1,7 @@
-package console;
+package main.console;
 
-import controller.Controller;
-import game.GameEngine;
+import main.controller.Controller;
+import main.game.GameEngine;
 import java.util.LinkedList;
 import java.util.Queue;
 

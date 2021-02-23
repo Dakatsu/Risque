@@ -1,7 +1,7 @@
-package game;
+package main.game;
 
-import console.Console;
-import controller.Controller;
+import main.console.Console;
+import main.controller.Controller;
 
 /**
  * From grading sheet:
