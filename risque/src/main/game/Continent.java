@@ -1,5 +1,7 @@
 package main.game;
 
+import java.util.LinkedList;
+
 /**
  * A collection of territories/countries.
  * @author Kyle
@@ -61,8 +63,13 @@ public class Continent {
 	/**
 	 * Sets the number of bonus armies given for complete continental control to a new number.
 	 * @param p_bonusArmies The new number of bonus armies to award.
+	 * @return True if the bonus army number was changed, false if a number less than zero was entered.
 	 */
-	public void setBonusArmies(int p_bonusArmies) {
-		d_bonusArmies = p_bonusArmies;
+	public boolean setBonusArmies(int p_bonusArmies) {
+		if (p_bonusArmies >= 0) {
+			d_bonusArmies = p_bonusArmies;
+			return true;
+		}
+		return false;
 	}
 }

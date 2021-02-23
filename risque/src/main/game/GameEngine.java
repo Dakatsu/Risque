@@ -5,15 +5,31 @@ import main.controller.Controller;
 
 /**
  * From grading sheet:
- * "Implementation of a GameEngineclass implementing and controlling the game phasesaccording to the Warzone rules."
+ * "Implementation of a GameEngineclass implementing and controlling the game phases according to the Warzone rules."
  * 
  * @author Kyle
  *
  */
 public class GameEngine extends Thread {
+	/**
+	 * The controller we're linked to.
+	 */
 	private Controller d_controller;
+	
+	/**
+	 * The console we're linked to.
+	 */
 	private Console d_console;
+	
+	/**
+	 * Do we want to quit the game?
+	 */
 	private boolean d_wantsExit = false;
+	
+	/**
+	 * The current map we have loaded for gameplay or editing.
+	 */
+	private Map d_map;
 	
 	/**
 	 * Default constructor for the GameEngine.
