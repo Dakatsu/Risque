@@ -50,47 +50,49 @@ public class InputHandler extends Thread {
 				input = reader.readLine();
 				
 			//calling corresponding functions from console class according to the input 
-				if (input=="editcontinent") {
+				String[] inputarr = input.split(" ",2);
+
+				if (inputarr[0]=="editcontinent") {
 					getOwner().execEditcontinent();
 				}
 				
-				if (input=="editcountry") {
+				if (inputarr[0]=="editcountry") {
 			 		getOwner().execEditcountry();
 				}
 
-                                if (input=="editneighbor") {
+                                if (inputarr[0]=="editneighbor") {
 					getOwner().execEditneighbor();
 				}
 
-                                if (input=="showmap") {
+                                if (inputarr[0]=="showmap") {
 			 		getOwner().execShowmap();
 				}
 
-				if (input=="savemap") {
+				if (inputarr[0]=="savemap") {
 			 		getOwner().execSavemap();
 				}
 
-				if (input=="editmap") {
+				if (inputarr[0]=="editmap") {
 					getOwner().execEditmap();
 				}
 
- 				if (input=="validatemap") {
+ 				if (inputarr[0]=="validatemap") {
 			 		getOwner().execValidatemap();
 				}
 				
-				if (input=="loadmap") {
+				if (inputarr[0]=="loadmap") {
 			 		getOwner().execLoadmap();
 				}
 
-				if (input=="gameplayer") {
+				if (inputarr[0]=="gameplayer") {
 			 		getOwner().execGameplayer();
 				}
 
-				if (input=="assigncountries") {
+				if (inputarr[0]=="assigncountries") {
 			 		getOwner().execAssigncountries();
 				}
 
-				if (input=="deploy") {
+				if (inputarr[0]=="deploy") {
 			 		getOwner().execDeploy();
 				}
 
