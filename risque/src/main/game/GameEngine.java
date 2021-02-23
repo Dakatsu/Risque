@@ -83,6 +83,10 @@ public class GameEngine extends Thread {
 		return d_map;
 	}
 	
+	public boolean loadMap() {
+		return false;
+	}
+	
 	/**
 	 * Starts the process for terminating the engine.
 	 */
