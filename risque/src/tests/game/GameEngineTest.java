@@ -15,12 +15,18 @@ public class GameEngineTest {
 	
 	GameEngine d_engine;
 	
+	/**
+	 * Sets up the GameEngine before executing a test.
+	 */
 	@Before
 	public void before() {
 		d_engine = new GameEngine();
 		d_engine.start();
 	}
 	
+	/**
+	 * Quits the game engine after executing a test..
+	 */
 	@After
 	public void after() {
 		d_engine.finishAndQuit();
