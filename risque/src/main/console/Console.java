@@ -93,22 +93,22 @@ public class Console extends Thread {
 	/**
 	*Controller to execute "editcontinent" command.
 	*/
-	public void execEditcontinent() {
-		d_controller.editcontinent();
+	public void execEditcontinent(String p_add_remove_cont) {
+		d_controller.editcontinent(p_add_remove_cont);
 	}
 
 	/**
 	*Controller to execute "editcountry" command.
 	*/
-	public void execEditcountry() {
-		d_controller.editcountry();
+	public void execEditcountry(String p_add_remove_coun) {
+		d_controller.editcountry(p_add_remove_coun);
 	}
 
 	/**
 	*Controller to execute "editneighbor" command.
 	*/
-	public void execEditneighbor() {
-		d_controller.editneighbor();
+	public void execEditneighbor(String p_add_remove_nei) {
+		d_controller.editneighbor(p_add_remove_nei);
 	}
 
 	/**
