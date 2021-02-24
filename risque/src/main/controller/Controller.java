@@ -59,22 +59,25 @@ public class Controller extends Thread {
 	
 	/**
 	*Will start the process for executing "editcontinent" command.
+	*@param p_add_remove_continent This parameter includes continent which is to be added or removed.
 	*/
-	public void editcontinent() {
+	public void editcontinent(String p_add_remove_continent) {
 	//TODO
 	}
 
 	/**
 	*Will start the process for executing "editcountry" command.
+	*@param p_add_remove_country This parameter includes country which is to be added or removed.
 	*/
-	public void editcountry() {
+	public void editcountry(String p_add_remove_country) {
 	//TODO
 	}
 
 	/**
 	*Will start the process for executing "editneighbor" command.
+	*@param p_add_remove_neighbor This parameter includes neighbor which is to be added or removed.
 	*/
-	public void editneighbor() {
+	public void editneighbor(String p_add_remove_neighbor) {
 	//TODO
 	}
 
