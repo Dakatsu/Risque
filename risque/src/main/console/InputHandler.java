@@ -50,18 +50,27 @@ public class InputHandler extends Thread {
 				input = reader.readLine();
 				
 			//calling corresponding functions from console class according to the input 
-				String[] inputarr = input.split(" ",2);
+				String[] inputarr = input.trim().split(" ",2);
 
-				if (inputarr[0]=="editcontinent") {
-					getOwner().execEditcontinent();
+				//if (inputarr[0]=="editcontinent") {
+					String[] editcon= inputarr[1].trim().split("-");
+					for (int i= 1; i<editcon.length; i++) {   
+						getOwner().execEditcontinent(editcon[i].trim());
+					}
 				}
 				
-				if (inputarr[0]=="editcountry") {
-			 		getOwner().execEditcountry();
+				//if (inputarr[0]=="editcountry") {
+					String[] editcoun= inputarr[1].trim().split("-");
+					for (int i= 1; i<editcoun.length; i++) {
+			 			getOwner().execEditcountry(editcoun[i].trim());
+					}
 				}
 
-                                if (inputarr[0]=="editneighbor") {
-					getOwner().execEditneighbor();
+                                //if (inputarr[0]=="editneighbor") {
+					String[] editnei= inputarr[1].trim().split("-");
+					for (int i= 1; i<editnei.length; i++) {
+						getOwner().execEditneighbor(editnei[i].trim());
+					}
 				}
 
                                 if (inputarr[0]=="showmap") {
