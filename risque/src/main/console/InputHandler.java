@@ -52,21 +52,21 @@ public class InputHandler extends Thread {
 			//calling corresponding functions from console class according to the input 
 				String[] inputarr = input.trim().split(" ",2);
 
-				//if (inputarr[0]=="editcontinent") {
+				if (inputarr[0]=="editcontinent") {
 					String[] editcon= inputarr[1].trim().split("-");
 					for (int i= 1; i<editcon.length; i++) {   
 						getOwner().execEditcontinent(editcon[i].trim());
 					}
 				}
 				
-				//if (inputarr[0]=="editcountry") {
+				if (inputarr[0]=="editcountry") {
 					String[] editcoun= inputarr[1].trim().split("-");
 					for (int i= 1; i<editcoun.length; i++) {
 			 			getOwner().execEditcountry(editcoun[i].trim());
 					}
 				}
 
-                                //if (inputarr[0]=="editneighbor") {
+                                if (inputarr[0]=="editneighbor") {
 					String[] editnei= inputarr[1].trim().split("-");
 					for (int i= 1; i<editnei.length; i++) {
 						getOwner().execEditneighbor(editnei[i].trim());
