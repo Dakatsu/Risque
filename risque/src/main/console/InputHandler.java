@@ -69,11 +69,11 @@ public class InputHandler extends Thread {
 				}
 
 				if (inputarr[0]=="savemap") {
-			 		getOwner().execSavemap();
+			 		getOwner().execSavemap(inputarr[1]);
 				}
 
 				if (inputarr[0]=="editmap") {
-					getOwner().execEditmap();
+					getOwner().execEditmap(inputarr[1]);
 				}
 
  				if (inputarr[0]=="validatemap") {
@@ -81,7 +81,7 @@ public class InputHandler extends Thread {
 				}
 				
 				if (inputarr[0]=="loadmap") {
-			 		getOwner().execLoadmap();
+			 		getOwner().execLoadmap(inputarr[1]);
 				}
 
 				if (inputarr[0]=="gameplayer") {
