@@ -120,6 +120,7 @@ public class Console extends Thread {
 
 	/**
 	*Controller to execute "savemap" command.
+	*@param p_file File name to which a map is to be saved.
 	*/
 	public void execSavemap(String p_file) {
 		d_controller.savemap(p_file);
@@ -127,6 +128,7 @@ public class Console extends Thread {
 
 	/**
 	*Controller to execute "editmap" command.
+	*@param p_file File name from which the map is to be edited.
 	*/
 	public void execEditmap(String p_file) {
 		d_controller.editmap(p_file);
@@ -141,6 +143,7 @@ public class Console extends Thread {
 
 	/**
 	*Controller to execute "loadmap" command.
+	*@param p_file File name from which the map is to be loaded.
 	*/
 	public void execLoadmap(String p_file) {
 		d_controller.loadmap(p_file);

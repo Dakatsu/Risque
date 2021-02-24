@@ -87,6 +87,7 @@ public class Controller extends Thread {
 
 	/**
 	*Will start the process for executing "savemap" command.
+	*@param p_filename File name to which a map is to be saved.
 	*/
 	public void savemap(String p_filename) {
 	//TODO
@@ -94,6 +95,7 @@ public class Controller extends Thread {
 
 	/**
 	*Will start the process for executing "editmap" command.
+	*@param p_filename File name from which a map is to be edited.
 	*/
 	public void editmap(String p_filename) {
 	//TODO
@@ -108,6 +110,7 @@ public class Controller extends Thread {
 
 	/**
 	*Will start the process for executing "loadmap" command.
+	*@param p_filename File name from which a map is to be loaded.
 	*/
 	public void loadmap(String p_filename) {
 	//TODO
