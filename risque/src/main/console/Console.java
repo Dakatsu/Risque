@@ -92,23 +92,26 @@ public class Console extends Thread {
 	
 	/**
 	*Controller to execute "editcontinent" command.
+	*@param p_add_remove_cont This parameter includes continent which is to be added or removed.
 	*/
-	public void execEditcontinent() {
-		d_controller.editcontinent();
+	public void execEditcontinent(String p_add_remove_cont) {
+		d_controller.editcontinent(p_add_remove_cont);
 	}
 
 	/**
 	*Controller to execute "editcountry" command.
+	*@param p_add_remove_coun This parameter includes country which is to be added or removed.
 	*/
-	public void execEditcountry() {
-		d_controller.editcountry();
+	public void execEditcountry(String p_add_remove_coun) {
+		d_controller.editcountry(p_add_remove_coun);
 	}
 
 	/**
 	*Controller to execute "editneighbor" command.
+	*@param p_add_remove_nei This parameter includes neighbor country which is to be placed next to other country.
 	*/
-	public void execEditneighbor() {
-		d_controller.editneighbor();
+	public void execEditneighbor(String p_add_remove_nei) {
+		d_controller.editneighbor(p_add_remove_nei);
 	}
 
 	/**
