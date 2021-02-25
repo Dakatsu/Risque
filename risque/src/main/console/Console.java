@@ -154,9 +154,10 @@ public class Console extends Thread {
 
 	/**
 	*Controller to execute "gameplayer" command.
+	*@param p_add_remove_pla Includes player to be added or removed.
 	*/
-	public void execGameplayer() {
-		d_controller.gameplayer();
+	public void execGameplayer(String p_add_remove_pla) {
+		d_controller.gameplayer(p_add_remove_pla);
 	}
 
 	/**
@@ -168,9 +169,10 @@ public class Console extends Thread {
 
 	/**
 	*Controller to execute "deploy" command.
+	*@param p_depcount Includes country for deploy command.
 	*/
-	public void execDeploy() {
-		d_controller.deploy();
+	public void execDeploy(String p_depcount) {
+		d_controller.deploy(p_depcount);
 	}
 
 	/**

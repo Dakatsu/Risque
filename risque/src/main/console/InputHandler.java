@@ -94,7 +94,10 @@ public class InputHandler extends Thread {
 				}
 
 				if (inputarr[0]=="gameplayer") {
-			 		getOwner().execGameplayer();
+					String[] gamepl= inputarr[1].trim().split("-");
+					for (int i= 1; i<gamepl.length; i++) {
+			 			getOwner().execGameplayer(gamepl[i].trim());
+					}
 				}
 
 				if (inputarr[0]=="assigncountries") {
@@ -102,7 +105,7 @@ public class InputHandler extends Thread {
 				}
 
 				if (inputarr[0]=="deploy") {
-			 		getOwner().execDeploy();
+			 		getOwner().execDeploy(inputarr[1].trim());
 				}
 
 			}
