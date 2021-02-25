@@ -121,8 +121,9 @@ public class Controller {
 
 	/**
 	*Will start the process for executing "gameplayer" command.
+	*@param p_add_remove_player Includes player to be added or removed.
 	*/
-	public void gameplayer() {
+	public void gameplayer(String p_add_remove_player) {
 	//TODO
 	}
 
@@ -135,8 +136,9 @@ public class Controller {
 
 	/**
 	*Will start the process for executing "deploy" command.
+	*@param p_depcountry Includes country for deploy command.
 	*/
-	public void deploy() {
+	public void deploy(String p_depcountry) {
 	//TODO
 	}
 
