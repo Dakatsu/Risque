@@ -96,7 +96,6 @@ public class InputHandler extends Thread {
 					if (l_areParametersInvalid) {
 						getOwner().addMessage("Invalid parameters for command " + l_splitInput[0] + ".");
 					}
-<<<<<<< HEAD
 					
 					// TODO: move validated commands to switch statement above.
 					if (l_splitInput[0]=="editcontinent") {
@@ -127,54 +126,33 @@ public class InputHandler extends Thread {
 				 		getOwner().execValidatemap();
 					}
 	
-					if (l_splitInput[0]=="gameplayer") {
-				 		getOwner().execGameplayer();
-					}
-	
 					if (l_splitInput[0]=="assigncountries") {
 				 		getOwner().execAssigncountries();
 					}
 	
-					if (l_splitInput[0]=="deploy") {
-				 		getOwner().execDeploy();
-					}
-=======
 				}
 
-                                if (inputarr[0]=="showmap") {
-			 		getOwner().execShowmap();
+				if (l_splitInput[0]=="editmap") {
+					getOwner().execEditMap(l_splitInput[1].trim());
 				}
 
-				if (inputarr[0]=="savemap") {
-			 		getOwner().execSavemap(inputarr[1].trim());
-				}
-
-				if (inputarr[0]=="editmap") {
-					getOwner().execEditmap(inputarr[1].trim());
-				}
-
- 				if (inputarr[0]=="validatemap") {
+ 				if (l_splitInput[0]=="validatemap") {
 			 		getOwner().execValidatemap();
 				}
-				
-				if (inputarr[0]=="loadmap") {
-			 		getOwner().execLoadmap(inputarr[1].trim());
-				}
 
-				if (inputarr[0]=="gameplayer") {
-					String[] gamepl= inputarr[1].trim().split("-");
+				if (l_splitInput[0]=="gameplayer") {
+					String[] gamepl= l_splitInput[1].trim().split("-");
 					for (int i= 1; i<gamepl.length; i++) {
 			 			getOwner().execGameplayer(gamepl[i].trim());
 					}
 				}
 
-				if (inputarr[0]=="assigncountries") {
+				if (l_splitInput[0]=="assigncountries") {
 			 		getOwner().execAssigncountries();
 				}
 
-				if (inputarr[0]=="deploy") {
-			 		getOwner().execDeploy(inputarr[1].trim());
->>>>>>> branch 'main' of https://github.com/Dakatsu/Risque.git
+				if (l_splitInput[0]=="deploy") {
+			 		getOwner().execDeploy(l_splitInput[1].trim());
 				}
 
 			}
