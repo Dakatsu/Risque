@@ -21,7 +21,6 @@ public class GameEngineTest {
 	@Before
 	public void before() {
 		d_engine = new GameEngine();
-		d_engine.start();
 	}
 	
 	/**

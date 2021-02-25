@@ -44,65 +44,99 @@ public class InputHandler extends Thread {
         	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		
 			// keep looping and reading input and converting them to function calls.
-			// So far we have just one command: quit
-			String input = "";
-			while (!input.trim().equalsIgnoreCase("quit")) {
-				input = reader.readLine();
+        	// So long as "quit" is not typed in.
+			String l_input = "";
+			while (!l_input.equalsIgnoreCase("quit")) {
+				l_input = reader.readLine().trim();
 				
-			//calling corresponding functions from console class according to the input 
-				String[] inputarr = input.trim().split(" ",2);
-
-				if (inputarr[0]=="editcontinent") {
-					String[] editcon= inputarr[1].trim().split("-");
-					for (int i= 1; i<editcon.length; i++) {   
-						getOwner().execEditcontinent(editcon[i].trim());
-					}
-				}
+				// calling corresponding functions from console class according to the input 
+				String[] l_splitInput = l_input.split(" ",2);
 				
-				if (inputarr[0]=="editcountry") {
-					String[] editcoun= inputarr[1].trim().split("-");
-					for (int i= 1; i<editcoun.length; i++) {
-			 			getOwner().execEditcountry(editcoun[i].trim());
+				if (l_splitInput.length > 0) {
+					
+					boolean l_areParametersInvalid = false;
+					
+					switch(l_splitInput[0].toLowerCase()) {
+					
+						case("quit"):
+							getOwner().execQuit();
+							return;
+					
+						case("loadmap"):
+							if (l_splitInput.length != 2) {
+								l_areParametersInvalid = true;
+							}
+							else {
+						 		getOwner().execLoadMap(l_splitInput[1].trim());
+							}
+							break;
+							
+						case("savemap"):
+							if (l_splitInput.length != 2) {
+								l_areParametersInvalid = true;
+							}
+							else {
+								getOwner().execSaveMap(l_splitInput[1].trim());
+							}
+							break;
+							
+						case("showmap"):
+							if (l_splitInput.length != 1) {
+								l_areParametersInvalid = true;
+							}
+							else {
+								getOwner().execShowMap();
+							}
+							break;
+						
+						default:
+							getOwner().addMessage("Command " + l_splitInput[0] + " not recognized.");
 					}
-				}
-
-                                if (inputarr[0]=="editneighbor") {
-					String[] editnei= inputarr[1].trim().split("-");
-					for (int i= 1; i<editnei.length; i++) {
-						getOwner().execEditneighbor(editnei[i].trim());
+					
+					if (l_areParametersInvalid) {
+						getOwner().addMessage("Invalid parameters for command " + l_splitInput[0] + ".");
 					}
-				}
-
-                                if (inputarr[0]=="showmap") {
-			 		getOwner().execShowmap();
-				}
-
-				if (inputarr[0]=="savemap") {
-			 		getOwner().execSavemap(inputarr[1].trim());
-				}
-
-				if (inputarr[0]=="editmap") {
-					getOwner().execEditmap(inputarr[1].trim());
-				}
-
- 				if (inputarr[0]=="validatemap") {
-			 		getOwner().execValidatemap();
-				}
-				
-				if (inputarr[0]=="loadmap") {
-			 		getOwner().execLoadmap(inputarr[1].trim());
-				}
-
-				if (inputarr[0]=="gameplayer") {
-			 		getOwner().execGameplayer();
-				}
-
-				if (inputarr[0]=="assigncountries") {
-			 		getOwner().execAssigncountries();
-				}
-
-				if (inputarr[0]=="deploy") {
-			 		getOwner().execDeploy();
+					
+					// TODO: move validated commands to switch statement above.
+					if (l_splitInput[0]=="editcontinent") {
+						String[] editcon= l_splitInput[1].trim().split("-");
+						for (int i= 1; i<editcon.length; i++) {   
+							getOwner().execEditcontinent(editcon[i].trim());
+						}
+					}
+					if (l_splitInput[0]=="editcountry") {
+						String[] editcoun= l_splitInput[1].trim().split("-");
+						for (int i= 1; i<editcoun.length; i++) {
+				 			getOwner().execEditcountry(editcoun[i].trim());
+						}
+					}
+	
+					if (l_splitInput[0]=="editneighbor") {
+						String[] editnei= l_splitInput[1].trim().split("-");
+						for (int i= 1; i<editnei.length; i++) {
+							getOwner().execEditneighbor(editnei[i].trim());
+						}
+					}
+	
+					if (l_splitInput[0]=="editmap") {
+						getOwner().execEditMap(l_splitInput[1].trim());
+					}
+	
+	 				if (l_splitInput[0]=="validatemap") {
+				 		getOwner().execValidatemap();
+					}
+	
+					if (l_splitInput[0]=="gameplayer") {
+				 		getOwner().execGameplayer();
+					}
+	
+					if (l_splitInput[0]=="assigncountries") {
+				 		getOwner().execAssigncountries();
+					}
+	
+					if (l_splitInput[0]=="deploy") {
+				 		getOwner().execDeploy();
+					}
 				}
 
 			}

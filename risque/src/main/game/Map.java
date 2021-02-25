@@ -404,7 +404,8 @@ public class Map {
 	/**
 	 * Loads a map from a given file, deleting any existing map data before doing so.
 	 * Note that attributes not used by this game are ignored and not loaded.
-	 * This means that those attributes will not be present when saving a map.
+	 * This means that those attributes will not be present when saving a map from this game.
+	 * 
 	 * @param l_fileName The name of the file to load from (including the extension).
 	 * @return Whether a valid map was loaded.
 	 */
@@ -433,11 +434,6 @@ public class Map {
 					}
 					else {
 						String l_splitLine[] = l_line.split(" ");
-						System.out.print(l_section.toUpperCase());
-						for (int i = 0; i < l_splitLine.length; i++) {
-							System.out.print(" " + l_splitLine[i]);
-						}
-						System.out.print("\n");
 						switch(l_section) {
 							case "continents":
 								if (l_splitLine.length >= 2) {
@@ -466,11 +462,9 @@ public class Map {
 			return validateMap();
 		} 
 		catch (FileNotFoundException l_exception) {
-			l_exception.printStackTrace();
 			return false;
 		}
 		catch (NumberFormatException l_exception) {
-			l_exception.printStackTrace();
 			return false;
 			
 		}
@@ -565,5 +559,61 @@ public class Map {
 		}
 	}
 	
-	
+	/**
+	 * Outputs the current map as text format. Identical to the representation in a .map file.
+	 * @return The map as text.
+	 */
+	public String toText() {
+		/**
+		 * Reference on what a .map file entails:
+		 * http://domination.sourceforge.net/makemaps.shtml
+		 */
+		String l_mapAsString = "";
+		
+		/**
+		 *  Write the continents header, then print out the continents in this format:
+		 *    continent-name number-of-bonus-armies colour
+		 *  TODO: colour is not loaded or used by this game, so we are defaulting to everything being purple.
+		 */
+		l_mapAsString += "[continents]\n";
+		for (int l_cID = 1; l_cID <= getNumContinents(); l_cID++) {
+			Continent l_continent = getContinent(l_cID);
+			l_mapAsString += l_continent.getName() + " " + l_continent.getBonusArmies() + " purple\n";
+		}
+		
+		/**
+		 *  Write the countries header, then print out the territories in this format:
+		 *    territory-ID territory-name continent-ID coordinate coordinate
+		 *  While doing so, prepare the border strings. They are the territory's ID followed by the ID of every bordering nation.
+		 *  TODO: we do not use coordinates for this game, so defaulting to zeroes for both.
+		 */
+		LinkedList<String> l_borderStrings = new LinkedList<>();
+		l_mapAsString += "\n[countries]\n";
+		for (int l_tID = 1; l_tID <= getNumTerritories(); l_tID++) {
+			Territory l_territory = getTerritory(l_tID);
+			int l_cID = getContinentID(l_territory.getContinent());
+			l_mapAsString += l_tID + " " + l_territory.getName() +  " " + l_cID + " 0 0\n";
+			
+			// Write the border strings.
+			String l_borderString = Integer.toString(l_tID);
+			if (d_borders.containsKey(l_territory)) {
+				LinkedList<Territory> l_borderingTerritories = d_borders.get(l_territory);
+				for (Territory l_borderingTerritory : l_borderingTerritories) {
+					l_borderString += " " + Integer.toString(getTerritoryID(l_borderingTerritory));
+				}
+			}
+			l_borderStrings.add(l_borderString);
+		}
+		
+		/**
+		 *  Write the countries header, then print out the borders we already calculated above.
+		 */
+		l_mapAsString += "\n[borders]\n";
+		for (String l_borderString : l_borderStrings) {
+			l_mapAsString += l_borderString + "\n";
+		}
+		
+		// Return the final result.
+		return l_mapAsString;
+	}
 }

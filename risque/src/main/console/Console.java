@@ -24,7 +24,7 @@ import java.util.Queue;
  * @author Kyle
  *
  */
-public class Console extends Thread {
+public class Console {
 	private GameEngine d_engine;
 	private Controller d_controller;
 	private Queue<String> d_unprintedMessages;
@@ -44,6 +44,8 @@ public class Console extends Thread {
 		if (d_controller != null) {
 			d_controller.setConsole(this);
 		}
+		InputHandler l_inputHandler = new InputHandler(this);
+		l_inputHandler.start();
 		d_unprintedMessages = new LinkedList<String>();
 	}
 	
@@ -115,26 +117,32 @@ public class Console extends Thread {
 	}
 
 	/**
-	*Controller to execute "showmap" command.
-	*/
-	public void execShowmap() {
-		d_controller.showmap();
+	 *Controller to execute "showmap" command.
+	 */
+	public void execShowMap() {
+		addMessage("Printing map to console:\n\n" + d_controller.showMap());
 	}
 
 	/**
-	*Controller to execute "savemap" command.
-	*@param p_file File name to which a map is to be saved.
-	*/
-	public void execSavemap(String p_file) {
-		d_controller.savemap(p_file);
+	 * Controller to execute "savemap" command.
+	 * @param p_fileName File name to which a map is to be saved.
+	 */
+	public void execSaveMap(String p_fileName) {
+		boolean l_wasMapSaved = d_controller.saveMap(p_fileName);
+		if (l_wasMapSaved) {
+			addMessage("Map successfully saved as: " + p_fileName);
+		}
+		else {
+			addMessage("Map could not be saved. Please check that the map is valid.");
+		}
 	}
 
 	/**
 	*Controller to execute "editmap" command.
 	*@param p_file File name from which the map is to be edited.
 	*/
-	public void execEditmap(String p_file) {
-		d_controller.editmap(p_file);
+	public void execEditMap(String p_file) {
+		d_controller.editMap(p_file);
 	}
 
 	/**
@@ -145,11 +153,17 @@ public class Console extends Thread {
 	}
 
 	/**
-	*Controller to execute "loadmap" command.
-	*@param p_file File name from which the map is to be loaded.
-	*/
-	public void execLoadmap(String p_file) {
-		d_controller.loadmap(p_file);
+	 * Controller to execute "loadmap" command.
+	 * @param p_fileName File name from which the map is to be loaded.
+	 */
+	public void execLoadMap(String p_fileName) {
+		boolean l_wasMapLoaded = d_controller.loadMap(p_fileName);
+		if (l_wasMapLoaded) {
+			addMessage("Map " + p_fileName + " loaded successfully.");
+		}
+		else {
+			addMessage("Map " + p_fileName + " could not be loaded. Please check that the map exists and is valid.");
+		}
 	}
 
 	/**
@@ -185,24 +199,5 @@ public class Console extends Thread {
 	 */
 	public void finishAndQuit() {
 		d_wantsExit = true;
-	}
-	
-	/**
-	 * Entry point for the Console. The object is deleted once this method finishes.
-	 */
-	public void run() {
-		// Create and start our separate input handling thread.
-		InputHandler l_inputHandler = new InputHandler(this);
-		l_inputHandler.start();
-		// Temporary default behaviour: print that we're running every five seconds, unless we want to quit.
-		while (!d_wantsExit) {
-			//addMessage("Console is running!");
-			try {
-				sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 }

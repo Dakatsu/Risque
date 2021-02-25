@@ -12,7 +12,7 @@ import main.controller.Controller;
  * @author Kyle
  *
  */
-public class GameEngine extends Thread {
+public class GameEngine {
 	/**
 	 * The controller we're linked to.
 	 */
@@ -86,9 +86,22 @@ public class GameEngine extends Thread {
 		return d_map;
 	}
 	
+	/**
+	 * Loads a map, replacing the current one.
+	 * @param p_mapName The name of the map to be loaded.
+	 * @return True if the map was successfully loaded, otherwise false.
+	 */
 	public boolean loadMap(String p_mapName) {
-		// TODO
-		return false;
+		return d_map.loadFromFile(p_mapName);
+	}
+	
+	/**
+	 * Saves a map to a file name.
+	 * @param p_mapName The name for the new map.
+	 * @return True if the map was successfully saved, otherwise false.
+	 */
+	public boolean saveMap(String p_mapName) {
+		return d_map.saveToFile(p_mapName);
 	}
 	
 	/**
@@ -96,25 +109,5 @@ public class GameEngine extends Thread {
 	 */
 	public void finishAndQuit() {
 		d_wantsExit = true;
-	}
-	
-	/**
-	 * Entry point for the GameEngine. The object is deleted once this method finishes.
-	 */
-	public void run() {
-		
-		// Temporary loop until game engine's core behaviour is implemented.
-		// Just tell the console we're running every five seconds, unless we want to quit.
-		while (!d_wantsExit) {
-			if (d_console != null) {
-				//d_console.addMessage("GameEngine is running.");
-			}
-			try {
-				sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 }

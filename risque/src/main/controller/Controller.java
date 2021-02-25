@@ -9,7 +9,7 @@ import main.game.GameEngine;
  * @author Kyle
  *
  */
-public class Controller extends Thread {
+public class Controller {
 	private GameEngine d_engine;
 	private Console d_console;
 	private boolean d_wantsExit = false;
@@ -82,26 +82,26 @@ public class Controller extends Thread {
 	}
 
 	/**
-	*Will start the process for executing "showmap" command.
-	*/
-	public void showmap() {
-	//TODO
+	 *Will start the process for executing "showmap" command.
+	 */
+	public String showMap() {
+		return d_engine.getMap().toText();
 	}
 
 	/**
 	*Will start the process for executing "savemap" command.
-	*@param p_filename File name to which a map is to be saved.
+	*@param p_fileName File name to which a map is to be saved.
 	*/
-	public void savemap(String p_filename) {
-	//TODO
+	public boolean saveMap(String p_fileName) {
+		return d_engine.saveMap(p_fileName);
 	}
 
 	/**
-	*Will start the process for executing "editmap" command.
-	*@param p_filename File name from which a map is to be edited.
-	*/
-	public void editmap(String p_filename) {
-	//TODO
+	 * Will start the process for executing "editmap" command.
+	 * @param p_fileName File name from which a map is to be edited.
+	 */
+	public boolean editMap(String p_fileName) {
+		return false;
 	}
 	
 	/**
@@ -113,10 +113,10 @@ public class Controller extends Thread {
 
 	/**
 	*Will start the process for executing "loadmap" command.
-	*@param p_filename File name from which a map is to be loaded.
+	*@param p_fileName File name from which a map is to be loaded.
 	*/
-	public void loadmap(String p_filename) {
-	//TODO
+	public boolean loadMap(String p_fileName) {
+		return d_engine.loadMap(p_fileName);
 	}
 
 	/**
@@ -155,24 +155,5 @@ public class Controller extends Thread {
 	 */
 	public void finishAndQuit() {
 		d_wantsExit = true;
-	}
-	
-	/**
-	 * Entry point for the Controller. The object is deleted once this method finishes.
-	 */
-	public void run() {
-		// Temporary code until Controller's core behaviour is implemented.
-		// Just tell the console we're running every five seconds, unless we want to quit.
-		while (!d_wantsExit) {
-			if (d_console != null) {
-				//d_console.addMessage("Controller is running.");
-			}
-			try {
-				sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 }
