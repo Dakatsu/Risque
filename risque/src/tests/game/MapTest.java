@@ -155,4 +155,41 @@ public class MapTest {
 		l_testMap.addBorder(3, 4);
 		assertFalse(l_testMap.validateMap());
 	}
+	
+	/**
+	 * Testing that saving a map and them loading it should create an identical map.
+	 */
+	@Test
+	public void mapSavingLoadingTest() {
+		Map l_savedMap = new Map();
+		assertTrue(l_savedMap.createContinent(1));
+		assertTrue(l_savedMap.createContinent(2));
+		assertTrue(l_savedMap.createTerritory(1, 1));
+		assertTrue(l_savedMap.createTerritory(2, 1));
+		assertTrue(l_savedMap.createTerritory(3, 2));
+		assertTrue(l_savedMap.createTerritory(4, 2));
+		l_savedMap.addBorder(1, 2);
+		l_savedMap.addBorder(2, 3);
+		l_savedMap.addBorder(3, 4);
+		l_savedMap.addBorder(4, 1);
+		l_savedMap.saveToFile("JUnitTest.map");
+		
+		Map l_loadedMap = new Map();
+		l_loadedMap.loadFromFile("JUnitTest.map");
+		
+		assertEquals(l_savedMap.getNumContinents(), l_loadedMap.getNumContinents());
+		assertEquals(l_savedMap.getNumTerritories(), l_loadedMap.getNumTerritories());
+		
+		for (int l_idx = 1; l_idx <= l_savedMap.getNumContinents(); l_idx++) {
+			assertEquals(l_savedMap.getContinent(l_idx).getName(), l_loadedMap.getContinent(l_idx).getName());
+			assertEquals(l_savedMap.getContinent(l_idx).getBonusArmies(), l_loadedMap.getContinent(l_idx).getBonusArmies());
+		}
+		
+		for (int l_idx = 1; l_idx <= l_savedMap.getNumTerritories(); l_idx++) {
+			assertEquals(l_savedMap.getTerritory(l_idx).getName(), l_loadedMap.getTerritory(l_idx).getName());
+			assertEquals(l_savedMap.getContinentID(l_savedMap.getTerritory(l_idx).getContinent()), l_loadedMap.getContinentID(l_loadedMap.getTerritory(l_idx).getContinent()));
+		}
+		
+		// TODO: Check that borders are the same.
+	}
 }

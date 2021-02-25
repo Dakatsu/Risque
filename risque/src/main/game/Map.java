@@ -1,8 +1,13 @@
 package main.game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Represents a map file. It may be valid and playable or in the midst of being created and unplayable.
@@ -62,25 +67,47 @@ public class Map {
 	}
 	
 	/**
+	 * Returns the continent's ID by its reference.
+	 * @param l_continent The continent.
+	 * @return The continent's ID if it exists, otherwise 0.
+	 */
+	public int getContinentID(Continent l_continent) {
+		return d_continents.indexOf(l_continent) + 1;
+	}
+	
+	/**
 	 * Creates a continent at the given ID or at the last ID, whichever is less.
+	 * Initializes the continent with a name and bonus army count.
+	 * @param p_name The name of the new continent.
+	 * @param p_numBonusArmies The number of bonus armies for the continent.
 	 * @param p_continentID The desired ID of the new continent.
 	 * @return True if a continent was created, otherwise false.
 	 */
-	public boolean createContinent(int p_continentID) {
+	public boolean createContinent(String p_name, int p_numBonusArmies, int p_continentID) {
 		if (p_continentID > 0) {
 			int l_newIdx = Math.min(p_continentID - 1, getNumContinents());
-			// TODO: What are we doing about the names? Defaulting to a random name.
-			Random l_random = new Random();
-			String l_continentName = "Continentia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
-			// TODO: What are we doing about the bonus armies? Defaulting to five.
-			int l_numBonusArmies = 5;
-			Continent l_newContinent = new Continent(l_continentName, l_numBonusArmies);
+			Continent l_newContinent = new Continent(p_name, p_numBonusArmies);
 			d_continents.add(l_newIdx, l_newContinent);
 			// Create an empty entry in the continent/territory map.
 			d_continentTerritories.put(l_newContinent, new LinkedList<Territory>());
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Creates a continent at the given ID or at the last ID, whichever is less.
+	 * Gives it a generated name and five bonus armies.
+	 * @param p_continentID The desired ID of the new continent.
+	 * @return True if a continent was created, otherwise false.
+	 */
+	public boolean createContinent(int p_continentID) {
+		// TODO: What are we doing about the names? Defaulting to a random name.
+		Random l_random = new Random();
+		String l_continentName = "Continentia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
+		// TODO: What are we doing about the bonus armies? Defaulting to five.
+		int l_numBonusArmies = 5;
+		return createContinent(l_continentName, l_numBonusArmies, p_continentID);
 	}
 	
 	/**
@@ -132,18 +159,25 @@ public class Map {
 	}
 	
 	/**
+	 * Returns the territory's ID by its reference.
+	 * @param l_territory The continent.
+	 * @return The territory's ID if it exists, otherwise 0.
+	 */
+	public int getTerritoryID(Territory l_territory) {
+		return d_territories.indexOf(l_territory) + 1;
+	}
+	
+	/**
 	 * Creates a territory at the given ID or at the last ID, whichever is less.
 	 * @param p_territoryID The desired ID of the new territory.
+	 * @param p_name The human-readable name for this territory.
 	 * @param p_continentID The ID of the continent this territory will belong to.
 	 * @return True if a territory was created, otherwise false.
 	 */
-	public boolean createTerritory(int p_territoryID, int p_continentID) {
+	public boolean createTerritory(int p_territoryID, String p_name, int p_continentID) {
 		if (p_territoryID > 0 && p_continentID > 0 && p_continentID <= getNumContinents()) {
 			int l_newIdx = Math.min(p_territoryID - 1, getNumTerritories());
-			// TODO: What are we doing about names? Defaulting to a random designation for now.
-			Random l_random = new Random();
-			String l_territoryName = "Testlandia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
-			Territory l_newTerritory = new Territory(l_territoryName, getContinent(p_continentID));
+			Territory l_newTerritory = new Territory(p_name, getContinent(p_continentID));
 			// Make an empty list of neighbours to start.
 			d_borders.put(l_newTerritory, new LinkedList<Territory>());
 			d_continentTerritories.get(getContinent(p_continentID)).add(l_newTerritory);
@@ -151,6 +185,19 @@ public class Map {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Creates a territory at the given ID or at the last ID, whichever is less.
+	 * @param p_territoryID The desired ID of the new territory.
+	 * @param p_continentID The ID of the continent this territory will belong to.
+	 * @return True if a territory was created, otherwise false.
+	 */
+	public boolean createTerritory(int p_territoryID, int p_continentID) {
+		// TODO: What are we doing about names? Defaulting to a random designation for now.
+		Random l_random = new Random();
+		String l_territoryName = "Testlandia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
+		return createTerritory(p_territoryID, l_territoryName, p_continentID);
 	}
 	
 	/**
@@ -222,9 +269,19 @@ public class Map {
 		Territory l_secondTerritory = getTerritory(p_secondID);
 		if (l_firstTerritory != null && l_secondTerritory != null) {
 			// There should already exist an empty LinkedList upon creation of the territory, so this should always work.
-			d_borders.get(l_firstTerritory).add(l_secondTerritory);
-			d_borders.get(l_secondTerritory).add(l_firstTerritory);
-			return true;
+			// Do not add duplicates.
+			boolean bAddedBorders = false;
+			LinkedList<Territory> l_firstBorders = d_borders.get(l_firstTerritory);
+			if (!l_firstBorders.contains(l_secondTerritory)) {
+				l_firstBorders.add(l_secondTerritory);
+				bAddedBorders = true;
+			}
+			LinkedList<Territory> l_secondBorders = d_borders.get(l_secondTerritory);
+			if (!l_secondBorders.contains(l_firstTerritory)) {
+				l_secondBorders.add(l_firstTerritory);
+				bAddedBorders = true;
+			}
+			return bAddedBorders;
 		}
 		return false;
 	}
@@ -315,10 +372,10 @@ public class Map {
 	 * @param l_continent The continent to validate.
 	 * @return True if the continent is valid, otherwise false.
 	 */
-	private boolean validateContinent(Continent l_continent) {
+	private boolean validateContinent(Continent p_continent) {
 		// We cannot be valid if we have no territories.
-		LinkedList<Territory> l_territoriesOnContinent = d_continentTerritories.get(l_continent);
-		if (d_continentTerritories.get(l_continent).size() == 0) {
+		LinkedList<Territory> l_territoriesOnContinent = d_continentTerritories.get(p_continent);
+		if (d_continentTerritories.get(p_continent).size() == 0) {
 			return false;
 		}
 		
@@ -334,13 +391,179 @@ public class Map {
 			for (Territory l_territory : l_territoriesOnContinent) {
 				if (!l_connectedTerritories.contains(l_territory) && doesBorderExist(l_connectedTerritories.get(l_idx), l_territory)) {
 					l_connectedTerritories.add(l_territory);
-					if (l_connectedTerritories.size() == d_continentTerritories.get(l_continent).size()) {
+					if (l_connectedTerritories.size() == d_continentTerritories.get(p_continent).size()) {
 						return true;
 					}
 				}
 			}
 		}
 		
-		return l_connectedTerritories.size() == d_continentTerritories.get(l_continent).size();
+		return l_connectedTerritories.size() == d_continentTerritories.get(p_continent).size();
 	}
+	
+	/**
+	 * Loads a map from a given file, deleting any existing map data before doing so.
+	 * Note that attributes not used by this game are ignored and not loaded.
+	 * This means that those attributes will not be present when saving a map.
+	 * @param l_fileName The name of the file to load from (including the extension).
+	 * @return Whether a valid map was loaded.
+	 */
+	public boolean loadFromFile(String l_fileName) {
+		// TODO: this could be refactored into a static function that returns a new Map object.
+		d_continents.clear();
+		d_territories.clear();
+		d_borders.clear();
+		d_continentTerritories.clear();
+		/**
+		 * Reference on what a .map file entails:
+		 * http://domination.sourceforge.net/makemaps.shtml
+		 */
+		try {
+			File l_file = new File(l_fileName);
+			Scanner l_reader = new Scanner(l_file);
+			String l_section = "";
+			while (l_reader.hasNextLine()) {
+				String l_line = l_reader.nextLine();
+				
+				// Ignore comments, which start with: ;
+				if (!l_line.startsWith(";")) {
+					
+					if (l_line.startsWith("[")) {
+						l_section = l_line.substring(1, l_line.length() - 1);
+					}
+					else {
+						String l_splitLine[] = l_line.split(" ");
+						System.out.print(l_section.toUpperCase());
+						for (int i = 0; i < l_splitLine.length; i++) {
+							System.out.print(" " + l_splitLine[i]);
+						}
+						System.out.print("\n");
+						switch(l_section) {
+							case "continents":
+								if (l_splitLine.length >= 2) {
+									createContinent(l_splitLine[0], Integer.parseInt(l_splitLine[1]), getNumContinents() + 1);
+								}
+								break;
+							case "countries":
+								if (l_splitLine.length >= 3) {
+									createTerritory(Integer.parseInt(l_splitLine[0]), l_splitLine[1], Integer.parseInt(l_splitLine[2]));
+								}
+								break;
+							case "borders":
+								if (l_splitLine.length >= 2) {
+									for (int l_idx = 1; l_idx < l_splitLine.length; l_idx++) {
+										addBorder(Integer.parseInt(l_splitLine[0]), Integer.parseInt(l_splitLine[l_idx]));
+									}
+								}
+								break;
+							default:
+								// Do nothing. We do not care about any other sections.
+						}
+					}
+				}
+			}
+			l_reader.close();
+			return validateMap();
+		} 
+		catch (FileNotFoundException l_exception) {
+			l_exception.printStackTrace();
+			return false;
+		}
+		catch (NumberFormatException l_exception) {
+			l_exception.printStackTrace();
+			return false;
+			
+		}
+	}
+	
+	/**
+	 * Saves the map to a given file name. Overwrites any existing map with the same name.
+	 * The map will only save if it is valid.
+	 * @param l_fileName The name of the file to save to, including the extension.
+	 * @return Whether the file was successfully saved.
+	 */
+	public boolean saveToFile(String l_fileName) {
+		/**
+		 * Reference on what a .map file entails:
+		 * http://domination.sourceforge.net/makemaps.shtml
+		 */
+		
+		// Do not allow us to save if the map is not valid.
+		if (!validateMap()) {
+			return false;
+		}
+		
+		try {
+			// Attempt to create the file.
+			File l_file = new File(l_fileName);
+			if (l_file.exists()) {
+				System.out.println("File already exists. Deleting!");
+				l_file.delete();
+			}
+			if (l_file.createNewFile()) {
+				System.out.println("File created!");
+			}
+			else {
+				System.out.println("File already exists!");
+			}
+			
+			// Begin by writing a comment containing the file name and that it was made by this program.
+			FileWriter l_writer = new FileWriter(l_fileName);
+			l_writer.write("; map: " + l_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n");
+			
+			/**
+			 *  Write the continents header, then print out the continents in this format:
+			 *    continent-name number-of-bonus-armies colour
+			 *  TODO: colour is not loaded or used by this game, so we are defaulting to everything being purple.
+			 */
+			l_writer.write("\n[continents]\n");
+			for (int l_cID = 1; l_cID <= getNumContinents(); l_cID++) {
+				Continent l_continent = getContinent(l_cID);
+				l_writer.write(l_continent.getName() + " " + l_continent.getBonusArmies() + " purple\n");
+			}
+			
+			/**
+			 *  Write the countries header, then print out the territories in this format:
+			 *    territory-ID territory-name continent-ID coordinate coordinate
+			 *  While doing so, prepare the border strings. They are the territory's ID followed by the ID of every bordering nation.
+			 *  TODO: we do not use coordinates for this game, so defaulting to zeroes for both.
+			 */
+			LinkedList<String> l_borderStrings = new LinkedList<>();
+			l_writer.write("\n[countries]\n");
+			for (int l_tID = 1; l_tID <= getNumTerritories(); l_tID++) {
+				Territory l_territory = getTerritory(l_tID);
+				int l_cID = getContinentID(l_territory.getContinent());
+				l_writer.write(l_tID + " " + l_territory.getName() +  " " + l_cID + " 0 0\n");
+				
+				// Write the border strings.
+				String l_borderString = Integer.toString(l_tID);
+				if (d_borders.containsKey(l_territory)) {
+					LinkedList<Territory> l_borderingTerritories = d_borders.get(l_territory);
+					for (Territory l_borderingTerritory : l_borderingTerritories) {
+						l_borderString += " " + Integer.toString(getTerritoryID(l_borderingTerritory));
+					}
+				}
+				l_borderStrings.add(l_borderString);
+			}
+			
+			/**
+			 *  Write the countries header, then print out the borders we already calculated above.
+			 */
+			l_writer.write("\n[borders]\n");
+			for (String l_borderString : l_borderStrings) {
+				l_writer.write(l_borderString + "\n");
+			}
+			
+			/**
+			 * Close the file writer once we have finished.
+			 */
+			l_writer.close();
+			return true;
+		} 
+		catch (IOException l_exception) {
+			return false;
+		}
+	}
+	
+	
 }

@@ -33,6 +33,9 @@ public class GameEngine extends Thread {
 	 */
 	private Map d_map;
 	
+	/**
+	 * All players in the game.
+	 */
 	private LinkedList<Player> d_players;
 	
 	/**
@@ -83,7 +86,8 @@ public class GameEngine extends Thread {
 		return d_map;
 	}
 	
-	public boolean loadMap() {
+	public boolean loadMap(String p_mapName) {
+		// TODO
 		return false;
 	}
 	
@@ -98,11 +102,12 @@ public class GameEngine extends Thread {
 	 * Entry point for the GameEngine. The object is deleted once this method finishes.
 	 */
 	public void run() {
+		
 		// Temporary loop until game engine's core behaviour is implemented.
 		// Just tell the console we're running every five seconds, unless we want to quit.
 		while (!d_wantsExit) {
 			if (d_console != null) {
-				d_console.addMessage("GameEngine is running.");
+				//d_console.addMessage("GameEngine is running.");
 			}
 			try {
 				sleep(5000);

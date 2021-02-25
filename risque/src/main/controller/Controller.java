@@ -165,7 +165,7 @@ public class Controller extends Thread {
 		// Just tell the console we're running every five seconds, unless we want to quit.
 		while (!d_wantsExit) {
 			if (d_console != null) {
-				d_console.addMessage("Controller is running.");
+				//d_console.addMessage("Controller is running.");
 			}
 			try {
 				sleep(5000);

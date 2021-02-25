@@ -196,7 +196,7 @@ public class Console extends Thread {
 		l_inputHandler.start();
 		// Temporary default behaviour: print that we're running every five seconds, unless we want to quit.
 		while (!d_wantsExit) {
-			addMessage("Console is running!");
+			//addMessage("Console is running!");
 			try {
 				sleep(5000);
 			} catch (InterruptedException e) {
