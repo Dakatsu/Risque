@@ -93,7 +93,7 @@ public class InputHandler extends Thread {
 			 		getOwner().execLoadmap(inputarr[1].trim());
 				}
 
-				//if (inputarr[0]=="gameplayer") {
+				if (inputarr[0]=="gameplayer") {
 					String[] gamepl= inputarr[1].trim().split("-");
 					for (int i= 1; i<gamepl.length; i++) {
 			 			getOwner().execGameplayer(gamepl[i].trim());
@@ -104,7 +104,7 @@ public class InputHandler extends Thread {
 			 		getOwner().execAssigncountries();
 				}
 
-				//if (inputarr[0]=="deploy") {
+				if (inputarr[0]=="deploy") {
 			 		getOwner().execDeploy(inputarr[1].trim());
 				}
 
