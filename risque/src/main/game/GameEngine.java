@@ -49,6 +49,11 @@ public class GameEngine {
 	private int d_minArmies;
 	
 	/**
+	 * The index of the next player that gets to issue orders.
+	 */
+	private int d_nextPlayer;
+	
+	/**
 	 * Default constructor for the GameEngine.
 	 */
 	public GameEngine() {
@@ -181,9 +186,72 @@ public class GameEngine {
 				d_players.get(l_idx % getNumPlayers()).addOwnedTerritory(d_map.getTerritory(l_idx));
 			}
 			d_isGameInProgress = true;
+			calculateArmiesPerPlayer();
+			d_nextPlayer = 0;
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Calculates the number of armies to give to each player.
+	 */
+	public void calculateArmiesPerPlayer() {
+		// Start every player off with a minimum number of armies.
+		for (Player l_player : d_players) {
+			l_player.d_numArmiesLeftToDeploy = d_minArmies;
+		}
+		// TODO: Add armies if player controls a continent.
+		
+	}
+	
+	/**
+	 * Creates an order to deploy armies for the next player.
+	 * @param p_tID The ID of the territory to deploy the armies to.
+	 * @param p_num The number of armies desired to be deployed.
+	 * @return The number of armies actually deployed.
+	 */
+	public int deployArmies(int p_tID, int p_num) {
+		// TODO: Next player should be player that actually has armies to deploy.
+		// TODO: Should only be able to deploy to your own territory.
+		if (p_tID > 0 && p_tID <= d_map.getNumTerritories()) {
+			Player l_player = d_players.get(d_nextPlayer);
+			// Calc next player.
+			d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
+			// Cannot deploy more armies than we have.
+			int l_numArmies = Math.min(l_player.d_numArmiesLeftToDeploy, p_num);
+			l_player.d_numArmiesLeftToDeploy -= l_numArmies;
+			Territory l_territory = d_map.getTerritory(p_tID);
+			l_player.issueOrder(new DeployOrder(l_territory, l_numArmies));
+			d_console.addMessage(l_player.getName() + " deployed " + l_numArmies + " to " + l_territory.getName());
+			return l_numArmies;
+			
+		}
+		d_console.addMessage("Invalid territory. Please try again.");
+		return 0;
+	}
+	
+	/**
+	 * Executes every player's order. The orders are executed in round-robin order,
+	 * e.g. player 1's first order is executed, then player 2, etc. until every player has
+	 * issued their first order. Then it begins with player 1 again.
+	 * Players are skipped if they have no orders to issue.
+	 * After all orders are issued, the number of armies is calculated again.
+	 */
+	public void executeOrders() {
+		boolean l_areThereUnexecutedOrders = true;
+		while (l_areThereUnexecutedOrders) {
+			l_areThereUnexecutedOrders = false;
+			for (Player l_player : d_players) {
+				if (l_player.hasOrdersLeftToExecute()) {
+					l_player.nextOrder().execute();
+					if (l_player.hasOrdersLeftToExecute()) {
+						l_areThereUnexecutedOrders = true;
+					}
+				}
+			}
+		}
+		
 	}
 	
 	/**

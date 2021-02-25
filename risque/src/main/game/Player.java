@@ -28,8 +28,15 @@ public class Player {
 	
 	/**
 	 * All the player's issued but unexecuted orders.
+	 * TODO: Change to queue?
 	 */
 	private LinkedList<Order> d_orders;
+	
+	/**
+	 * Number of armies left to deploy for this player.
+	 * TODO: Add getter/setter and make private!
+	 */
+	public int d_numArmiesLeftToDeploy;
 	
 	/**
 	 * Default constructor for player.
@@ -39,6 +46,7 @@ public class Player {
 		setName(p_name);
 		d_ownedTerritories = new LinkedList<>();
 		d_orders = new LinkedList<>();
+		d_numArmiesLeftToDeploy = 0;
 	}
 	
 	/**
@@ -93,5 +101,35 @@ public class Player {
 			return d_ownedTerritories.remove(p_territory);
 		}
 		return false;
+	}
+	
+	/**
+	 * Adds an order to the list of orders.
+	 * This is issue_order from the project requirements, but in camelCase to match the rest of the code's style.
+	 * @param p_order The order to add.
+	 * @return True if the order was added successfully, otherwise false.
+	 */
+	public boolean issueOrder(Order p_order) {
+		return d_orders.add(p_order);
+	}
+	
+	/**
+	 * Pops the next order from the list.
+	 * This is next_order from the project requirements, but in camelCase to match the rest of the code's style.
+	 * @return The next order to execute, or null if there are no orders to execute.
+	 */
+	public Order nextOrder() {
+		if (!d_orders.isEmpty()) {
+			return d_orders.pop();
+		}
+		return null;
+	}
+	
+	/**
+	 * Does the player have any more orders to execute?
+	 * @return True if there is at least one order to execute, otherwise false.
+	 */
+	public boolean hasOrdersLeftToExecute() {
+		return !d_orders.isEmpty();
 	}
 }

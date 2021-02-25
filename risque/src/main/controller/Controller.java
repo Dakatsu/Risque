@@ -233,11 +233,13 @@ public class Controller {
 	}
 
 	/**
-	*Will start the process for executing "deploy" command.
-	*@param p_depcountry Includes country for deploy command.
-	*/
-	public void deploy(String p_depcountry) {
-	//TODO
+	 * Deploys armies to a territory.
+	 * @param p_tID The ID of the territory to deploy to.
+	 * @param p_numArmies The number of armies to deploy.
+	 * @return The number of armies actually deployed.
+	 */
+	public int deploy(int p_tID, int p_numArmies) {
+		return d_engine.deployArmies(p_tID, p_numArmies);
 	}
 
 	/**

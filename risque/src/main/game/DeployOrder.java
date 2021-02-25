@@ -1,5 +1,10 @@
 package main.game;
 
+/**
+ * An order to deploy armies to a given territory.
+ * @author Kyle
+ *
+ */
 public class DeployOrder extends Order {
 	
 	/**

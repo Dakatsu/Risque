@@ -284,6 +284,20 @@ public class InputHandler extends Thread {
 								getOwner().execAssignTerritories();
 							}
 							break;
+							
+						case("deploy"):
+							if (l_splitInput.length != 3) {
+								l_areParametersInvalid = true;
+							}
+							else {
+								try {
+									getOwner().execDeploy(Integer.parseInt(l_splitInput[1]), Integer.parseInt(l_splitInput[2]));
+								}
+								catch (NumberFormatException l_exception) {
+									l_areParametersInvalid = true;
+								}
+							}
+							break;
 						
 						default:
 							getOwner().addMessage("Command " + l_splitInput[0] + " not recognized.");
@@ -317,11 +331,6 @@ public class InputHandler extends Thread {
 					if (l_splitInput[0]=="editmap") {
 						getOwner().execEditMap(l_splitInput[1].trim());
 					}
-
-					if (l_splitInput[0]=="deploy") {
-				 		getOwner().execDeploy(l_splitInput[1].trim());
-					}
-	
 				}
 
 			}

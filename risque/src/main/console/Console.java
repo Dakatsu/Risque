@@ -291,12 +291,15 @@ public class Console {
 		}
 	}
 
+
 	/**
-	*Controller to execute "deploy" command.
-	*@param p_depcount Includes country for deploy command.
-	*/
-	public void execDeploy(String p_depcount) {
-		d_controller.deploy(p_depcount);
+	 * Deploys armies to a territory.
+	 * @param p_tID The territory to deploy to.
+	 * @param p_numArmies The number of armies to deploy.
+	 */
+	public void execDeploy(int p_tID, int p_numArmies) {
+		int l_numDeployed = d_controller.deploy(p_tID, p_numArmies);
+		// TODO: Remove message from Game Engine? Not sure what's best here.
 	}
 
 	/**
