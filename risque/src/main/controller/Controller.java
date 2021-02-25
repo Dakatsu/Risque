@@ -82,15 +82,17 @@ public class Controller {
 	}
 
 	/**
-	 *Will start the process for executing "showmap" command.
+	 * Will start the process for executing "showmap" command.
+	 * @return The map as text.
 	 */
 	public String showMap() {
 		return d_engine.getMap().toText();
 	}
 
 	/**
-	*Will start the process for executing "savemap" command.
-	*@param p_fileName File name to which a map is to be saved.
+	* Will start the process for executing "savemap" command.
+	* @param p_fileName File name to which a map is to be saved.
+	* @return True if the map was successfully saved, otherwise false.
 	*/
 	public boolean saveMap(String p_fileName) {
 		return d_engine.saveMap(p_fileName);
@@ -99,39 +101,135 @@ public class Controller {
 	/**
 	 * Will start the process for executing "editmap" command.
 	 * @param p_fileName File name from which a map is to be edited.
+	 * @return TODO: This comman does nothing right now!
 	 */
 	public boolean editMap(String p_fileName) {
 		return false;
 	}
 	
 	/**
-	*Will start the process for executing "validatemap" command.
-	*/
-	public void validatemap() {
-	//TODO
+	 * Will start the process for executing "validatemap" command.
+	 * @return True if the map is valid, otherwise false.
+	 */
+	public boolean validateMap() {
+		return d_engine.getMap().validateMap();
 	}
 
 	/**
-	*Will start the process for executing "loadmap" command.
-	*@param p_fileName File name from which a map is to be loaded.
-	*/
+	 * Will start the process for executing "loadmap" command.
+	 * @param p_fileName File name from which a map is to be loaded.
+	 * @return True if the map was successfully loaded, otherwise false.
+	 */
 	public boolean loadMap(String p_fileName) {
 		return d_engine.loadMap(p_fileName);
 	}
-
+	
 	/**
-	*Will start the process for executing "gameplayer" command.
-	*@param p_add_remove_player Includes player to be added or removed.
-	*/
-	public void gameplayer(String p_add_remove_player) {
-	//TODO
+	 * Adds a player to the game.
+	 * @param p_name The new player's name.
+	 * @return True if the player was added, false otherwise.
+	 */
+	public boolean addPlayer(String p_name) {
+		return d_engine.addPlayer(p_name);
+	}
+	
+	/**
+	 * Removes a player from the game.
+	 * @param p_name The name of the player to remove.
+	 * @return True if a player was removed, false if none were removed (e.g. name did not exist).
+	 */
+	public boolean removePlayer(String p_name) {
+		return d_engine.removePlayer(p_name);
+	}
+	
+	/**
+	 * Adds a new continent to the map.
+	 * @param p_cID The desired ID for this continent.
+	 * @param p_cValue The number of bonus armies for this new continent.
+	 * @return True if the continent was created, otherwise false.
+	 */
+	public boolean addContinent(int p_cID, int p_cValue) {
+		// TODO: Do gameplay check elsewhere.
+		if (d_engine.isGameInProgress()) {
+			return false;
+		}
+		return d_engine.getMap().createContinent(p_cID, p_cValue);
+	}
+	
+	/**
+	 * Removes a continent from the map.
+	 * @param p_cID The ID of the continent to remove.
+	 * @return True if a continent was removed, otherwise false.
+	 */
+	public boolean removeContinent(int p_cID) {
+		// TODO: Do gameplay check elsewhere.
+		if (d_engine.isGameInProgress()) {
+			return false;
+		}
+		return d_engine.getMap().deleteContinent(p_cID);
+	}
+	
+	/**
+	 * Adds a territory to the map.
+	 * @param p_tID The desired ID for this territory.
+	 * @param p_cID The continent for this ID.
+	 * @return True if the territory was created, otherwise false.
+	 */
+	public boolean addTerritory(int p_tID, int p_cID) {
+		// TODO: Do gameplay check elsewhere.
+		if (d_engine.isGameInProgress()) {
+			return false;
+		}
+		return d_engine.getMap().createTerritory(p_tID, p_cID);
+	}
+	
+	/**
+	 * Removes the territory at the given index.
+	 * @param p_tID The ID of the territory to remove.
+	 * @return True if a territory was removed, false otherwise.
+	 */
+	public boolean removeTerritory(int p_tID) {
+		// TODO: Do gameplay check elsewhere.
+		if (d_engine.isGameInProgress()) {
+			return false;
+		}
+		return d_engine.getMap().deleteTerritory(p_tID);
+	}
+	
+	/**
+	 * Makes two territories neighbours (if the were not already).
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 * @return True if the territories are newly neighbours, false otherwise.
+	 */
+	public boolean addNeighbours(int p_firstID, int p_secondID) {
+		// TODO: Do gameplay check elsewhere.
+		if (d_engine.isGameInProgress()) {
+			return false;
+		}
+		return d_engine.getMap().addBorder(p_firstID, p_secondID);
+	}
+	
+	/**
+	 * Removes the link between two territories.
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 * @return True if a link between them was removed, otherwise false.
+	 */
+	public boolean removeNeighbours(int p_firstID, int p_secondID) {
+		// TODO: Do gameplay check elsewhere.
+		if (d_engine.isGameInProgress()) {
+			return false;
+		}
+		return d_engine.getMap().deleteBorder(p_firstID, p_secondID);
 	}
 
 	/**
-	*Will start the process for executing "assigncountries" command.
-	*/
-	public void assigncountries() {
-	//TODO
+	 *Will start the process for executing "assigncountries" command.
+	 *@return True if the territories were assigned and the game started, otherwise false.
+	 */
+	public boolean assignTerritories() {
+		return d_engine.assignTerritories();
 	}
 
 	/**

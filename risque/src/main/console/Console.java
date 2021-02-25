@@ -138,18 +138,23 @@ public class Console {
 	}
 
 	/**
-	*Controller to execute "editmap" command.
-	*@param p_file File name from which the map is to be edited.
-	*/
+	 *Controller to execute "editmap" command.
+	 *@param p_file File name from which the map is to be edited.
+	 */
 	public void execEditMap(String p_file) {
 		d_controller.editMap(p_file);
 	}
 
 	/**
-	*Controller to execute "validate" command.
-	*/
-	public void execValidatemap() {
-		d_controller.validatemap();
+	 * Controller to execute "validate" command.
+	 */
+	public void execValidateMap() {
+		if (d_controller.validateMap()) {
+			addMessage("Map is valid.");
+		}
+		else {
+			addMessage("Map is invalid.");
+		}
 	}
 
 	/**
@@ -165,20 +170,125 @@ public class Console {
 			addMessage("Map " + p_fileName + " could not be loaded. Please check that the map exists and is valid.");
 		}
 	}
-
+	
 	/**
-	*Controller to execute "gameplayer" command.
-	*@param p_add_remove_pla Includes player to be added or removed.
-	*/
-	public void execGameplayer(String p_add_remove_pla) {
-		d_controller.gameplayer(p_add_remove_pla);
+	 * Adds a a player to the game.
+	 * @param p_name The new player's name.
+	 */
+	public void execAddPlayer(String p_name) {
+		if (d_controller.addPlayer(p_name)) {
+			addMessage("Player added. Total players: " + d_engine.getNumPlayers());
+		}
+		else {
+			addMessage("Player " + p_name + " could not be added.");
+		}
+	}
+	
+	/**
+	 * Removes a player from the game.
+	 * @param p_name The name of the player to remove.
+	 */
+	public void execRemovePlayer(String p_name) {
+		if (d_controller.removePlayer(p_name)) {
+			addMessage("Player " + p_name + " removed. Total players: " + d_engine.getNumPlayers());
+		}
+		else {
+			addMessage("No players were removed. Check that you entered the name of a player.");
+		}
+	}
+	
+	/**
+	 * Adds a continent to the map.
+	 * @param p_cID The desired ID for the new continent. 
+	 * @param p_cValue The number of bonus armies controlling this continent awards.
+	 */
+	public void execAddContinent(int p_cID, int p_cValue) {
+		if (d_controller.addContinent(p_cID, p_cValue)) {
+			addMessage("New continent created. The number of continents is now " + d_engine.getMap().getNumContinents());
+		}
+		else {
+			addMessage("The continent could not be created.");
+		}
+	}
+	
+	/**
+	 * Removes a continent from the map.
+	 * @param p_cID The ID of the continent to remove.
+	 */
+	public void execRemoveContinent(int p_cID) {
+		if (d_controller.removeContinent(p_cID)) {
+			addMessage("Continent removed. The number of continents is now " + d_engine.getMap().getNumContinents());
+		}
+		else {
+			addMessage("No continents were removed. Please ensure a valid ID was entered.");
+		}
+	}
+	
+	/**
+	 * Adds a territory to the map.
+	 * @param p_tID The desired ID for the new territory.
+	 * @param p_cID The ID of the continent the territory will belong to.
+	 */
+	public void execAddTerritory(int p_tID, int p_cID) {
+		if (d_controller.addTerritory(p_tID, p_cID)) {
+			addMessage("New territory created. The number of territories is now " + d_engine.getMap().getNumTerritories());
+		}
+		else {
+			addMessage("Territory was not added. Please check your parameters.");
+		}
+	}
+	
+	/**
+	 * Removes a territory from the map.
+	 * @param p_tID The ID of the territory to remove.
+	 */
+	public void execRemoveTerritory(int p_tID) {
+		if (d_controller.removeTerritory(p_tID)) {
+			addMessage("Territory removed. The number of territories is now " + d_engine.getMap().getNumTerritories());
+		}
+		else {
+			addMessage("Territory was not added. Please check that there is a territory with the input ID.");
+		}
+	}
+	
+	/**
+	 * Creates a link between two territories.
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 */
+	public void execAddNeighbour(int p_firstID, int p_secondID) {
+		if (d_controller.addNeighbours(p_firstID, p_secondID)) {
+			addMessage("Neighbours successfully added.");
+		}
+		else {
+			addMessage("Invalid IDs or the territories were already neighbours.");
+		}
+	}
+	
+	/**
+	 * Removes a link between two territories.
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 */
+	public void execRemoveNeighbour(int p_firstID, int p_secondID) {
+		if (d_controller.removeNeighbours(p_firstID, p_secondID)) {
+			addMessage("Territories are no longer neighbours.");
+		}
+		else {
+			addMessage("Invalid IDs or the territories were not neighbours.");
+		}
 	}
 
 	/**
-	*Controller to execute "assigncountries" command.
-	*/
-	public void execAssigncountries() {
-		d_controller.assigncountries();
+	 *Controller to execute "assigncountries" or "assignterritories" command.
+	 */
+	public void execAssignTerritories() {
+		if (d_controller.assignTerritories()) {
+			addMessage("Territories have been assigned and the game has started. Good luck!");
+		}
+		else {
+			addMessage("Unable to assign territories and start the game. Please ensure the map is valid and there are at least two players.");
+		}
 	}
 
 	/**

@@ -99,15 +99,14 @@ public class Map {
 	 * Creates a continent at the given ID or at the last ID, whichever is less.
 	 * Gives it a generated name and five bonus armies.
 	 * @param p_continentID The desired ID of the new continent.
+	 * @param p_continentValue The number of bonus armies this continent gives when controlled.
 	 * @return True if a continent was created, otherwise false.
 	 */
-	public boolean createContinent(int p_continentID) {
+	public boolean createContinent(int p_continentID, int p_continentValue) {
 		// TODO: What are we doing about the names? Defaulting to a random name.
 		Random l_random = new Random();
 		String l_continentName = "Continentia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
-		// TODO: What are we doing about the bonus armies? Defaulting to five.
-		int l_numBonusArmies = 5;
-		return createContinent(l_continentName, l_numBonusArmies, p_continentID);
+		return createContinent(l_continentName, p_continentValue, p_continentID);
 	}
 	
 	/**
@@ -503,50 +502,12 @@ public class Map {
 			
 			// Begin by writing a comment containing the file name and that it was made by this program.
 			FileWriter l_writer = new FileWriter(l_fileName);
-			l_writer.write("; map: " + l_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n");
+			l_writer.write("; map: " + l_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n\n");
 			
 			/**
-			 *  Write the continents header, then print out the continents in this format:
-			 *    continent-name number-of-bonus-armies colour
-			 *  TODO: colour is not loaded or used by this game, so we are defaulting to everything being purple.
+			 *  Write the contents of the map as text to the file.
 			 */
-			l_writer.write("\n[continents]\n");
-			for (int l_cID = 1; l_cID <= getNumContinents(); l_cID++) {
-				Continent l_continent = getContinent(l_cID);
-				l_writer.write(l_continent.getName() + " " + l_continent.getBonusArmies() + " purple\n");
-			}
-			
-			/**
-			 *  Write the countries header, then print out the territories in this format:
-			 *    territory-ID territory-name continent-ID coordinate coordinate
-			 *  While doing so, prepare the border strings. They are the territory's ID followed by the ID of every bordering nation.
-			 *  TODO: we do not use coordinates for this game, so defaulting to zeroes for both.
-			 */
-			LinkedList<String> l_borderStrings = new LinkedList<>();
-			l_writer.write("\n[countries]\n");
-			for (int l_tID = 1; l_tID <= getNumTerritories(); l_tID++) {
-				Territory l_territory = getTerritory(l_tID);
-				int l_cID = getContinentID(l_territory.getContinent());
-				l_writer.write(l_tID + " " + l_territory.getName() +  " " + l_cID + " 0 0\n");
-				
-				// Write the border strings.
-				String l_borderString = Integer.toString(l_tID);
-				if (d_borders.containsKey(l_territory)) {
-					LinkedList<Territory> l_borderingTerritories = d_borders.get(l_territory);
-					for (Territory l_borderingTerritory : l_borderingTerritories) {
-						l_borderString += " " + Integer.toString(getTerritoryID(l_borderingTerritory));
-					}
-				}
-				l_borderStrings.add(l_borderString);
-			}
-			
-			/**
-			 *  Write the countries header, then print out the borders we already calculated above.
-			 */
-			l_writer.write("\n[borders]\n");
-			for (String l_borderString : l_borderStrings) {
-				l_writer.write(l_borderString + "\n");
-			}
+			l_writer.write(toText());
 			
 			/**
 			 * Close the file writer once we have finished.

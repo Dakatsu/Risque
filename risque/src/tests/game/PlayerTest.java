@@ -12,11 +12,15 @@ import main.game.Player;
 public class PlayerTest {
 
 	/**
-	 * Simple test to ensure we can instantiate this class. Placeholder until we have better tests.
+	 * Tests functions related to the player's name.
 	 */
 	@Test
-	public void testNotNull() {
-		Player l_player = new Player();
-		assertNotNull(l_player);
+	public void nameTest() {
+		String l_testName = "Kyle";
+		Player l_player = new Player(l_testName);
+		assertEquals(l_player.getName(), l_testName);
+		String l_newName = "Swaggins";
+		l_player.setName(l_newName);
+		assertEquals(l_player.getName(), l_newName);
 	}
 }

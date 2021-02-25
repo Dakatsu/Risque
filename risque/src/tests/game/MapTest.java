@@ -32,7 +32,7 @@ public class MapTest {
 	@Test
 	public void twoTerritoryOneContinentMapTest() {
 		Map l_testMap = new Map();
-		assertTrue(l_testMap.createContinent(1));
+		assertTrue(l_testMap.createContinent(1, 5));
 		assertTrue(l_testMap.createTerritory(1, 1));
 		assertTrue(l_testMap.createTerritory(2, 1));
 		l_testMap.addBorder(1, 2);
@@ -54,8 +54,8 @@ public class MapTest {
 	@Test
 	public void twoTerritoryTwoContinentMapTest() {
 		Map l_testMap = new Map();
-		assertTrue(l_testMap.createContinent(1));
-		assertTrue(l_testMap.createContinent(2));
+		assertTrue(l_testMap.createContinent(1, 5));
+		assertTrue(l_testMap.createContinent(2, 5));
 		assertTrue(l_testMap.createTerritory(1, 1));
 		assertTrue(l_testMap.createTerritory(2, 2));
 		l_testMap.addBorder(1, 2);
@@ -77,8 +77,8 @@ public class MapTest {
 	@Test
 	public void fourTerritoryTwoContinentMapTest() {
 		Map l_testMap = new Map();
-		assertTrue(l_testMap.createContinent(1));
-		assertTrue(l_testMap.createContinent(2));
+		assertTrue(l_testMap.createContinent(1, 5));
+		assertTrue(l_testMap.createContinent(2, 5));
 		assertTrue(l_testMap.createTerritory(1, 1));
 		assertTrue(l_testMap.createTerritory(2, 1));
 		assertTrue(l_testMap.createTerritory(3, 2));
@@ -131,8 +131,8 @@ public class MapTest {
 	@Test
 	public void unconnectedMapTest() {
 		Map l_testMap = new Map();
-		assertTrue(l_testMap.createContinent(1));
-		assertTrue(l_testMap.createContinent(2));
+		assertTrue(l_testMap.createContinent(1, 5));
+		assertTrue(l_testMap.createContinent(2, 5));
 		assertTrue(l_testMap.createTerritory(1, 1));
 		assertTrue(l_testMap.createTerritory(2, 1));
 		assertTrue(l_testMap.createTerritory(3, 1));
@@ -162,8 +162,8 @@ public class MapTest {
 	@Test
 	public void mapSavingLoadingTest() {
 		Map l_savedMap = new Map();
-		assertTrue(l_savedMap.createContinent(1));
-		assertTrue(l_savedMap.createContinent(2));
+		assertTrue(l_savedMap.createContinent(1, 5));
+		assertTrue(l_savedMap.createContinent(2, 5));
 		assertTrue(l_savedMap.createTerritory(1, 1));
 		assertTrue(l_savedMap.createTerritory(2, 1));
 		assertTrue(l_savedMap.createTerritory(3, 2));

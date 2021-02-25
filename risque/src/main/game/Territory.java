@@ -13,7 +13,9 @@ public class Territory {
 	/**
 	 * The continent this territory belongs to.
 	 */
-	Continent d_continent;
+	private Continent d_continent;
+	
+	private int d_armies;
 	
 	/**
 	 * Constructs a new territory with a human name and no continent.
@@ -23,6 +25,7 @@ public class Territory {
 	public Territory(String p_name, Continent p_continent) {
 		setName(p_name);
 		setContinent(p_continent);
+		d_armies = 0;
 	}
 	
 	/**
@@ -64,5 +67,21 @@ public class Territory {
 	 */
 	public void setContinent(Continent p_continent) {
 		d_continent = p_continent;
+	}
+	
+	/**
+	 * Gets the number of armies currently on this territory.
+	 * @return The number of armies on this territory.
+	 */
+	public int getNumArmies() {
+		return d_armies;
+	}
+	
+	/**
+	 * Sets the number of armies to a new value, clamed to zero or above.
+	 * @param p_armies The new number of armies.
+	 */
+	public void setNumArmies(int p_armies) {
+		d_armies = Math.max(0, p_armies);
 	}
 }
