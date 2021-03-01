@@ -1,7 +1,5 @@
 package main.game;
 
-import java.util.LinkedList;
-
 /**
  * A collection of territories/countries.
  * @author Kyle

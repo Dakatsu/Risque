@@ -80,6 +80,15 @@ public class Player {
 	}
 	
 	/**
+	 * Does this player own a specific territory?
+	 * @param p_territory The territory to check ownership of.
+	 * @return True if the player owns the territory, otherwise false.
+	 */
+	public boolean ownsTerritory(Territory p_territory) {
+		return d_ownedTerritories.contains(p_territory);
+	}
+	
+	/**
 	 * Adds the territory to the list of this player's owned territories.
 	 * @param p_territory The territory to add.
 	 * @return True if the player did not own this territory before, otherwise false.

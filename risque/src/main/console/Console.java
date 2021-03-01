@@ -28,7 +28,6 @@ public class Console {
 	private GameEngine d_engine;
 	private Controller d_controller;
 	private Queue<String> d_unprintedMessages;
-	private boolean d_wantsExit = false;
 	
 	/**
 	 * Constructor for the console that connects it to the engine and controller
@@ -120,7 +119,7 @@ public class Console {
 	 *Controller to execute "showmap" command.
 	 */
 	public void execShowMap() {
-		addMessage("Printing map to console:\n\n" + d_controller.showMap());
+		d_controller.printMap();
 	}
 
 	/**
@@ -300,19 +299,5 @@ public class Console {
 	public void execDeploy(int p_tID, int p_numArmies) {
 		int l_numDeployed = d_controller.deploy(p_tID, p_numArmies);
 		// TODO: Remove message from Game Engine? Not sure what's best here.
-	}
-
-	/**
-	 * Has the controller execute the "quit" command.
-	 */
-	public void execQuit() {
-		d_controller.quit();
-	}
-	
-	/**
-	 * Starts the process for terminating the console.
-	 */
-	public void finishAndQuit() {
-		d_wantsExit = true;
 	}
 }

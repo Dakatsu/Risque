@@ -24,11 +24,6 @@ public class GameEngine {
 	private Console d_console;
 	
 	/**
-	 * Do we want to quit the game?
-	 */
-	private boolean d_wantsExit = false;
-	
-	/**
 	 * The current map we have loaded for gameplay or editing.
 	 */
 	private Map d_map;
@@ -127,6 +122,20 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Prints the map to the console.
+	 * If the game has begun, it prints a strategic gameplay view.
+	 */
+	public void printMap() {
+		if (isGameInProgress()) {
+			// TODO: Make a gameplay view.
+			d_console.addMessage("Map:\n" + d_map.toText());
+		}
+		else {
+			d_console.addMessage("Printing Map to Console:\n" + d_map.toText());
+		}
+	}
+	
+	/**
 	 * Gets the number of players.
 	 * @return The number of players.
 	 */
@@ -201,8 +210,7 @@ public class GameEngine {
 		for (Player l_player : d_players) {
 			l_player.d_numArmiesLeftToDeploy = d_minArmies;
 		}
-		// TODO: Add armies if player controls a continent.
-		
+		// TODO: Calculate by continent bonus.
 	}
 	
 	/**
@@ -216,14 +224,22 @@ public class GameEngine {
 		// TODO: Should only be able to deploy to your own territory.
 		if (p_tID > 0 && p_tID <= d_map.getNumTerritories()) {
 			Player l_player = d_players.get(d_nextPlayer);
+			Territory l_territory = d_map.getTerritory(p_tID);
+			// Cannot deploy to a territory we do not control.
+			if (!l_player.ownsTerritory(l_territory)) {
+				d_console.addMessage("Cannot deploy to a territory " + l_player.getName() + " does not control.");
+				return 0;
+			}
 			// Calc next player.
 			d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
+			while (d_players.get(d_nextPlayer).d_numArmiesLeftToDeploy == 0) {
+				d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
+			}
 			// Cannot deploy more armies than we have.
 			int l_numArmies = Math.min(l_player.d_numArmiesLeftToDeploy, p_num);
 			l_player.d_numArmiesLeftToDeploy -= l_numArmies;
-			Territory l_territory = d_map.getTerritory(p_tID);
 			l_player.issueOrder(new DeployOrder(l_territory, l_numArmies));
-			d_console.addMessage(l_player.getName() + " deployed " + l_numArmies + " to " + l_territory.getName());
+			d_console.addMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getName() + ".");
 			return l_numArmies;
 			
 		}
@@ -251,13 +267,5 @@ public class GameEngine {
 				}
 			}
 		}
-		
-	}
-	
-	/**
-	 * Starts the process for terminating the engine.
-	 */
-	public void finishAndQuit() {
-		d_wantsExit = true;
 	}
 }

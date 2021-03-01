@@ -536,11 +536,7 @@ public class Map {
 		 *    continent-name number-of-bonus-armies colour
 		 *  TODO: colour is not loaded or used by this game, so we are defaulting to everything being purple.
 		 */
-		l_mapAsString += "[continents]\n";
-		for (int l_cID = 1; l_cID <= getNumContinents(); l_cID++) {
-			Continent l_continent = getContinent(l_cID);
-			l_mapAsString += l_continent.getName() + " " + l_continent.getBonusArmies() + " purple\n";
-		}
+		l_mapAsString += continentsToString();
 		
 		/**
 		 *  Write the countries header, then print out the territories in this format:
@@ -567,7 +563,7 @@ public class Map {
 		}
 		
 		/**
-		 *  Write the countries header, then print out the borders we already calculated above.
+		 *  Write the borders header, then print out the borders we already calculated above.
 		 */
 		l_mapAsString += "\n[borders]\n";
 		for (String l_borderString : l_borderStrings) {
@@ -576,5 +572,23 @@ public class Map {
 		
 		// Return the final result.
 		return l_mapAsString;
+	}
+	
+	/**
+	 * Outputs the continents as a string. Identical to the representation in a .map file.
+	 * @return The string representation of the continents.
+	 */
+	public String continentsToString() {
+		/**
+		 *  Write the continents header, then print out the continents in this format:
+		 *    continent-name number-of-bonus-armies colour
+		 *  TODO: colour is not loaded or used by this game, so we are defaulting to everything being purple.
+		 */
+		String l_continentsAsString = "[continents]\n";
+		for (int l_cID = 1; l_cID <= getNumContinents(); l_cID++) {
+			Continent l_continent = getContinent(l_cID);
+			l_continentsAsString += l_continent.getName() + " " + l_continent.getBonusArmies() + " purple\n";
+		}
+		return l_continentsAsString;
 	}
 }

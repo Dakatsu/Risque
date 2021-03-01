@@ -12,7 +12,6 @@ import main.game.GameEngine;
 public class Controller {
 	private GameEngine d_engine;
 	private Console d_console;
-	private boolean d_wantsExit = false;
 	
 	/**
 	 * Constructor for the controller.
@@ -82,11 +81,10 @@ public class Controller {
 	}
 
 	/**
-	 * Will start the process for executing "showmap" command.
-	 * @return The map as text.
+	 * Asks the game engine to print the map to the console.
 	 */
-	public String showMap() {
-		return d_engine.getMap().toText();
+	public void printMap() {
+		d_engine.printMap();
 	}
 
 	/**
@@ -240,22 +238,5 @@ public class Controller {
 	 */
 	public int deploy(int p_tID, int p_numArmies) {
 		return d_engine.deployArmies(p_tID, p_numArmies);
-	}
-
-	/**
-	 * Starts the process for terminating the whole program.
-	 */
-	public void quit() {
-		finishAndQuit();
-		d_engine.finishAndQuit();
-		d_console.addMessage("...Quitting Risque...");
-		d_console.finishAndQuit();
-	}
-	
-	/**
-	 * Starts the process for terminating the controller.
-	 */
-	public void finishAndQuit() {
-		d_wantsExit = true;
 	}
 }

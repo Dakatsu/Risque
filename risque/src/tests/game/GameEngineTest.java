@@ -22,14 +22,6 @@ public class GameEngineTest {
 	public void before() {
 		d_engine = new GameEngine();
 	}
-	
-	/**
-	 * Quits the game engine after executing a test..
-	 */
-	@After
-	public void after() {
-		d_engine.finishAndQuit();
-	}
 
 	/**
 	 * Ensures that we always have a default blank map at start.

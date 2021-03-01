@@ -59,7 +59,7 @@ public class InputHandler extends Thread {
 					switch(l_splitInput[0].toLowerCase()) {
 					
 						case("quit"):
-							getOwner().execQuit();
+							getOwner().addMessage("...Quitting Risque...");
 							return;
 					
 						case("loadmap"):
@@ -120,12 +120,12 @@ public class InputHandler extends Thread {
 									 */
 									for (int l_idx = 1; l_idx < l_splitInput.length; ) {
 										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-											Integer.parseInt(l_splitInput[l_idx] + 1);
-											Integer.parseInt(l_splitInput[l_idx] + 2);
+											Integer.parseInt(l_splitInput[l_idx + 1]);
+											Integer.parseInt(l_splitInput[l_idx + 2]);
 											l_idx += 3;
 										}
 										else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
-											Integer.parseInt(l_splitInput[l_idx] + 1);
+											Integer.parseInt(l_splitInput[l_idx + 1]);
 											l_idx += 2;
 										}
 										else {
@@ -173,8 +173,8 @@ public class InputHandler extends Thread {
 									 */
 									for (int l_idx = 1; l_idx < l_splitInput.length; ) {
 										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-											Integer.parseInt(l_splitInput[l_idx] + 1);
-											Integer.parseInt(l_splitInput[l_idx] + 2);
+											Integer.parseInt(l_splitInput[l_idx + 1]);
+											Integer.parseInt(l_splitInput[l_idx + 2]);
 											l_idx += 3;
 										}
 										else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
@@ -226,8 +226,8 @@ public class InputHandler extends Thread {
 									 */
 									for (int l_idx = 1; l_idx < l_splitInput.length; l_idx += 3) {
 										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-											Integer.parseInt(l_splitInput[l_idx] + 1);
-											Integer.parseInt(l_splitInput[l_idx] + 2);
+											Integer.parseInt(l_splitInput[l_idx + 1]);
+											Integer.parseInt(l_splitInput[l_idx + 2]);
 										}
 										else {
 											l_areParametersInvalid = true;
@@ -308,25 +308,6 @@ public class InputHandler extends Thread {
 					}
 					
 					// TODO: move validated commands to switch statement above.
-					if (l_splitInput[0]=="editcontinent") {
-						String[] editcon= l_splitInput[1].trim().split("-");
-						for (int i= 1; i<editcon.length; i++) {   
-							getOwner().execEditcontinent(editcon[i].trim());
-						}
-					}
-					if (l_splitInput[0]=="editcountry") {
-						String[] editcoun= l_splitInput[1].trim().split("-");
-						for (int i= 1; i<editcoun.length; i++) {
-				 			getOwner().execEditcountry(editcoun[i].trim());
-						}
-					}
-	
-					if (l_splitInput[0]=="editneighbor") {
-						String[] editnei= l_splitInput[1].trim().split("-");
-						for (int i= 1; i<editnei.length; i++) {
-							getOwner().execEditneighbor(editnei[i].trim());
-						}
-					}
 	
 					if (l_splitInput[0]=="editmap") {
 						getOwner().execEditMap(l_splitInput[1].trim());
