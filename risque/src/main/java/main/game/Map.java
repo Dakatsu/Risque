@@ -1,25 +1,16 @@
 package main.game;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Scanner;
 
-/**
- * Represents a map file. It may be valid and playable or in the midst of being created and unplayable.
- * @author Kyle
- */
 public class Map {
 	/** 
 	 * The list of continents in this map.
 	 * Their ID is equivalent to their index in this list + 1.
 	 */
 	LinkedList<Continent> d_continents;
-	
 	/**
 	 * The list of territories in this map.
 	 * Their ID is equivalent to their index in this list + 1.
@@ -40,12 +31,12 @@ public class Map {
 	 * Default constructor that creates an empty map.
 	 */
 	public Map() {
-		d_continents = new LinkedList<>();
-		d_territories = new LinkedList<>();
-		d_borders = new HashMap<>();
-		d_continentTerritories = new HashMap<>();
+		d_continents = new LinkedList<Continent>();
+		d_territories = new LinkedList<Territory>();
+		d_borders = new HashMap<Territory, LinkedList<Territory>>();
+		d_continentTerritories = new HashMap<Continent, LinkedList<Territory>>();
 	}
-	
+
 	/**
 	 * Returns the number of continents in this map.
 	 * @return The number of continents.
@@ -53,7 +44,13 @@ public class Map {
 	public int getNumContinents() {
 		return d_continents.size();
 	}
-	
+	/**
+	 * Returns the number of territories in this map.
+	 * @return The number of territories.
+	 */
+	public int getNumTerritories() {
+		return d_territories.size();
+	}
 	/**
 	 * Returns the continent by its ID if it exists.
 	 * @param l_continentID The continent's ID.
@@ -65,7 +62,26 @@ public class Map {
 		}
 		return null;
 	}
+	/**
+	 * Returns the territory by its ID if it exists.
+	 * @param l_territoryID The territory's ID.
+	 * @return The territory at the ID, otherwise null.
+	 */
+	public Territory getTerritory(int l_territoryID) {
+		if (l_territoryID > 0 && l_territoryID <= getNumTerritories()) {
+			return d_territories.get(l_territoryID - 1);
+		}
+		return null;
+	}
 	
+	/**
+	 * Returns the territory's ID by its reference.
+	 * @param l_territory The continent.
+	 * @return The territory's ID if it exists, otherwise 0.
+	 */
+	public int getTerritoryID(Territory l_territory) {
+		return d_territories.indexOf(l_territory) + 1;
+	}
 	/**
 	 * Returns the continent's ID by its reference.
 	 * @param l_continent The continent.
@@ -94,78 +110,6 @@ public class Map {
 		}
 		return false;
 	}
-	
-	/**
-	 * Creates a continent at the given ID or at the last ID, whichever is less.
-	 * Gives it a generated name and five bonus armies.
-	 * @param p_continentID The desired ID of the new continent.
-	 * @param p_continentValue The number of bonus armies this continent gives when controlled.
-	 * @return True if a continent was created, otherwise false.
-	 */
-	public boolean createContinent(int p_continentID, int p_continentValue) {
-		// TODO: What are we doing about the names? Defaulting to a random name.
-		Random l_random = new Random();
-		String l_continentName = "Continentia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
-		return createContinent(l_continentName, p_continentValue, p_continentID);
-	}
-	
-	/**
-	 * Deletes the continent at the given ID.
-	 * All territories connected to this continent will also be removed.
-	 * @param p_continentID The ID of the continent to remove.
-	 * @return True if a continent was deleted, otherwise false.
-	 */
-	public boolean deleteContinent(int p_continentID) {
-		return deleteContinent(getContinent(p_continentID));
-	}
-	
-	/**
-	 * Deletes the continent by reference.
-	 * All territories connected to this continent will also be removed.
-	 * @param p_continent The continent to remove.
-	 * @return True if a continent was deleted, otherwise false.
-	 */
-	private boolean deleteContinent(Continent l_continent) {
-		if (l_continent != null) {
-			// The continent should always be in the continent/territory map even if it has no territories.
-			for (Territory l_territory : d_continentTerritories.get(l_continent)) {
-				deleteTerritory(l_territory);
-			}
-			d_continentTerritories.remove(l_continent);
-			return d_continents.remove(l_continent);
-		}
-		return false;
-	}
-	
-	/**
-	 * Returns the number of territories in this map.
-	 * @return The number of territories.
-	 */
-	public int getNumTerritories() {
-		return d_territories.size();
-	}
-	
-	/**
-	 * Returns the territory by its ID if it exists.
-	 * @param l_territoryID The territory's ID.
-	 * @return The territory at the ID, otherwise null.
-	 */
-	public Territory getTerritory(int l_territoryID) {
-		if (l_territoryID > 0 && l_territoryID <= getNumTerritories()) {
-			return d_territories.get(l_territoryID - 1);
-		}
-		return null;
-	}
-	
-	/**
-	 * Returns the territory's ID by its reference.
-	 * @param l_territory The continent.
-	 * @return The territory's ID if it exists, otherwise 0.
-	 */
-	public int getTerritoryID(Territory l_territory) {
-		return d_territories.indexOf(l_territory) + 1;
-	}
-	
 	/**
 	 * Creates a territory at the given ID or at the last ID, whichever is less.
 	 * @param p_territoryID The desired ID of the new territory.
@@ -185,131 +129,6 @@ public class Map {
 		}
 		return false;
 	}
-	
-	/**
-	 * Creates a territory at the given ID or at the last ID, whichever is less.
-	 * @param p_territoryID The desired ID of the new territory.
-	 * @param p_continentID The ID of the continent this territory will belong to.
-	 * @return True if a territory was created, otherwise false.
-	 */
-	public boolean createTerritory(int p_territoryID, int p_continentID) {
-		// TODO: What are we doing about names? Defaulting to a random designation for now.
-		Random l_random = new Random();
-		String l_territoryName = "Testlandia".concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10))).concat(String.valueOf(l_random.nextInt(10)));
-		return createTerritory(p_territoryID, l_territoryName, p_continentID);
-	}
-	
-	/**
-	 * Deletes the territory at the given ID.
-	 * @param p_territoryID The ID of the territory to delete.
-	 * @return True if a territory was deleted, otherwise false.
-	 */
-	public boolean deleteTerritory(int p_territoryID) {
-		return deleteTerritory(getTerritory(p_territoryID));
-	}
-	
-	/**
-	 * Deletes the territory by reference.
-	 * @param p_territory The territory to delete.
-	 * @return True if a territory was deleted, otherwise false.
-	 */
-	private boolean deleteTerritory(Territory p_territory) {
-		if (p_territory != null) {
-			for (Territory l_otherTerritory : d_territories) {
-				d_borders.get(l_otherTerritory).remove(p_territory);
-			}
-			d_borders.remove(p_territory);
-			return d_territories.remove(p_territory);
-		}
-		return false;
-	}
-	
-	/**
-	 * Checks to see if a border exists between the two territories.
-	 * @param p_firstID The first territory's ID.
-	 * @param p_secondID The second territory's ID.
-	 * @return True if the border exists, false otherwise.
-	 */
-	public boolean doesBorderExist(int p_firstID, int p_secondID) {
-		return doesBorderExist(getTerritory(p_firstID), getTerritory(p_secondID));
-	}
-	
-	/**
-	 * Checks to see if a border exists between the two territories.
-	 * @param p_first The first territory.
-	 * @param p_second The second territory.
-	 * @return True if the border exists, false otherwise.
-	 */
-	private boolean doesBorderExist(Territory p_first, Territory p_second) {
-		// Can we border ourself? Let's go with 'no'.
-		if (p_first == p_second) {
-			return false;
-		}
-		// Note: which territory is first or second should not affect the outcome of this result.
-		if (p_first != null && p_second != null && d_borders.containsKey(p_first)) {
-			LinkedList<Territory> l_borderingTerritories = d_borders.get(p_first);
-			return l_borderingTerritories.contains(p_second);
-		}
-		return false;
-	}
-	
-	/**
-	 * Adds a border between two territories.
-	 * @param p_firstID The first territory's ID.
-	 * @param p_secondID The second territory's ID.
-	 * @return True if the border was added, false otherwise.
-	 */
-	public boolean addBorder(int p_firstID, int p_secondID) {
-		// Don't allow us to border ourself.
-		if (p_firstID == p_secondID) {
-			return false;
-		}
-		Territory l_firstTerritory = getTerritory(p_firstID);
-		Territory l_secondTerritory = getTerritory(p_secondID);
-		if (l_firstTerritory != null && l_secondTerritory != null) {
-			// There should already exist an empty LinkedList upon creation of the territory, so this should always work.
-			// Do not add duplicates.
-			boolean bAddedBorders = false;
-			LinkedList<Territory> l_firstBorders = d_borders.get(l_firstTerritory);
-			if (!l_firstBorders.contains(l_secondTerritory)) {
-				l_firstBorders.add(l_secondTerritory);
-				bAddedBorders = true;
-			}
-			LinkedList<Territory> l_secondBorders = d_borders.get(l_secondTerritory);
-			if (!l_secondBorders.contains(l_firstTerritory)) {
-				l_secondBorders.add(l_firstTerritory);
-				bAddedBorders = true;
-			}
-			return bAddedBorders;
-		}
-		return false;
-	}
-	
-	/**
-	 * Removes a border between two territories.
-	 * @param p_firstID The first territory's ID.
-	 * @param p_secondID The second territory's ID.
-	 * @return True if a border was deleted, false otherwise.
-	 */
-	public boolean deleteBorder(int p_firstID, int p_secondID) {
-		// A border with ourself should have never been created.
-		if (p_firstID == p_secondID) {
-			return false;
-		}
-		Territory l_firstTerritory = getTerritory(p_firstID);
-		Territory l_secondTerritory = getTerritory(p_secondID);
-		if (l_firstTerritory != null && l_secondTerritory != null) {
-			LinkedList<Territory> l_firstNeighbours = d_borders.get(l_firstTerritory);
-			boolean l_removedFromFirst = l_firstNeighbours.remove(l_secondTerritory);
-			LinkedList<Territory> l_secondNeighbours = d_borders.get(l_secondTerritory);
-			boolean l_removedFromSecond = l_secondNeighbours.remove(l_firstTerritory);
-			// TODO: output an error if just one territory had the other as its neighbour.
-			// That implies that there is a fault in the creation process.
-			return l_removedFromFirst || l_removedFromSecond;
-		}
-		return false;
-	}
-	
 	/**
 	 * Checks the map for correctness (i.e. is a connected graph).
 	 * @return whether the map is valid.
@@ -347,7 +166,7 @@ public class Map {
 		 * Return true if we have added every continent to the list of connected continents.
 		 * 
 		 */
-		LinkedList<Continent> l_connectedContinents = new LinkedList<>();
+		LinkedList<Continent> l_connectedContinents = new LinkedList<Continent>();
 		l_connectedContinents.add(getContinent(1));
 		for (int l_idx = 0; l_idx < l_connectedContinents.size(); l_idx++) {
 			LinkedList<Territory> l_continentTerritories = d_continentTerritories.get(l_connectedContinents.get(l_idx));
@@ -384,7 +203,7 @@ public class Map {
 		 * We do this until either we run out of territories in the connected territory list,
 		 *   or we have accounted for every territory.
 		 */
-		LinkedList<Territory> l_connectedTerritories = new LinkedList<>();
+		LinkedList<Territory> l_connectedTerritories = new LinkedList<Territory>();
 		l_connectedTerritories.add(l_territoriesOnContinent.getFirst());
 		for (int l_idx = 0; l_idx < l_connectedTerritories.size(); l_idx++) {
 			for (Territory l_territory : l_territoriesOnContinent) {
@@ -399,7 +218,65 @@ public class Map {
 		
 		return l_connectedTerritories.size() == d_continentTerritories.get(p_continent).size();
 	}
+	/**
+	 * Checks to see if a border exists between the two territories.
+	 * @param p_firstID The first territory's ID.
+	 * @param p_secondID The second territory's ID.
+	 * @return True if the border exists, false otherwise.
+	 */
+	public boolean doesBorderExist(int p_firstID, int p_secondID) {
+		return doesBorderExist(getTerritory(p_firstID), getTerritory(p_secondID));
+	}
 	
+	/**
+	 * Checks to see if a border exists between the two territories.
+	 * @param p_first The first territory.
+	 * @param p_second The second territory.
+	 * @return True if the border exists, false otherwise.
+	 */
+	private boolean doesBorderExist(Territory p_first, Territory p_second) {
+		// Can we border ourself? Let's go with 'no'.
+		if (p_first == p_second) {
+			return false;
+		}
+		// Note: which territory is first or second should not affect the outcome of this result.
+		if (p_first != null && p_second != null && d_borders.containsKey(p_first)) {
+			LinkedList<Territory> l_borderingTerritories = d_borders.get(p_first);
+			return l_borderingTerritories.contains(p_second);
+		}
+		return false;
+	}
+	/**
+	 * Adds a border between two territories.
+	 * @param p_firstID The first territory's ID.
+	 * @param p_secondID The second territory's ID.
+	 * @return True if the border was added, false otherwise.
+	 */
+	public boolean addBorder(int p_firstID, int p_secondID) {
+		// Don't allow us to border ourself.
+		if (p_firstID == p_secondID) {
+			return false;
+		}
+		Territory l_firstTerritory = getTerritory(p_firstID);
+		Territory l_secondTerritory = getTerritory(p_secondID);
+		if (l_firstTerritory != null && l_secondTerritory != null) {
+			// There should already exist an empty LinkedList upon creation of the territory, so this should always work.
+			// Do not add duplicates.
+			boolean bAddedBorders = false;
+			LinkedList<Territory> l_firstBorders = d_borders.get(l_firstTerritory);
+			if (!l_firstBorders.contains(l_secondTerritory)) {
+				l_firstBorders.add(l_secondTerritory);
+				bAddedBorders = true;
+			}
+			LinkedList<Territory> l_secondBorders = d_borders.get(l_secondTerritory);
+			if (!l_secondBorders.contains(l_firstTerritory)) {
+				l_secondBorders.add(l_firstTerritory);
+				bAddedBorders = true;
+			}
+			return bAddedBorders;
+		}
+		return false;
+	}
 	/**
 	 * Loads a map from a given file, deleting any existing map data before doing so.
 	 * Note that attributes not used by this game are ignored and not loaded.
@@ -470,57 +347,6 @@ public class Map {
 	}
 	
 	/**
-	 * Saves the map to a given file name. Overwrites any existing map with the same name.
-	 * The map will only save if it is valid.
-	 * @param l_fileName The name of the file to save to, including the extension.
-	 * @return Whether the file was successfully saved.
-	 */
-	public boolean saveToFile(String l_fileName) {
-		/**
-		 * Reference on what a .map file entails:
-		 * http://domination.sourceforge.net/makemaps.shtml
-		 */
-		
-		// Do not allow us to save if the map is not valid.
-		if (!validateMap()) {
-			return false;
-		}
-		
-		try {
-			// Attempt to create the file.
-			File l_file = new File(l_fileName);
-			if (l_file.exists()) {
-				System.out.println("File already exists. Deleting!");
-				l_file.delete();
-			}
-			if (l_file.createNewFile()) {
-				System.out.println("File created!");
-			}
-			else {
-				System.out.println("File already exists!");
-			}
-			
-			// Begin by writing a comment containing the file name and that it was made by this program.
-			FileWriter l_writer = new FileWriter(l_fileName);
-			l_writer.write("; map: " + l_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n\n");
-			
-			/**
-			 *  Write the contents of the map as text to the file.
-			 */
-			l_writer.write(toText());
-			
-			/**
-			 * Close the file writer once we have finished.
-			 */
-			l_writer.close();
-			return true;
-		} 
-		catch (IOException l_exception) {
-			return false;
-		}
-	}
-	
-	/**
 	 * Outputs the current map as text format. Identical to the representation in a .map file.
 	 * @return The map as text.
 	 */
@@ -573,7 +399,6 @@ public class Map {
 		// Return the final result.
 		return l_mapAsString;
 	}
-	
 	/**
 	 * Outputs the continents as a string. Identical to the representation in a .map file.
 	 * @return The string representation of the continents.
