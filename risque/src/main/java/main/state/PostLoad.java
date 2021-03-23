@@ -20,6 +20,7 @@ public class PostLoad extends Edit{
 	}
 
 	public void saveMap() {
+		ge.map.saveToFile("test.map");
 		System.out.println("map has been saved");
 		ge.setPhase(new PlaySetup(ge));
 	}

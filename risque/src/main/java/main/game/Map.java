@@ -1,6 +1,8 @@
 package main.game;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -343,6 +345,56 @@ public class Map {
 		catch (NumberFormatException l_exception) {
 			return false;
 			
+		}
+	}
+	/**
+	 * Saves the map to a given file name. Overwrites any existing map with the same name.
+	 * The map will only save if it is valid.
+	 * @param l_fileName The name of the file to save to, including the extension.
+	 * @return Whether the file was successfully saved.
+	 */
+	public boolean saveToFile(String l_fileName) {
+		/**
+		 * Reference on what a .map file entails:
+		 * http://domination.sourceforge.net/makemaps.shtml
+		 */
+		
+		// Do not allow us to save if the map is not valid.
+		if (!validateMap()) {
+			return false;
+		}
+		
+		try {
+			// Attempt to create the file.
+			File l_file = new File(l_fileName);
+			if (l_file.exists()) {
+				System.out.println("File already exists. Deleting!");
+				l_file.delete();
+			}
+			if (l_file.createNewFile()) {
+				System.out.println("File created!");
+			}
+			else {
+				System.out.println("File already exists!");
+			}
+			
+			// Begin by writing a comment containing the file name and that it was made by this program.
+			FileWriter l_writer = new FileWriter(l_fileName);
+			l_writer.write("; map: " + l_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n\n");
+			
+			/**
+			 *  Write the contents of the map as text to the file.
+			 */
+			l_writer.write(toText());
+			
+			/**
+			 * Close the file writer once we have finished.
+			 */
+			l_writer.close();
+			return true;
+		} 
+		catch (IOException l_exception) {
+			return false;
 		}
 	}
 	
