@@ -1,5 +1,7 @@
 package main.state;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.game.Map;
 
@@ -12,10 +14,13 @@ public class GameEngine {
 	/**
 	 * State object of the GameEngine 
 	 */
+	List<Territory> mapNew;
+	List<Player> players;
 	private Phase gamePhase;
 	public Map map = new Map();
 	int mystart;
 	int mycommand;
+	
 
 	/**
 	 * Method that allows the GameEngine object to change its state.  
@@ -25,6 +30,67 @@ public class GameEngine {
 		gamePhase = p_phase;
 		System.out.println("new phase: " + p_phase.getClass().getSimpleName());
 	}
+	
+	GameEngine() {
+		mapNew = new ArrayList<Territory>();
+		players = new ArrayList<Player>();
+	}
+	
+	public void startNew() {
+		int numTurns = 5;
+
+		// create the players
+		players.add(new Player("player1"));
+		players.add(new Player("player2"));
+
+		// create the map
+		mapNew.add(new Territory("territory1", players.get(0), 10));
+		mapNew.add(new Territory("territory2", players.get(0), 10));
+		mapNew.add(new Territory("territory3", players.get(1), 10));
+		mapNew.add(new Territory("territory4", players.get(1), 10));
+		printMap();
+
+		// run the game turns
+		for (int turn = 1; turn <= numTurns; turn++) {
+			boolean an_order = true;
+			do {
+				for (Player p : players) {
+					an_order = p.createOrder(mapNew, players);
+					if (!an_order)
+						break;
+				}
+			} while (an_order);
+			executeAllOrders();
+			printMap();
+		}
+	}
+
+	public void printMap() {
+		System.out.println("===========================MAP============================");
+		for (Territory t : mapNew) {
+			t.print();
+		}
+		System.out.println("===========================MAP============================");
+	}
+
+	public void executeAllOrders() {
+		System.out.println("===============BEGIN EXECUTING ALL ORDERS=================");
+		Order order;
+		boolean still_more_orders = false;
+		do {
+			still_more_orders = false;
+			for (Player p : players) {
+				order = p.getNextOrder();
+				if (order != null) {
+					still_more_orders = true;
+					order.printOrder();
+					order.execute();
+				}
+			}
+		} while (still_more_orders);
+		System.out.println("===============END EXECUTING ALL ORDERS===================");
+	}
+
 	
 	/**
 	 * This method will ask the user: 
