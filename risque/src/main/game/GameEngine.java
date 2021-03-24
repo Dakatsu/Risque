@@ -34,11 +34,6 @@ public class GameEngine {
 	private LinkedList<Player> d_players;
 	
 	/**
-	 * Is the game in progress? False if we have not started playing yet.
-	 */
-	private boolean d_isGameInProgress;
-	
-	/**
 	 * The minimum number of armies assigned on each round.
 	 */
 	private int d_minArmies;
@@ -49,12 +44,18 @@ public class GameEngine {
 	private int d_nextPlayer;
 	
 	/**
+	 * The current phase the game is in.
+	 */
+	private Phase d_currentPhase;
+	
+	/**
 	 * Default constructor for the GameEngine.
 	 */
 	public GameEngine() {
 		d_players = new LinkedList<>();
 		d_map = new Map();
 		d_minArmies = 3;
+		d_currentPhase = new StartupPhase(this);
 	}
 	
 	/**
@@ -126,13 +127,7 @@ public class GameEngine {
 	 * If the game has begun, it prints a strategic gameplay view.
 	 */
 	public void printMap() {
-		if (isGameInProgress()) {
-			// TODO: Make a gameplay view.
-			d_console.addMessage("Map:\n" + d_map.toText());
-		}
-		else {
-			d_console.addMessage("Printing Map to Console:\n" + d_map.toText());
-		}
+		d_currentPhase.showMap();
 	}
 	
 	/**
@@ -180,7 +175,7 @@ public class GameEngine {
 	 * @return True if the game is in progress. False if we are in the pre-game and/or editing the map.
 	 */
 	public boolean isGameInProgress() {
-		return d_isGameInProgress;
+		return d_currentPhase.getClass() != StartupPhase.class;
 	}
 	
 	/** 
@@ -194,9 +189,9 @@ public class GameEngine {
 			for (int l_idx = 1; l_idx <= d_map.getNumTerritories(); l_idx++) {
 				d_players.get(l_idx % getNumPlayers()).addOwnedTerritory(d_map.getTerritory(l_idx));
 			}
-			d_isGameInProgress = true;
 			calculateArmiesPerPlayer();
 			d_nextPlayer = 0;
+			d_currentPhase = new IssueOrderPhase(this);
 			return true;
 		}
 		return false;
@@ -241,7 +236,6 @@ public class GameEngine {
 			l_player.issueOrder(new DeployOrder(l_territory, l_numArmies));
 			d_console.addMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getName() + ".");
 			return l_numArmies;
-			
 		}
 		d_console.addMessage("Invalid territory. Please try again.");
 		return 0;
