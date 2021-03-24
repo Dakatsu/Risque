@@ -27,7 +27,6 @@ import java.util.Queue;
 public class Console {
 	private GameEngine d_engine;
 	private Controller d_controller;
-	private Queue<String> d_unprintedMessages;
 	
 	/**
 	 * Constructor for the console that connects it to the engine and controller
@@ -45,7 +44,6 @@ public class Console {
 		}
 		InputHandler l_inputHandler = new InputHandler(this);
 		l_inputHandler.start();
-		d_unprintedMessages = new LinkedList<String>();
 	}
 	
 	/**
@@ -81,14 +79,11 @@ public class Console {
 	}
 	
 	/**
-	 * Adds a message to the print messages queue.
-	 * @param p_message the message to add (if not blank).
-	 * @return whether the message was successfully added.
+	 * Prints a message to the console.
+	 * @param p_message the message to print.
 	 */
-	public boolean addMessage(String p_message) {
-		// TODO: cannot get message queue (d_unprintedMessages) to properly work, so this immediately prints messages for time being.
+	public void addMessage(String p_message) {
 		System.out.println(p_message);
-		return true;
 	}
 	
 	/**
