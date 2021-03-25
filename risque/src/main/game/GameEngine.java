@@ -205,7 +205,13 @@ public class GameEngine {
 		for (Player l_player : d_players) {
 			l_player.d_numArmiesLeftToDeploy = d_minArmies;
 		}
-		// TODO: Calculate by continent bonus.
+		for (int l_idx = 1; l_idx <= getMap().getNumContinents(); l_idx++) {
+			Continent l_continent = getMap().getContinent(l_idx);
+			Player l_playerOwner = l_continent.getPlayerOwner();
+			if (l_playerOwner != null) {
+				l_playerOwner.d_numArmiesLeftToDeploy += l_continent.getBonusArmies();
+			}
+		}
 	}
 	
 	/**
