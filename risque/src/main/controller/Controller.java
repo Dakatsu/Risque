@@ -239,27 +239,25 @@ public class Controller {
 	 * Issues a deploy order.
 	 * @param p_tID The ID of the territory to deploy to.
 	 * @param p_numArmies The number of armies to deploy.
-	 * @return The number of armies actually deployed.
 	 */
-	public int deploy(int p_tID, int p_numArmies) {
-		return d_engine.deployArmies(p_tID, p_numArmies);
+	public void deploy(int p_tID, int p_numArmies) {
+		d_engine.deployArmies(p_tID, p_numArmies);
 	}
 	
 	/**
 	 * Issues an advance order.
 	 * @param p_fromID The ID of the origin territory.
 	 * @param p_toID The ID of the destination territory.
-	 * @param p_numArmies The number of armies to deploy.
-	 * @return The number of armies actually deployed.
+	 * @param p_numArmies The number of armies to advance.
 	 */
-	public int advance(int p_fromID, int p_toID, int p_numArmies) {
-		return d_engine.advanceArmies(p_fromID, p_toID, p_numArmies);
+	public void advance(int p_fromID, int p_toID, int p_numArmies) {
+		d_engine.advanceArmies(p_fromID, p_toID, p_numArmies);
 	}
 	
 	/**
 	 * Ends this current player's turn without issuing any orders, and signals that they have no more orders to issue.
 	 */
 	public void finishOrders() {
-		// TODO
+		d_engine.finishOrders();
 	}
 }
