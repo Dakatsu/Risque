@@ -5,7 +5,7 @@ package main.game;
  * @author Kyle
  *
  */
-public class Continent {
+public class Continent extends MapEntity {
 	/**
 	 * The human-readable name for this continent.
 	 */

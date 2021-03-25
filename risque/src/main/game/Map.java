@@ -87,6 +87,7 @@ public class Map {
 		if (p_continentID > 0) {
 			int l_newIdx = Math.min(p_continentID - 1, getNumContinents());
 			Continent l_newContinent = new Continent(p_name, p_numBonusArmies);
+			l_newContinent.setMap(this);
 			d_continents.add(l_newIdx, l_newContinent);
 			// Create an empty entry in the continent/territory map.
 			d_continentTerritories.put(l_newContinent, new LinkedList<Territory>());
@@ -177,6 +178,7 @@ public class Map {
 		if (p_territoryID > 0 && p_continentID > 0 && p_continentID <= getNumContinents()) {
 			int l_newIdx = Math.min(p_territoryID - 1, getNumTerritories());
 			Territory l_newTerritory = new Territory(p_name, getContinent(p_continentID));
+			l_newTerritory.setMap(this);
 			// Make an empty list of neighbours to start.
 			d_borders.put(l_newTerritory, new LinkedList<Territory>());
 			d_continentTerritories.get(getContinent(p_continentID)).add(l_newTerritory);

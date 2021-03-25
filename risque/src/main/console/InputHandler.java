@@ -291,7 +291,7 @@ public class InputHandler extends Thread {
 							}
 							else {
 								try {
-									getOwner().execDeploy(Integer.parseInt(l_splitInput[1]), Integer.parseInt(l_splitInput[2]));
+									getOwner().getController().deploy(Integer.parseInt(l_splitInput[1]), Integer.parseInt(l_splitInput[2]));
 								}
 								catch (NumberFormatException l_exception) {
 									l_areParametersInvalid = true;
