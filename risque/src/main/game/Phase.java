@@ -2,6 +2,9 @@ package main.game;
 
 /**
  *	Phases represent the current state of the game engine, such as map editing and gameplay phases.
+ *  The command in this abstract class will print that they are not implemented for that phase.
+ *  This is so subclasses will not have to manually print that for every command.
+ *  Subclasses can then simply override the functions they actually need.
  */
 public abstract class Phase {
 	/**
@@ -45,6 +48,13 @@ public abstract class Phase {
 	 */
 	public void assignTerritories() {
 		printInvalidCommandMessage("assignTerritories");
+	}
+	
+	/**
+	 * Implements the finish(orders) command.
+	 */
+	public void finishOrders() {
+		printInvalidCommandMessage("finishOrders");
 	}
 	
 	/**

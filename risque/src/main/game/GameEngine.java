@@ -218,6 +218,15 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Gets a shallow copy of the list of players.
+	 * @return The list of players.
+	 */
+	@SuppressWarnings("unchecked")
+	public LinkedList<Player> getPlayers() {
+		return (LinkedList<Player>)d_players.clone();
+	}
+	
+	/**
 	 * Returns whether the game is in progress.
 	 * @return True if the game is in progress. False if we are in the pre-game and/or editing the map.
 	 */
@@ -311,25 +320,10 @@ public class GameEngine {
 	}
 	
 	/**
-	 * Executes every player's order. The orders are executed in round-robin order,
-	 * e.g. player 1's first order is executed, then player 2, etc. until every player has
-	 * issued their first order. Then it begins with player 1 again.
-	 * Players are skipped if they have no orders to issue.
-	 * After all orders are issued, the number of armies is calculated again.
+	 * Signals that the current player does not want to issue any more orders.
 	 */
-	public void executeOrders() {
-		boolean l_areThereUnexecutedOrders = true;
-		while (l_areThereUnexecutedOrders) {
-			l_areThereUnexecutedOrders = false;
-			for (Player l_player : d_players) {
-				if (l_player.hasOrdersLeftToExecute()) {
-					l_player.nextOrder().execute();
-					if (l_player.hasOrdersLeftToExecute()) {
-						l_areThereUnexecutedOrders = true;
-					}
-				}
-			}
-		}
+	public void finishOrders() {
+		
 	}
 	
 	/**
