@@ -17,6 +17,7 @@ public class ExecuteOrderPhase extends Phase {
 
 	@Override
 	public void onPhaseStart(Phase p_prevPhase) {
+		d_engine.broadcastMessage("Executing orders.");
 		boolean l_areThereUnexecutedOrders = true;
 		while (l_areThereUnexecutedOrders) {
 			l_areThereUnexecutedOrders = false;

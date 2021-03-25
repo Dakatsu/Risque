@@ -245,78 +245,19 @@ public class GameEngine {
 	 * Creates an order to deploy armies for the next player.
 	 * @param p_tID The ID of the territory to deploy the armies to.
 	 * @param p_num The number of armies desired to be deployed.
-	 * @return The number of armies actually deployed.
 	 */
-	public int deployArmies(int p_tID, int p_num) {
-		// TODO: Next player should be player that actually has armies to deploy.
-		if (p_tID > 0 && p_tID <= d_map.getNumTerritories()) {
-			Player l_player = d_players.get(d_nextPlayer);
-			Territory l_territory = d_map.getTerritory(p_tID);
-			// Cannot deploy to a territory we do not control.
-			if (!l_player.ownsTerritory(l_territory)) {
-				broadcastMessage("Cannot deploy to a territory " + l_player.getName() + " does not control.");
-				return 0;
-			}
-			// Calc next player.
-			d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
-			while (d_players.get(d_nextPlayer).getNumUndeployedArmies() == 0) {
-				d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
-			}
-			// Cannot deploy more armies than we have.
-			int l_numArmies = l_player.removeUndeployedArmies(p_num);
-			l_player.issueOrder(onCreateEntity(new DeployOrder(l_territory, l_numArmies)));
-			broadcastMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getDisplayName() + ".");
-			return l_numArmies;
-		}
-		broadcastMessage("Invalid territory. Please try again.");
-		return 0;
+	public void deployArmies(int p_tID, int p_num) {
+		d_currentPhase.createDeployOrder(p_tID, p_num);
 	}
 	
 	/**
 	 * Creates an order to advance armies for the next player.
 	 * @param p_fromID The ID of the territory the armies are moving from.
 	 * @param p_toID The ID of the territory the armies will go to.
-	 * @param p_numToAdvance The number of armies desired to be advanced.
-	 * @return The number of armies actually advanced.
+	 * @param p_num The number of armies desired to be advanced.
 	 */
-	public int advanceArmies(int p_fromID, int p_toID, int p_num) {
-		// TODO: Next player should be player that actually has armies to deploy.
-		// TODO: Should only be able to deploy to your own territory.
-		if (!getMap().doesBorderExist(p_toID, p_fromID)) {
-			broadcastMessage("Error: territories do not border each other.");
-			return 0;
-		}
-		if (p_fromID == p_toID) {
-			broadcastMessage("Error: the territories cannot be the same.");
-		}
-		if (p_fromID < 1 || p_fromID > d_map.getNumTerritories()) {
-			broadcastMessage("Error: invalid origin territory.");
-			return 0;
-		}
-		if (p_toID < 1 || p_toID > d_map.getNumTerritories()) {
-			broadcastMessage("Error: invalid destination territory.");
-			return 0;
-		}
-		if (p_num < 1) {
-			broadcastMessage("Error: must advance at least one army.");
-			return 0;
-		}
-		Player l_player = d_players.get(d_nextPlayer);
-		Territory l_fromTerritory = d_map.getTerritory(p_fromID);
-		// Cannot advance from a territory we do not control
-		// However, it doesn't matter if we own the destination; it could be lost or gained before this order is executed).
-		if (!l_player.ownsTerritory(l_fromTerritory)) {
-			broadcastMessage("Error: cannot advance from a territory " + l_player.getName() + " does not control.");
-			return 0;
-		}
-		Territory l_toTerritory = d_map.getTerritory(p_toID);
-		// Calc next player.
-		d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
-		// Cannot advance more armies than currently exist in the territory.
-		int l_numArmies = Math.min(p_num, l_fromTerritory.getNumArmies());
-		l_player.issueOrder(onCreateEntity(new AdvanceOrder(l_fromTerritory, l_toTerritory, l_numArmies)));
-		broadcastMessage(l_player.getName() + " will advance " + l_numArmies + " from " + l_fromTerritory.getDisplayName() + " to " + l_toTerritory.getDisplayName() + ".");
-		return l_numArmies;
+	public void advanceArmies(int p_fromID, int p_toID, int p_num) {
+		d_currentPhase.createAdvanceOrder(p_fromID, p_toID, p_num);
 	}
 	
 	/**

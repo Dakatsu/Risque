@@ -51,10 +51,29 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Implements the creation of a deploy order in this Phase.
+	 * @param p_tID The ID of the territory to deploy the armies to.
+	 * @param p_num The number of armies desired to be deployed.
+	 */
+	public void createDeployOrder(int p_tID, int p_num) {
+		printInvalidCommandMessage("deploy");
+	}
+	
+	/**
+	 * Implements the creation of an advance order in this Phase.
+	 * @param p_fromID The ID of the territory the armies are moving from.
+	 * @param p_toID The ID of the territory the armies will go to.
+	 * @param p_num The number of armies desired to be advanced.
+	 */
+	public void createAdvanceOrder(int p_fromID, int p_toID, int p_num) {
+		printInvalidCommandMessage("advance");
+	}
+	
+	/**
 	 * Implements the finish(orders) command.
 	 */
 	public void finishOrders() {
-		printInvalidCommandMessage("finishOrders");
+		printInvalidCommandMessage("finish");
 	}
 	
 	/**
