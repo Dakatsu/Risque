@@ -45,7 +45,15 @@ public class Territory extends MapEntity {
 	}
 	
 	/**
-	 * Sets the human-readable name of this territory to a new value.
+	 * Gets the human-readable name of this territory (no underscores).
+	 * @return The human-readable name of this territory.
+	 */
+	public String getDisplayName() {
+		return d_name.replace('_', ' ');
+	}
+	
+	/**
+	 * Sets the name of this territory to a new value.
 	 * @param p_name The new name for this territory.
 	 */
 	public void setName(String p_name) {

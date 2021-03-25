@@ -14,24 +14,24 @@ public class AdvanceOrder extends Order {
 	/**
 	 * The territory the armies will come from.
 	 */
-	private int d_fromTerritoryID;
+	private Territory d_fromTerritory;
 	
 	/**
 	 * The territory armies will go to or invade.
 	 */
-	private int d_toTerritoryID;
+	private Territory d_toTerritory;
 	
-	AdvanceOrder(int p_numArmiesAdvancing, int p_fromTerritoryID, int p_toTerritoryID) {
+	AdvanceOrder(Territory p_fromTerritory, Territory p_toTerritory, int p_numArmiesAdvancing) {
 		d_numArmiesAdvancing = p_numArmiesAdvancing;
-		d_fromTerritoryID = p_fromTerritoryID;
-		d_toTerritoryID = p_toTerritoryID;
+		d_fromTerritory = p_fromTerritory;
+		d_toTerritory = p_toTerritory;
 	}
 	
 	@Override
 	public boolean execute() {
 		Map l_map = getEngine().getMap();
 		// Check that we actually have a valid path.
-		if (l_map != null && l_map.doesBorderExist(d_fromTerritoryID, d_toTerritoryID)) {
+		if (l_map != null && l_map.doesBorderExist(l_map.getTerritoryID(d_fromTerritory), l_map.getTerritoryID(d_toTerritory))) {
 			// TODO: The rest of the logic!
 			return true;
 		}

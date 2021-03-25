@@ -34,11 +34,6 @@ public class GameEngine {
 	private LinkedList<Player> d_players;
 	
 	/**
-	 * The minimum number of armies assigned on each round.
-	 */
-	private int d_minArmies;
-	
-	/**
 	 * The index of the next player that gets to issue orders.
 	 */
 	private int d_nextPlayer;
@@ -54,7 +49,6 @@ public class GameEngine {
 	public GameEngine() {
 		d_players = new LinkedList<>();
 		d_map = onCreateEntity(new Map());
-		d_minArmies = 3;
 		d_currentPhase = new StartupPhase(this);
 	}
 	
@@ -83,8 +77,29 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Gets the current phase.
+	 * @return The current phase.
+	 */
+	public Phase getPhase() {
+		return d_currentPhase;
+	}
+	
+	/**
+	 * Sets the phase to a new phase.
+	 * @param p_nextPhase The phase to switch to.
+	 */
+	public void setPhase(Phase p_nextPhase) {
+		d_currentPhase.onPhaseEnd(p_nextPhase);
+		Phase l_prevPhase = d_currentPhase;
+		d_currentPhase = p_nextPhase;
+		p_nextPhase.onPhaseStart(l_prevPhase);
+	}
+	
+	/**
 	 * Called whenever the game engine creates an entity. Just ensures it has a connection to the game engine.
+	 * @param <T> the type of GameEntity that was created.
 	 * @param p_entity The new entity.
+	 * @return The entity.
 	 */
 	public <T extends GameEntity> T onCreateEntity(T p_entity) {
 		p_entity.setEngine(this);
@@ -93,7 +108,7 @@ public class GameEngine {
 	
 	/**
 	 * Sets the console.
-	 * @param p_console the new console
+	 * @param p_console the new console.
 	 */
 	public void setConsole(Console p_console) {
 		d_console = p_console;
@@ -135,7 +150,7 @@ public class GameEngine {
 	 * Prints the map to the console.
 	 * If the game has begun, it prints a strategic gameplay view.
 	 */
-	public void printMap() {
+	public void showMap() {
 		d_currentPhase.showMap();
 	}
 	
@@ -155,9 +170,9 @@ public class GameEngine {
 	public boolean addPlayer(String p_name) {
 		if (!isGameInProgress()) {
 			Player l_newPlayer = onCreateEntity(new Player(p_name));
-			if (l_newPlayer != null) {
+			if (l_newPlayer != null && d_players.add(l_newPlayer)) {
 				broadcastMessage("Player \"" + p_name + "\" added. Total Players: " + getNumPlayers());
-				return d_players.add(l_newPlayer);
+				return true;
 			}
 			else {
 				broadcastMessage("Error: could not add player.");
@@ -191,6 +206,18 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Gets a player by their ID (zero-based indexing) if a player exists at that ID.
+	 * @param p_playerID The ID of the player.
+	 * @return The player if there is one at that ID.
+	 */
+	public Player getPlayerByID(int p_playerID) {
+		if (getNumPlayers() > 0) {
+			return d_players.get(p_playerID);
+		}
+		return null;
+	}
+	
+	/**
 	 * Returns whether the game is in progress.
 	 * @return True if the game is in progress. False if we are in the pre-game and/or editing the map.
 	 */
@@ -200,47 +227,9 @@ public class GameEngine {
 	
 	/** 
 	 * Assigns territories and begins the game. 
-	 * @return True if the territories were assigned and the game has started, otherwise false.
 	 */
-	public boolean assignTerritories() {
-		// Print out an error message if we cannot start the game.
-		if (!d_map.validateMap()) {
-			broadcastMessage("Error: a valid map must be loaded.");
-			return false;
-		}
-		else if (getNumPlayers() < 2) {
-			broadcastMessage("Error: cannot start a game with just one player.");
-			return false;
-		}
-		else if (d_map.getNumTerritories() < getNumPlayers()) {
-			broadcastMessage("Error: there must be at least one territory per player.");
-			return false;
-		}
-		// Otherwise, divvy up the territories between the players.
-		// TODO: Make this actually random and have some balance calculations.
-		for (int l_idx = 1; l_idx <= d_map.getNumTerritories(); l_idx++) {
-			d_players.get(l_idx % getNumPlayers()).addOwnedTerritory(d_map.getTerritory(l_idx));
-		}
-		calculateArmiesPerPlayer();
-		d_nextPlayer = 0;
-		d_currentPhase = new IssueOrderPhase(this);
-		broadcastMessage("Territories have been assigned and the game has started. Good luck!");
-		return true;
-	}
-	
-	/**
-	 * Calculates the number of armies to give to each player and sets them.
-	 */
-	public void calculateArmiesPerPlayer() {
-		// Start every player off with a minimum number of armies.
-		for (Player l_player : d_players) {
-			// Start every player off with a minimum number of armies.
-			l_player.setNumUndeployedArmies(0);
-			// Then each player gets a number according to the continents they control.
-			for (Continent l_continent : l_player.getOwnedContinents()) {
-				l_player.addUndeployedArmies(l_continent.getBonusArmies());
-			}
-		}
+	public void assignTerritories() {
+		d_currentPhase.assignTerritories();
 	}
 	
 	/**
@@ -251,7 +240,6 @@ public class GameEngine {
 	 */
 	public int deployArmies(int p_tID, int p_num) {
 		// TODO: Next player should be player that actually has armies to deploy.
-		// TODO: Should only be able to deploy to your own territory.
 		if (p_tID > 0 && p_tID <= d_map.getNumTerritories()) {
 			Player l_player = d_players.get(d_nextPlayer);
 			Territory l_territory = d_map.getTerritory(p_tID);
@@ -268,11 +256,58 @@ public class GameEngine {
 			// Cannot deploy more armies than we have.
 			int l_numArmies = l_player.removeUndeployedArmies(p_num);
 			l_player.issueOrder(onCreateEntity(new DeployOrder(l_territory, l_numArmies)));
-			broadcastMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getName() + ".");
+			broadcastMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getDisplayName() + ".");
 			return l_numArmies;
 		}
 		broadcastMessage("Invalid territory. Please try again.");
 		return 0;
+	}
+	
+	/**
+	 * Creates an order to advance armies for the next player.
+	 * @param p_fromID The ID of the territory the armies are moving from.
+	 * @param p_toID The ID of the territory the armies will go to.
+	 * @param p_numToAdvance The number of armies desired to be advanced.
+	 * @return The number of armies actually advanced.
+	 */
+	public int advanceArmies(int p_fromID, int p_toID, int p_num) {
+		// TODO: Next player should be player that actually has armies to deploy.
+		// TODO: Should only be able to deploy to your own territory.
+		if (!getMap().doesBorderExist(p_toID, p_fromID)) {
+			broadcastMessage("Error: territories do not border each other.");
+			return 0;
+		}
+		if (p_fromID == p_toID) {
+			broadcastMessage("Error: the territories cannot be the same.");
+		}
+		if (p_fromID < 1 || p_fromID > d_map.getNumTerritories()) {
+			broadcastMessage("Error: invalid origin territory.");
+			return 0;
+		}
+		if (p_toID < 1 || p_toID > d_map.getNumTerritories()) {
+			broadcastMessage("Error: invalid destination territory.");
+			return 0;
+		}
+		if (p_num < 1) {
+			broadcastMessage("Error: must advance at least one army.");
+			return 0;
+		}
+		Player l_player = d_players.get(d_nextPlayer);
+		Territory l_fromTerritory = d_map.getTerritory(p_fromID);
+		// Cannot advance from a territory we do not control
+		// However, it doesn't matter if we own the destination; it could be lost or gained before this order is executed).
+		if (!l_player.ownsTerritory(l_fromTerritory)) {
+			broadcastMessage("Error: cannot advance from a territory " + l_player.getName() + " does not control.");
+			return 0;
+		}
+		Territory l_toTerritory = d_map.getTerritory(p_toID);
+		// Calc next player.
+		d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
+		// Cannot advance more armies than currently exist in the territory.
+		int l_numArmies = Math.min(p_num, l_fromTerritory.getNumArmies());
+		l_player.issueOrder(onCreateEntity(new AdvanceOrder(l_fromTerritory, l_toTerritory, l_numArmies)));
+		broadcastMessage(l_player.getName() + " will advance " + l_numArmies + " from " + l_fromTerritory.getDisplayName() + " to " + l_toTerritory.getDisplayName() + ".");
+		return l_numArmies;
 	}
 	
 	/**

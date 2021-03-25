@@ -307,6 +307,24 @@ public class InputHandler extends Thread {
 								}
 							}
 							break;
+							
+						case("advance"):
+							if (l_splitInput.length != 4) {
+								l_areParametersInvalid = true;
+							}
+							else {
+								try {
+									getOwner().getController().advance(Integer.parseInt(l_splitInput[1]), Integer.parseInt(l_splitInput[2]), Integer.parseInt(l_splitInput[3]));
+								}
+								catch (NumberFormatException l_exception) {
+									l_areParametersInvalid = true;
+								}
+							}
+							break;
+							
+						case("finish"):
+							getOwner().getController().finishOrders();
+							break;
 						
 						default:
 							getOwner().addMessage("Command \"" + l_splitInput[0] + "\" not recognized.");
@@ -321,7 +339,7 @@ public class InputHandler extends Thread {
 		} 
         catch (IOException e) {
 			// Just print error and go continue to the exit portion if we encounter an error.
-			System.err.println("Terminating program due to IOException: " + e.getMessage());
+			getOwner().addMessage("Terminating program due to IOException: " + e.getMessage());
 		}
 	}
 }

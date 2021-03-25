@@ -35,16 +35,24 @@ public class Continent extends MapEntity {
 	}
 	
 	/**
-	 * Gets the human-readable name of this territory.
-	 * @return The name of this territory.
+	 * Gets the name of this continent.
+	 * @return The name of this continent.
 	 */
 	public String getName() {
 		return d_name;
 	}
 	
 	/**
-	 * Sets the human-readable name of this territory to a new value.
-	 * @param p_name The new name for this territory.
+	 * Gets the human-readable name of this continent (no underscores).
+	 * @return The human-readable name of this continent.
+	 */
+	public String getDisplayName() {
+		return d_name.replace('_', ' ');
+	}
+	
+	/**
+	 * Sets the name of this territory to a new value.
+	 * @param p_name The new name for this continent.
 	 */
 	public void setName(String p_name) {
 		d_name = p_name;

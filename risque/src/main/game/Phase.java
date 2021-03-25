@@ -16,6 +16,22 @@ public abstract class Phase {
 	Phase(GameEngine p_engine) {
 		d_engine = p_engine;
 	}
+	
+	/**
+	 * Does actions at the start of a phase.
+	 * @param p_prevPhase The previous phase.
+	 */
+	public void onPhaseStart(Phase p_prevPhase) {
+		// Do nothing by default.
+	}
+	
+	/**
+	 * Does actions upon ending a phase.
+	 * @param p_nextPhase The next phase.
+	 */
+	public void onPhaseEnd(Phase p_nextPhase) {
+		// Do nothing by default.
+	}
 
 	/**
 	 * Implements the showMap command.
@@ -25,7 +41,15 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Implements the assignTerritories command.
+	 */
+	public void assignTerritories() {
+		printInvalidCommandMessage("assignTerritories");
+	}
+	
+	/**
 	 *  Generic message when a command is invalid for a given state.
+	 *  @param p_commandName The name of the command that was invalid.
 	 */
 	public void printInvalidCommandMessage(String p_commandName) {
 		d_engine.getConsole().addMessage("Command " + p_commandName + " is not valid in state " + this.getClass().getSimpleName() + ".");
