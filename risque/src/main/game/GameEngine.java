@@ -156,9 +156,15 @@ public class GameEngine {
 		if (!isGameInProgress()) {
 			Player l_newPlayer = onCreateEntity(new Player(p_name));
 			if (l_newPlayer != null) {
+				broadcastMessage("Player \"" + p_name + "\" added. Total Players: " + getNumPlayers());
 				return d_players.add(l_newPlayer);
 			}
+			else {
+				broadcastMessage("Error: could not add player.");
+				return false;
+			}
 		}
+		broadcastMessage("Error: players cannot be added during gameplay");
 		return false;
 	}
 	
@@ -170,12 +176,17 @@ public class GameEngine {
 	public boolean removePlayer(String p_name) {
 		if (!isGameInProgress()) {
 			for (int l_idx = 0; l_idx < getNumPlayers(); l_idx++) {
-				if (d_players.get(l_idx).getName().equalsIgnoreCase(p_name)) {
+				String l_playerName = d_players.get(l_idx).getName();
+				if (l_playerName.equalsIgnoreCase(p_name)) {
 					d_players.remove(l_idx);
+					broadcastMessage("Player \"" + l_playerName + "\" removed. Total Players: " + getNumPlayers());
 					return true;
 				}
 			}
+			broadcastMessage("Error: no players by that name exist in this game.");
+			return false;
 		}
+		broadcastMessage("Error: players cannot be removed during gameplay");
 		return false;
 	}
 	
@@ -192,31 +203,42 @@ public class GameEngine {
 	 * @return True if the territories were assigned and the game has started, otherwise false.
 	 */
 	public boolean assignTerritories() {
-		if (d_map.validateMap() && getNumPlayers() > 1 && d_map.getNumTerritories() >= getNumPlayers()) {
-			// Divvy up the territories between the players.
-			// TODO: Make this actually random and have some balance calculations.
-			for (int l_idx = 1; l_idx <= d_map.getNumTerritories(); l_idx++) {
-				d_players.get(l_idx % getNumPlayers()).addOwnedTerritory(d_map.getTerritory(l_idx));
-			}
-			calculateArmiesPerPlayer();
-			d_nextPlayer = 0;
-			d_currentPhase = new IssueOrderPhase(this);
-			return true;
+		// Print out an error message if we cannot start the game.
+		if (!d_map.validateMap()) {
+			broadcastMessage("Error: a valid map must be loaded.");
+			return false;
 		}
-		return false;
+		else if (getNumPlayers() < 2) {
+			broadcastMessage("Error: cannot start a game with just one player.");
+			return false;
+		}
+		else if (d_map.getNumTerritories() < getNumPlayers()) {
+			broadcastMessage("Error: there must be at least one territory per player.");
+			return false;
+		}
+		// Otherwise, divvy up the territories between the players.
+		// TODO: Make this actually random and have some balance calculations.
+		for (int l_idx = 1; l_idx <= d_map.getNumTerritories(); l_idx++) {
+			d_players.get(l_idx % getNumPlayers()).addOwnedTerritory(d_map.getTerritory(l_idx));
+		}
+		calculateArmiesPerPlayer();
+		d_nextPlayer = 0;
+		d_currentPhase = new IssueOrderPhase(this);
+		broadcastMessage("Territories have been assigned and the game has started. Good luck!");
+		return true;
 	}
 	
 	/**
-	 * Calculates the number of armies to give to each player.
+	 * Calculates the number of armies to give to each player and sets them.
 	 */
 	public void calculateArmiesPerPlayer() {
 		// Start every player off with a minimum number of armies.
 		for (Player l_player : d_players) {
 			// Start every player off with a minimum number of armies.
-			l_player.d_numArmiesLeftToDeploy = d_minArmies;
+			l_player.setNumUndeployedArmies(0);
 			// Then each player gets a number according to the continents they control.
 			for (Continent l_continent : l_player.getOwnedContinents()) {
-				l_player.d_numArmiesLeftToDeploy += l_continent.getBonusArmies();
+				l_player.addUndeployedArmies(l_continent.getBonusArmies());
 			}
 		}
 	}
@@ -240,13 +262,12 @@ public class GameEngine {
 			}
 			// Calc next player.
 			d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
-			while (d_players.get(d_nextPlayer).d_numArmiesLeftToDeploy == 0) {
+			while (d_players.get(d_nextPlayer).getNumUndeployedArmies() == 0) {
 				d_nextPlayer = (d_nextPlayer + 1) % getNumPlayers();
 			}
 			// Cannot deploy more armies than we have.
-			int l_numArmies = Math.min(l_player.d_numArmiesLeftToDeploy, p_num);
-			l_player.d_numArmiesLeftToDeploy -= l_numArmies;
-			l_player.issueOrder(new DeployOrder(l_territory, l_numArmies));
+			int l_numArmies = l_player.removeUndeployedArmies(p_num);
+			l_player.issueOrder(onCreateEntity(new DeployOrder(l_territory, l_numArmies)));
 			broadcastMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getName() + ".");
 			return l_numArmies;
 		}

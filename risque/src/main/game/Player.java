@@ -41,7 +41,7 @@ public class Player extends GameEntity {
 	 * Number of armies left to deploy for this player.
 	 * TODO: Add getter/setter and make private!
 	 */
-	public int d_numArmiesLeftToDeploy;
+	private int d_numUndeployedArmies;
 	
 	/**
 	 * Default constructor for player.
@@ -49,10 +49,10 @@ public class Player extends GameEntity {
 	 */
 	public Player(String p_name) {
 		setName(p_name);
+		setNumUndeployedArmies(0);
 		d_ownedTerritories = new LinkedList<>();
 		d_ownedContinents = new LinkedList<>();
 		d_orders = new LinkedList<>();
-		d_numArmiesLeftToDeploy = 0;
 	}
 	
 	/**
@@ -167,6 +167,43 @@ public class Player extends GameEntity {
 	@SuppressWarnings("unchecked")
 	public LinkedList<Continent> getOwnedContinents() {
 		return (LinkedList<Continent>)d_ownedContinents.clone();
+	}
+	
+	/**
+	 * Gets the number of undeployed armies.
+	 * @return The number of undeployed armies.
+	 */
+	public int getNumUndeployedArmies() {
+		return d_numUndeployedArmies;
+	}
+	
+	/**
+	 * Sets the number of undeployed armies to a new value. Will not go below zero.
+	 * @param p_newNum The desired number of armies.
+	 * @return The number of armies after ensuring it is zero or greater.
+	 */
+	public int setNumUndeployedArmies(int p_newNum) {
+		d_numUndeployedArmies = Math.max(0, p_newNum);
+		return d_numUndeployedArmies;
+	}
+	
+	/**
+	 * Adds armies to this player's undeployed army count.
+	 * @param p_armiesToAdd The number of armies to add.
+	 */
+	public void addUndeployedArmies(int p_armiesToAdd) {
+		d_numUndeployedArmies += p_armiesToAdd;
+	}
+	
+	/**
+	 * Subtracts armies from the player's undeployed army count.
+	 * @param p_armiesToRemove The number of armies to remove.
+	 * @return The number of armies actually subtracted.
+	 */
+	public int removeUndeployedArmies(int p_armiesToRemove) {
+		int l_armiesRemoved = Math.min(d_numUndeployedArmies, p_armiesToRemove);
+		d_numUndeployedArmies -= l_armiesRemoved;
+		return l_armiesRemoved;
 	}
 	
 	/**
