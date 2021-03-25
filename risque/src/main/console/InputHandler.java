@@ -67,7 +67,7 @@ public class InputHandler extends Thread {
 								l_areParametersInvalid = true;
 							}
 							else {
-						 		getOwner().execLoadMap(l_splitInput[1]);
+						 		getOwner().getController().loadMap(l_splitInput[1]);
 							}
 							break;
 							
@@ -76,7 +76,16 @@ public class InputHandler extends Thread {
 								l_areParametersInvalid = true;
 							}
 							else {
-								getOwner().execSaveMap(l_splitInput[1]);
+								getOwner().getController().saveMap(l_splitInput[1]);
+							}
+							break;
+							
+						case("editmap"):
+							if (l_splitInput.length != 2) {
+								l_areParametersInvalid = true;
+							}
+							else {
+								getOwner().getController().editMap(l_splitInput[1]);
 							}
 							break;
 							
@@ -86,7 +95,7 @@ public class InputHandler extends Thread {
 								l_areParametersInvalid = true;
 							}
 							else {
-								getOwner().execShowMap();
+								getOwner().getController().printMap();
 							}
 							break;
 							
@@ -95,7 +104,7 @@ public class InputHandler extends Thread {
 								l_areParametersInvalid = true;
 							}
 							else {
-								getOwner().execValidateMap();
+								getOwner().getController().validateMap();
 							}
 							break;
 							
@@ -262,10 +271,10 @@ public class InputHandler extends Thread {
 							else {
 								for (int l_idx = 1; l_idx < l_splitInput.length; l_idx += 2) {
 									if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-										getOwner().execAddPlayer(l_splitInput[l_idx + 1]);
+										getOwner().getController().addPlayer(l_splitInput[l_idx + 1]);
 									}
 									else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
-										getOwner().execRemovePlayer(l_splitInput[l_idx + 1]);
+										getOwner().getController().removePlayer(l_splitInput[l_idx + 1]);
 									}
 									else {
 										l_areParametersInvalid = true;
@@ -305,12 +314,6 @@ public class InputHandler extends Thread {
 					
 					if (l_areParametersInvalid) {
 						getOwner().addMessage("Invalid parameters for command " + l_splitInput[0] + ".");
-					}
-					
-					// TODO: move validated commands to switch statement above.
-	
-					if (l_splitInput[0]=="editmap") {
-						getOwner().execEditMap(l_splitInput[1].trim());
 					}
 				}
 

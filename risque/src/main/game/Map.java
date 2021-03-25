@@ -411,7 +411,7 @@ public class Map extends GameEntity {
 	 * @return Whether a valid map was loaded.
 	 */
 	public boolean loadFromFile(String l_fileName) {
-		// TODO: this could be refactored into a static function that returns a new Map object.
+		// TODO: this could be turned into a static function that returns a new Map object.
 		d_continents.clear();
 		d_territories.clear();
 		d_borders.clear();
@@ -460,12 +460,21 @@ public class Map extends GameEntity {
 				}
 			}
 			l_reader.close();
-			return validateMap();
+			if (validateMap()) {
+				getEngine().broadcastMessage("The map \"" + l_fileName + "\" was successfully loaded.");
+				return true;
+			}
+			else {
+				getEngine().broadcastMessage("The file \"" + l_fileName + "\" is not a valid map.");
+				return false;
+			}
 		} 
 		catch (FileNotFoundException l_exception) {
+			getEngine().broadcastMessage("The map \"" + l_fileName + "\" could not be found.");
 			return false;
 		}
 		catch (NumberFormatException l_exception) {
+			getEngine().broadcastMessage("The file \"" + l_fileName + "\" is not a valid map.");
 			return false;
 			
 		}
@@ -485,21 +494,15 @@ public class Map extends GameEntity {
 		
 		// Do not allow us to save if the map is not valid.
 		if (!validateMap()) {
+			getEngine().broadcastMessage("Error: cannot save an invalid map.");
 			return false;
 		}
 		
 		try {
-			// Attempt to create the file.
+			// Attempt to create the file. Override it if it already exists.
 			File l_file = new File(l_fileName);
 			if (l_file.exists()) {
-				System.out.println("File already exists. Deleting!");
 				l_file.delete();
-			}
-			if (l_file.createNewFile()) {
-				System.out.println("File created!");
-			}
-			else {
-				System.out.println("File already exists!");
 			}
 			
 			// Begin by writing a comment containing the file name and that it was made by this program.
@@ -515,9 +518,11 @@ public class Map extends GameEntity {
 			 * Close the file writer once we have finished.
 			 */
 			l_writer.close();
+			getEngine().broadcastMessage("Map successfully saved as: " + l_fileName);
 			return true;
 		} 
 		catch (IOException l_exception) {
+			getEngine().broadcastMessage("Error: the map could not be saved due to an IO exception: "  + l_exception.getMessage());
 			return false;
 		}
 	}

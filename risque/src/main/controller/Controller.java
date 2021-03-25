@@ -60,7 +60,7 @@ public class Controller {
 	*Will start the process for executing "editcontinent" command.
 	*@param p_add_remove_continent This parameter includes continent which is to be added or removed.
 	*/
-	public void editcontinent(String p_add_remove_continent) {
+	public void editContinent(String p_add_remove_continent) {
 	//TODO
 	}
 
@@ -68,7 +68,7 @@ public class Controller {
 	*Will start the process for executing "editcountry" command.
 	*@param p_add_remove_country This parameter includes country which is to be added or removed.
 	*/
-	public void editcountry(String p_add_remove_country) {
+	public void editCountry(String p_add_remove_country) {
 	//TODO
 	}
 
@@ -76,7 +76,7 @@ public class Controller {
 	*Will start the process for executing "editneighbor" command.
 	*@param p_add_remove_neighbor This parameter includes neighbor which is to be added or removed.
 	*/
-	public void editneighbor(String p_add_remove_neighbor) {
+	public void editNeighbour(String p_add_remove_neighbor) {
 	//TODO
 	}
 
@@ -92,8 +92,8 @@ public class Controller {
 	* @param p_fileName File name to which a map is to be saved.
 	* @return True if the map was successfully saved, otherwise false.
 	*/
-	public boolean saveMap(String p_fileName) {
-		return d_engine.saveMap(p_fileName);
+	public void saveMap(String p_fileName) {
+		d_engine.saveMap(p_fileName);
 	}
 
 	/**
@@ -107,10 +107,17 @@ public class Controller {
 	
 	/**
 	 * Will start the process for executing "validatemap" command.
-	 * @return True if the map is valid, otherwise false.
 	 */
-	public boolean validateMap() {
-		return d_engine.getMap().validateMap();
+	public void validateMap() {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("There is no map.");
+		}
+		else if (d_engine.getMap().validateMap()) {
+			d_engine.broadcastMessage("The map is valid.");
+		}
+		else {
+			d_engine.broadcastMessage("The map is invalid.");
+		}
 	}
 
 	/**

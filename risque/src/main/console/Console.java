@@ -91,7 +91,7 @@ public class Console {
 	*@param p_add_remove_cont This parameter includes continent which is to be added or removed.
 	*/
 	public void execEditcontinent(String p_add_remove_cont) {
-		d_controller.editcontinent(p_add_remove_cont);
+		d_controller.editContinent(p_add_remove_cont);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Console {
 	*@param p_add_remove_coun This parameter includes country which is to be added or removed.
 	*/
 	public void execEditcountry(String p_add_remove_coun) {
-		d_controller.editcountry(p_add_remove_coun);
+		d_controller.editCountry(p_add_remove_coun);
 	}
 
 	/**
@@ -107,28 +107,7 @@ public class Console {
 	*@param p_add_remove_nei This parameter includes neighbor country which is to be placed next to other country.
 	*/
 	public void execEditneighbor(String p_add_remove_nei) {
-		d_controller.editneighbor(p_add_remove_nei);
-	}
-
-	/**
-	 *Controller to execute "showmap" command.
-	 */
-	public void execShowMap() {
-		d_controller.printMap();
-	}
-
-	/**
-	 * Controller to execute "savemap" command.
-	 * @param p_fileName File name to which a map is to be saved.
-	 */
-	public void execSaveMap(String p_fileName) {
-		boolean l_wasMapSaved = d_controller.saveMap(p_fileName);
-		if (l_wasMapSaved) {
-			addMessage("Map successfully saved as: " + p_fileName);
-		}
-		else {
-			addMessage("Map could not be saved. Please check that the map is valid.");
-		}
+		d_controller.editNeighbour(p_add_remove_nei);
 	}
 
 	/**
@@ -137,58 +116,6 @@ public class Console {
 	 */
 	public void execEditMap(String p_file) {
 		d_controller.editMap(p_file);
-	}
-
-	/**
-	 * Controller to execute "validate" command.
-	 */
-	public void execValidateMap() {
-		if (d_controller.validateMap()) {
-			addMessage("Map is valid.");
-		}
-		else {
-			addMessage("Map is invalid.");
-		}
-	}
-
-	/**
-	 * Controller to execute "loadmap" command.
-	 * @param p_fileName File name from which the map is to be loaded.
-	 */
-	public void execLoadMap(String p_fileName) {
-		boolean l_wasMapLoaded = d_controller.loadMap(p_fileName);
-		if (l_wasMapLoaded) {
-			addMessage("Map " + p_fileName + " loaded successfully.");
-		}
-		else {
-			addMessage("Map " + p_fileName + " could not be loaded. Please check that the map exists and is valid.");
-		}
-	}
-	
-	/**
-	 * Adds a a player to the game.
-	 * @param p_name The new player's name.
-	 */
-	public void execAddPlayer(String p_name) {
-		if (d_controller.addPlayer(p_name)) {
-			addMessage("Player added. Total players: " + d_engine.getNumPlayers());
-		}
-		else {
-			addMessage("Player " + p_name + " could not be added.");
-		}
-	}
-	
-	/**
-	 * Removes a player from the game.
-	 * @param p_name The name of the player to remove.
-	 */
-	public void execRemovePlayer(String p_name) {
-		if (d_controller.removePlayer(p_name)) {
-			addMessage("Player " + p_name + " removed. Total players: " + d_engine.getNumPlayers());
-		}
-		else {
-			addMessage("No players were removed. Check that you entered the name of a player.");
-		}
 	}
 	
 	/**
