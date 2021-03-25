@@ -53,7 +53,7 @@ public class GameEngine {
 	 */
 	public GameEngine() {
 		d_players = new LinkedList<>();
-		d_map = new Map();
+		d_map = onCreateEntity(new Map());
 		d_minArmies = 3;
 		d_currentPhase = new StartupPhase(this);
 	}
@@ -80,6 +80,15 @@ public class GameEngine {
 	 */
 	public Console getConsole() {
 		return d_console;
+	}
+	
+	/**
+	 * Called whenever the game engine creates an entity. Just ensures it has a connection to the game engine.
+	 * @param p_entity The new entity.
+	 */
+	public <T extends GameEntity> T onCreateEntity(T p_entity) {
+		p_entity.setEngine(this);
+		return p_entity;
 	}
 	
 	/**
@@ -145,7 +154,7 @@ public class GameEngine {
 	 */
 	public boolean addPlayer(String p_name) {
 		if (!isGameInProgress()) {
-			Player l_newPlayer = new Player(p_name);
+			Player l_newPlayer = onCreateEntity(new Player(p_name));
 			if (l_newPlayer != null) {
 				return d_players.add(l_newPlayer);
 			}
@@ -203,13 +212,11 @@ public class GameEngine {
 	public void calculateArmiesPerPlayer() {
 		// Start every player off with a minimum number of armies.
 		for (Player l_player : d_players) {
+			// Start every player off with a minimum number of armies.
 			l_player.d_numArmiesLeftToDeploy = d_minArmies;
-		}
-		for (int l_idx = 1; l_idx <= getMap().getNumContinents(); l_idx++) {
-			Continent l_continent = getMap().getContinent(l_idx);
-			Player l_playerOwner = l_continent.getPlayerOwner();
-			if (l_playerOwner != null) {
-				l_playerOwner.d_numArmiesLeftToDeploy += l_continent.getBonusArmies();
+			// Then each player gets a number according to the continents they control.
+			for (Continent l_continent : l_player.getOwnedContinents()) {
+				l_player.d_numArmiesLeftToDeploy += l_continent.getBonusArmies();
 			}
 		}
 	}
@@ -228,7 +235,7 @@ public class GameEngine {
 			Territory l_territory = d_map.getTerritory(p_tID);
 			// Cannot deploy to a territory we do not control.
 			if (!l_player.ownsTerritory(l_territory)) {
-				d_console.addMessage("Cannot deploy to a territory " + l_player.getName() + " does not control.");
+				broadcastMessage("Cannot deploy to a territory " + l_player.getName() + " does not control.");
 				return 0;
 			}
 			// Calc next player.
@@ -240,10 +247,10 @@ public class GameEngine {
 			int l_numArmies = Math.min(l_player.d_numArmiesLeftToDeploy, p_num);
 			l_player.d_numArmiesLeftToDeploy -= l_numArmies;
 			l_player.issueOrder(new DeployOrder(l_territory, l_numArmies));
-			d_console.addMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getName() + ".");
+			broadcastMessage(l_player.getName() + " will deploy " + l_numArmies + " to " + l_territory.getName() + ".");
 			return l_numArmies;
 		}
-		d_console.addMessage("Invalid territory. Please try again.");
+		broadcastMessage("Invalid territory. Please try again.");
 		return 0;
 	}
 	
@@ -266,6 +273,16 @@ public class GameEngine {
 					}
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Broadcasts a message to any connected observers, like the console.
+	 * @param p_message The string to output.
+	 */
+	public void broadcastMessage(String p_message) {
+		if (d_console != null) {
+			d_console.addMessage(p_message);
 		}
 	}
 }

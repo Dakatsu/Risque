@@ -15,7 +15,7 @@ import java.util.LinkedList;
  * @author Kyle
  *
  */
-public class Player {	
+public class Player extends GameEntity {	
 	/**
 	 * The player's name.
 	 */
@@ -25,6 +25,11 @@ public class Player {
 	 * The territories this player owns.
 	 */
 	private LinkedList<Territory> d_ownedTerritories;
+	
+	/**
+	 * The continents this player owns/controls.
+	 */
+	private LinkedList<Continent> d_ownedContinents;
 	
 	/**
 	 * All the player's issued but unexecuted orders.
@@ -45,6 +50,7 @@ public class Player {
 	public Player(String p_name) {
 		setName(p_name);
 		d_ownedTerritories = new LinkedList<>();
+		d_ownedContinents = new LinkedList<>();
 		d_orders = new LinkedList<>();
 		d_numArmiesLeftToDeploy = 0;
 	}
@@ -110,6 +116,57 @@ public class Player {
 			return d_ownedTerritories.remove(p_territory);
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns a shallow copy of the territories this player owns.
+	 * @return The list of owned territories.
+	 */
+	@SuppressWarnings("unchecked")
+	public LinkedList<Territory> getOwnedTerritories() {
+		return (LinkedList<Territory>)d_ownedTerritories.clone();
+	}
+	
+	/**
+	 * Does this player control a specific continent?
+	 * @param p_continent The continent to check ownership of.
+	 * @return True if the player owns the continent, otherwise false.
+	 */
+	public boolean ownsContinent(Continent p_continent) {
+		return d_ownedContinents.contains(p_continent);
+	}
+	
+	/**
+	 * Adds the continent to the list of this player's owned continents.
+	 * @param p_continent The continent to add.
+	 * @return True if the player did not own this continent before, otherwise false.
+	 */
+	public boolean addOwnedContinent(Continent p_continent) {
+		if (p_continent != null && !d_ownedContinents.contains(p_continent)) {
+			return d_ownedContinents.add(p_continent);
+		}
+		return false;
+	}
+	
+	/**
+	 * Removes the continent to the list of this player's owned continents.
+	 * @param p_continent The continent to remove.
+	 * @return True if the player owned this continent and it was removed, otherwise false.
+	 */
+	public boolean removeOwnedContinent(Continent p_continent) {
+		if (p_continent != null) {
+			return d_ownedContinents.remove(p_continent);
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns a shallow copy of the continents this player owns.
+	 * @return The list of owned continents.
+	 */
+	@SuppressWarnings("unchecked")
+	public LinkedList<Continent> getOwnedContinents() {
+		return (LinkedList<Continent>)d_ownedContinents.clone();
 	}
 	
 	/**

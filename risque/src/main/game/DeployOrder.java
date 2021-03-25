@@ -5,7 +5,7 @@ package main.game;
  * @author Kyle
  *
  */
-public class DeployOrder implements Order {
+public class DeployOrder extends Order {
 	
 	/**
 	 * The territory to deploy to.

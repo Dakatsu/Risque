@@ -17,11 +17,6 @@ public class Continent extends MapEntity {
 	private int d_bonusArmies;
 	
 	/**
-	 * The player that controls this entire continent, if one exists.
-	 */
-	private Player d_playerOwner;
-	
-	/**
 	 * Constructs a continent with a name and specific number of bonus armies.
 	 * @param p_name The name for this continent.
 	 * @param p_bonusArmies The number of bonus armies controlling this continent provides.
@@ -29,7 +24,6 @@ public class Continent extends MapEntity {
 	public Continent(String p_name, int p_bonusArmies) {
 		setName(p_name);
 		setBonusArmies(p_bonusArmies);
-		determinePlayerOwner();
 	}
 	
 	/**
@@ -75,23 +69,5 @@ public class Continent extends MapEntity {
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * Returns the player who owns this continent.
-	 * @return The player who controls every territory in this continent (if one exists), otherwise null.
-	 */
-	public Player getPlayerOwner() {
-		return d_playerOwner;
-	}
-	
-	/**
-	 * Determines which player owns this continent, if one exists.
-	 * TODO: Actual logic to detect the owner.
-	 * @return The owning player (whether it changed or not), or null if nobody controls it.
-	 */
-	public Player determinePlayerOwner() {
-		d_playerOwner = null;
-		return getPlayerOwner();
 	}
 }

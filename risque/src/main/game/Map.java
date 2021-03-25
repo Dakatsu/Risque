@@ -13,7 +13,7 @@ import java.util.Scanner;
  * Represents a map file. It may be valid and playable or in the midst of being created and unplayable.
  * @author Kyle
  */
-public class Map {
+public class Map extends GameEntity {
 	/** 
 	 * The list of continents in this map.
 	 * Their ID is equivalent to their index in this list + 1.

@@ -1,13 +1,13 @@
 package main.game;
 
 /**
- * An interface for orders issued by players.
+ * An abstract class for orders issued by players.
  * @author Kyle
  */
-public interface Order {
+public abstract class Order extends GameEntity {
 	/**
 	 * Executes the given order.
 	 * @return Whether the order was executed successfully.
 	 */
-	public boolean execute();
+	abstract public boolean execute();
 }
