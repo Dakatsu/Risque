@@ -199,16 +199,4 @@ public class Console {
 			addMessage("Invalid IDs or the territories were not neighbours.");
 		}
 	}
-
-	/**
-	 *Controller to execute "assigncountries" or "assignterritories" command.
-	 */
-	public void execAssignTerritories() {
-		if (d_controller.assignTerritories()) {
-			addMessage("Territories have been assigned and the game has started. Good luck!");
-		}
-		else {
-			addMessage("Unable to assign territories and start the game. Please ensure the map is valid and there are at least two players.");
-		}
-	}
 }

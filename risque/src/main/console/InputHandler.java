@@ -290,7 +290,7 @@ public class InputHandler extends Thread {
 								l_areParametersInvalid = true;
 							}
 							else {
-								getOwner().execAssignTerritories();
+								getOwner().getController().assignTerritories();
 							}
 							break;
 							
@@ -309,11 +309,11 @@ public class InputHandler extends Thread {
 							break;
 						
 						default:
-							getOwner().addMessage("Command " + l_splitInput[0] + " not recognized.");
+							getOwner().addMessage("Command \"" + l_splitInput[0] + "\" not recognized.");
 					}
 					
 					if (l_areParametersInvalid) {
-						getOwner().addMessage("Invalid parameters for command " + l_splitInput[0] + ".");
+						getOwner().addMessage("Invalid parameters for command \"" + l_splitInput[0] + "\".");
 					}
 				}
 
