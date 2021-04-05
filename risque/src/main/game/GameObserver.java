@@ -13,4 +13,8 @@ public interface GameObserver {
 	 */
 	void onAddMessage(String p_message);
 
+	/**
+	 * Called by the game engine when the game wishes to shut down.
+	 */
+	void onQuit();
 }

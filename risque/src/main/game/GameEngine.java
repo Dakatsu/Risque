@@ -3,6 +3,7 @@ package main.game;
 import java.util.LinkedList;
 
 import main.console.Console;
+import main.console.LogEntryBuffer;
 import main.controller.Controller;
 
 /**
@@ -281,6 +282,16 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Starts the process of quitting the game.
+	 */
+	public void startQuit() {
+		for (GameObserver d_observer : d_observers) {
+			d_observer.onAddMessage("...Quitting Risque...");
+			d_observer.onQuit();
+		}
+	}
+	
+	/**
 	 * The main function that will start the key modules for the program.
 	 * The console will create an InputHandler as a separate thread.
 	 * The program terminates when that thread finishes, which happens after the "quit" command
@@ -292,5 +303,6 @@ public class GameEngine {
 		GameEngine l_gameEngine = new GameEngine();
 		Controller l_controller = new Controller(l_gameEngine);
 		Console l_console = new Console(l_gameEngine, l_controller);
+		LogEntryBuffer l_log = new LogEntryBuffer(l_gameEngine);
 	}
 }

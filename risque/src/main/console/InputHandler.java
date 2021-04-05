@@ -59,7 +59,7 @@ public class InputHandler extends Thread {
 					switch(l_splitInput[0].toLowerCase()) {
 					
 						case("quit"):
-							getOwner().onAddMessage("...Quitting Risque...");
+							getOwner().getController().quit();
 							return;
 					
 						case("loadmap"):

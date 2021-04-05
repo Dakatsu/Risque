@@ -260,4 +260,11 @@ public class Controller {
 	public void finishOrders() {
 		d_engine.finishOrders();
 	}
+	
+	/**
+	 * Tells the game engine that we want to quit.
+	 */
+	public void quit() {
+		d_engine.startQuit();
+	}
 }

@@ -27,7 +27,14 @@ import java.util.Queue;
  *
  */
 public class Console implements GameObserver {
+	/**
+	 * The game engine we are observing.
+	 */
 	private GameEngine d_engine;
+	
+	/**
+	 * The controller we send commands to.
+	 */
 	private Controller d_controller;
 	
 	/**
@@ -84,8 +91,17 @@ public class Console implements GameObserver {
 	 * Prints a message to the console.
 	 * @param p_message the message to print.
 	 */
+	@Override
 	public void onAddMessage(String p_message) {
 		System.out.println(p_message);
+	}
+	
+	/**
+	 * Nothing happens 
+	 */
+	@Override
+	public void onQuit() {
+		// Do nothing by default.
 	}
 	
 	/**
