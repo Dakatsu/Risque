@@ -20,7 +20,7 @@ public class StartupPhase extends Phase {
 	@Override
 	public void showMap() {
 		if (d_engine.getMap() != null) {
-			d_engine.getConsole().addMessage(d_engine.getMap().toText());
+			d_engine.broadcastMessage(d_engine.getMap().toText());
 		}
 	}
 	

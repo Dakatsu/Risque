@@ -8,7 +8,7 @@ import main.controller.Controller;
 /**
  * This is the root of the game's "Model" in the MVC architecture.
  * It manages most game functions and communicates with the view classes (e.g. the console).
- * The main function also provides the entrypoint for this program.
+ * The main function also provides the entry-point for this program.
  * 
  * @author Kyle
  *
@@ -20,9 +20,9 @@ public class GameEngine {
 	private Controller d_controller;
 	
 	/**
-	 * The console we're linked to.
+	 * The list of observers we're linked to.
 	 */
-	private Console d_console;
+	private LinkedList<GameObserver> d_observers;
 	
 	/**
 	 * The current map we have loaded for gameplay or editing.
@@ -48,6 +48,7 @@ public class GameEngine {
 	 * Default constructor for the GameEngine.
 	 */
 	public GameEngine() {
+		d_observers = new LinkedList<>();
 		d_players = new LinkedList<>();
 		d_map = onCreateEntity(new Map());
 		d_currentPhase = new StartupPhase(this);
@@ -67,14 +68,6 @@ public class GameEngine {
 	 */
 	public void setController(Controller p_controller) {
 		d_controller = p_controller;
-	}
-	
-	/**
-	 * Gets the console currently connected to this.
-	 * @return the current console
-	 */
-	public Console getConsole() {
-		return d_console;
 	}
 	
 	/**
@@ -108,11 +101,20 @@ public class GameEngine {
 	}
 	
 	/**
-	 * Sets the console.
-	 * @param p_console the new console.
+	 * Adds a new observer.
+	 * @param p_observer The new observer.
 	 */
-	public void setConsole(Console p_console) {
-		d_console = p_console;
+	public void addObserver(GameObserver p_observer) {
+		d_observers.add(p_observer);
+	}
+	
+	/**
+	 * Removes an observer (if they were observing us).
+	 * @param p_observer The observer to remove.
+	 * @return Whether p_observer was registered as an observer.
+	 */
+	public boolean removeObserver(GameObserver p_observer) {
+		return d_observers.remove(p_observer);
 	}
 	
 	/**
@@ -273,8 +275,8 @@ public class GameEngine {
 	 * @param p_message The string to output.
 	 */
 	public void broadcastMessage(String p_message) {
-		if (d_console != null) {
-			d_console.addMessage(p_message);
+		for (GameObserver d_observer : d_observers) {
+			d_observer.onAddMessage(p_message);
 		}
 	}
 	

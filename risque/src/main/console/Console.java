@@ -2,6 +2,8 @@ package main.console;
 
 import main.controller.Controller;
 import main.game.GameEngine;
+import main.game.GameObserver;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -24,7 +26,7 @@ import java.util.Queue;
  * @author Kyle
  *
  */
-public class Console {
+public class Console implements GameObserver {
 	private GameEngine d_engine;
 	private Controller d_controller;
 	
@@ -36,7 +38,7 @@ public class Console {
 	public Console(GameEngine p_engine, Controller p_controller) {
 		setEngine(p_engine);
 		if (d_engine != null) {
-			d_engine.setConsole(this);
+			d_engine.addObserver(this);
 		}
 		setController(p_controller);
 		if (d_controller != null) {
@@ -82,7 +84,7 @@ public class Console {
 	 * Prints a message to the console.
 	 * @param p_message the message to print.
 	 */
-	public void addMessage(String p_message) {
+	public void onAddMessage(String p_message) {
 		System.out.println(p_message);
 	}
 	
@@ -125,10 +127,10 @@ public class Console {
 	 */
 	public void execAddContinent(int p_cID, int p_cValue) {
 		if (d_controller.addContinent(p_cID, p_cValue)) {
-			addMessage("New continent created. The number of continents is now " + d_engine.getMap().getNumContinents());
+			onAddMessage("New continent created. The number of continents is now " + d_engine.getMap().getNumContinents());
 		}
 		else {
-			addMessage("The continent could not be created.");
+			onAddMessage("The continent could not be created.");
 		}
 	}
 	
@@ -138,10 +140,10 @@ public class Console {
 	 */
 	public void execRemoveContinent(int p_cID) {
 		if (d_controller.removeContinent(p_cID)) {
-			addMessage("Continent removed. The number of continents is now " + d_engine.getMap().getNumContinents());
+			onAddMessage("Continent removed. The number of continents is now " + d_engine.getMap().getNumContinents());
 		}
 		else {
-			addMessage("No continents were removed. Please ensure a valid ID was entered.");
+			onAddMessage("No continents were removed. Please ensure a valid ID was entered.");
 		}
 	}
 	
@@ -152,10 +154,10 @@ public class Console {
 	 */
 	public void execAddTerritory(int p_tID, int p_cID) {
 		if (d_controller.addTerritory(p_tID, p_cID)) {
-			addMessage("New territory created. The number of territories is now " + d_engine.getMap().getNumTerritories());
+			onAddMessage("New territory created. The number of territories is now " + d_engine.getMap().getNumTerritories());
 		}
 		else {
-			addMessage("Territory was not added. Please check your parameters.");
+			onAddMessage("Territory was not added. Please check your parameters.");
 		}
 	}
 	
@@ -165,10 +167,10 @@ public class Console {
 	 */
 	public void execRemoveTerritory(int p_tID) {
 		if (d_controller.removeTerritory(p_tID)) {
-			addMessage("Territory removed. The number of territories is now " + d_engine.getMap().getNumTerritories());
+			onAddMessage("Territory removed. The number of territories is now " + d_engine.getMap().getNumTerritories());
 		}
 		else {
-			addMessage("Territory was not added. Please check that there is a territory with the input ID.");
+			onAddMessage("Territory was not added. Please check that there is a territory with the input ID.");
 		}
 	}
 	
@@ -179,10 +181,10 @@ public class Console {
 	 */
 	public void execAddNeighbour(int p_firstID, int p_secondID) {
 		if (d_controller.addNeighbours(p_firstID, p_secondID)) {
-			addMessage("Neighbours successfully added.");
+			onAddMessage("Neighbours successfully added.");
 		}
 		else {
-			addMessage("Invalid IDs or the territories were already neighbours.");
+			onAddMessage("Invalid IDs or the territories were already neighbours.");
 		}
 	}
 	
@@ -193,10 +195,10 @@ public class Console {
 	 */
 	public void execRemoveNeighbour(int p_firstID, int p_secondID) {
 		if (d_controller.removeNeighbours(p_firstID, p_secondID)) {
-			addMessage("Territories are no longer neighbours.");
+			onAddMessage("Territories are no longer neighbours.");
 		}
 		else {
-			addMessage("Invalid IDs or the territories were not neighbours.");
+			onAddMessage("Invalid IDs or the territories were not neighbours.");
 		}
 	}
 }

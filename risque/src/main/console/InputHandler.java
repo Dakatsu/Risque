@@ -59,7 +59,7 @@ public class InputHandler extends Thread {
 					switch(l_splitInput[0].toLowerCase()) {
 					
 						case("quit"):
-							getOwner().addMessage("...Quitting Risque...");
+							getOwner().onAddMessage("...Quitting Risque...");
 							return;
 					
 						case("loadmap"):
@@ -327,11 +327,11 @@ public class InputHandler extends Thread {
 							break;
 						
 						default:
-							getOwner().addMessage("Command \"" + l_splitInput[0] + "\" not recognized.");
+							getOwner().onAddMessage("Command \"" + l_splitInput[0] + "\" not recognized.");
 					}
 					
 					if (l_areParametersInvalid) {
-						getOwner().addMessage("Invalid parameters for command \"" + l_splitInput[0] + "\".");
+						getOwner().onAddMessage("Invalid parameters for command \"" + l_splitInput[0] + "\".");
 					}
 				}
 
@@ -339,7 +339,7 @@ public class InputHandler extends Thread {
 		} 
         catch (IOException e) {
 			// Just print error and go continue to the exit portion if we encounter an error.
-			getOwner().addMessage("Terminating program due to IOException: " + e.getMessage());
+			getOwner().onAddMessage("Terminating program due to IOException: " + e.getMessage());
 		}
 	}
 }

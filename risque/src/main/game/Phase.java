@@ -81,6 +81,6 @@ public abstract class Phase {
 	 *  @param p_commandName The name of the command that was invalid.
 	 */
 	public void printInvalidCommandMessage(String p_commandName) {
-		d_engine.getConsole().addMessage("Command " + p_commandName + " is not valid in state " + this.getClass().getSimpleName() + ".");
+		d_engine.broadcastMessage("Command " + p_commandName + " is not valid in state " + this.getClass().getSimpleName() + ".");
 	}
 }
