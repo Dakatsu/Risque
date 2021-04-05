@@ -2,14 +2,29 @@ package tests.game;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import main.game.GameEngine;
 import main.game.Map;
 
 /**
  * Tests the {@link main.game.Map} class.
  */
 public class MapTest {
+	
+	/**
+	 * Reference to the game engine the map uses.
+	 */
+	GameEngine d_engine;
+	
+	/**
+	 * Sets up the GameEngine before executing a test.
+	 */
+	@Before
+	public void before() {
+		d_engine = new GameEngine();
+	}
 
 	/**
 	 * Tests the creation of an empty map.
@@ -162,6 +177,7 @@ public class MapTest {
 	@Test
 	public void mapSavingLoadingTest() {
 		Map l_savedMap = new Map();
+		l_savedMap.setEngine(d_engine);
 		assertTrue(l_savedMap.createContinent(1, 5));
 		assertTrue(l_savedMap.createContinent(2, 5));
 		assertTrue(l_savedMap.createTerritory(1, 1));
@@ -175,6 +191,7 @@ public class MapTest {
 		l_savedMap.saveToFile("JUnitTest.map");
 		
 		Map l_loadedMap = new Map();
+		l_loadedMap.setEngine(d_engine);
 		l_loadedMap.loadFromFile("JUnitTest.map");
 		
 		assertEquals(l_savedMap.getNumContinents(), l_loadedMap.getNumContinents());

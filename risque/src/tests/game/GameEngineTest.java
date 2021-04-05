@@ -13,6 +13,9 @@ import main.game.GameEngine;
  */
 public class GameEngineTest {
 	
+	/**
+	 * Reference to the game engine we're testing.
+	 */
 	GameEngine d_engine;
 	
 	/**
