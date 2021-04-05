@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Separate thread class to allow us to input data to the console while also receiving data.
@@ -24,7 +25,7 @@ public class InputHandler extends Thread {
 	private Method[] d_controllerMethods;
 	
 	/**
-	 * A map of different names for methods.
+	 * A map of different names for methods. The key is the input command, and the value is the method to invoke.
 	 */
 	private HashMap<String, String> d_methodAliases;
 	
@@ -261,40 +262,12 @@ public class InputHandler extends Thread {
 								}
 							}
 							break;
-							
-						case("deploy"):
-							if (l_splitInput.length != 3) {
-								l_areParametersInvalid = true;
-							}
-							else {
-								try {
-									getOwner().getController().deploy(Integer.parseInt(l_splitInput[1]), Integer.parseInt(l_splitInput[2]));
-								}
-								catch (NumberFormatException l_exception) {
-									l_areParametersInvalid = true;
-								}
-							}
-							break;
-							
-						case("advance"):
-							if (l_splitInput.length != 4) {
-								l_areParametersInvalid = true;
-							}
-							else {
-								try {
-									getOwner().getController().advance(Integer.parseInt(l_splitInput[1]), Integer.parseInt(l_splitInput[2]), Integer.parseInt(l_splitInput[3]));
-								}
-								catch (NumberFormatException l_exception) {
-									l_areParametersInvalid = true;
-								}
-							}
-							break;
 						
 						default:
-							// Attempt to find and call the method via reflection. Currently only supports methods with no parameters or one string parameter.
+							// Attempt to find and call the method via reflection. Currently handles string and integer arguments.
 							boolean l_wasMethodFound = false;
 							for (Method l_method : d_controllerMethods) {
-								// If we found the method, go ahead and attempt to call it.
+								// If we found the method, go ahead and attempt to invoke it.
 								if (l_method.getName().equalsIgnoreCase(l_convertedInput)) {
 									l_wasMethodFound = true;
 									int l_numInputParams = l_splitInput.length - 1;
@@ -302,32 +275,39 @@ public class InputHandler extends Thread {
 									// Only continue if the number of parameters match.
 									if (l_numInputParams == l_numMethodParams) {
 										try {
-											// Only call the method if it takes no parameters or it takes just one string.
-											if (l_numInputParams == 1 && l_method.getParameterTypes()[0].equals(String.class)) {
-												l_method.invoke(getOwner().getController(), l_splitInput[1]);
+											// Attempt to convert the arguments to the right types.
+											LinkedList<Object> l_parameters = new LinkedList<>();
+											Class[] l_paramTypes = l_method.getParameterTypes();
+											for (int l_idx = 0; l_idx < l_paramTypes.length; l_idx++) {
+												if (l_paramTypes[l_idx].equals(String.class)) {
+													l_parameters.add(l_splitInput[l_idx + 1]);
+												}
+												if (l_paramTypes[l_idx].equals(int.class)) {
+													l_parameters.add(Integer.parseInt(l_splitInput[l_idx + 1]));
+												}
 											}
-											else if (l_numInputParams == 0) {
-												l_method.invoke(getOwner().getController(), null);
+											// Only invoke if we have the right amount of arguments.
+											if (l_parameters.size() == l_numMethodParams) {
+												l_method.invoke(getOwner().getController(), l_parameters.toArray());
 											}
 											else {
 												getOwner().onAddMessage("Command \"" + l_splitInput[0] + "\" cannot currently be used via the method reflection system. Please implement it manually.");
 											}
 										} 
-										catch (IllegalAccessException l_exception) {
-											// TODO Auto-generated catch block
-											l_exception.printStackTrace();
-										} 
 										catch (IllegalArgumentException l_exception) {
 											l_areParametersInvalid = true;
-										} 
-										catch (InvocationTargetException l_exception) {
-											// TODO Auto-generated catch block
-											l_exception.printStackTrace();
 										}
+										catch (InvocationTargetException l_exception) {
+											getOwner().onAddMessage("Terminating program due to InvocationTargetException: " + l_exception.getMessage());
+										}
+										catch (IllegalAccessException l_exception) {
+											getOwner().onAddMessage("Terminating program due to IllegalAccessException: " + l_exception.getMessage());
+										} 
 									}
 									else {
 										l_areParametersInvalid = true;
 									}
+									// We found the method, so no need to check any others (even if we failed to execute it).
 									break;
 								}
 							}
@@ -345,7 +325,7 @@ public class InputHandler extends Thread {
 			}
 		} 
         catch (IOException l_exception) {
-			// Just print error and go continue to the exit portion if we encounter an error.
+			// Just print error and go continue to the exit portion if we encounter an IO error.
 			getOwner().onAddMessage("Terminating program due to IOException: " + l_exception.getMessage());
 		}
 	}
