@@ -25,7 +25,7 @@ public class InputHandler extends Thread {
 	private Method[] d_controllerMethods;
 	
 	/**
-	 * A map of different names for methods. The key is the input command, and the value is the method to invoke.
+	 * A map of different names for methods. The key is the input command name, and the value is the name of the method to invoke.
 	 */
 	private HashMap<String, String> d_methodAliases;
 	
@@ -39,6 +39,7 @@ public class InputHandler extends Thread {
 		// TODO: transfer this to the main console class?
 		if (getOwner() != null && getOwner().getController() != null) {
 			Class l_controllerClass = d_owner.getController().getClass();
+			// Add default method aliases.
 			if (l_controllerClass != null) {
 				d_controllerMethods = l_controllerClass.getDeclaredMethods();
 				d_methodAliases.put("assigncountries", "assignterritories");
@@ -167,7 +168,7 @@ public class InputHandler extends Thread {
 											l_idx += 3;
 										}
 										else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
-											Integer.parseInt(l_splitInput[l_idx] + 1);
+											Integer.parseInt(l_splitInput[l_idx + 1]);
 											l_idx += 2;
 										}
 										else {
