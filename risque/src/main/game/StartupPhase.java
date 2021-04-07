@@ -25,6 +25,84 @@ public class StartupPhase extends Phase {
 	}
 	
 	@Override
+	public void addContinent(int p_cID, int p_cValue) {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("That command cannot be used without a loaded map.");
+		}
+		else if (d_engine.getMap().createContinent(p_cID, p_cValue)) {
+			d_engine.broadcastMessage("New continent created. The number of continents is now " + d_engine.getMap().getNumContinents());
+		}
+		else {
+			d_engine.broadcastMessage("The continent could not be created.");
+		}
+	}
+	
+	@Override
+	public void removeContinent(int p_cID) {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("That command cannot be used without a loaded map.");
+		}
+		else if (d_engine.getMap().deleteContinent(p_cID)) {
+			d_engine.broadcastMessage("Continent removed. The number of continents is now " + d_engine.getMap().getNumContinents());
+		}
+		else {
+			d_engine.broadcastMessage("No continents were removed. Please ensure a valid ID was entered.");
+		}
+	}
+	
+	@Override
+	public void addTerritory(int p_tID, int p_cID) {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("That command cannot be used without a loaded map.");
+		}
+		else if (d_engine.getMap().createTerritory(p_tID, p_cID)) {
+			d_engine.broadcastMessage("New territory created. The number of territories is now " + d_engine.getMap().getNumTerritories());
+		}
+		else {
+			d_engine.broadcastMessage("Territory was not added. Please check your parameters.");
+		}
+	}
+	
+	@Override
+	public void removeTerritory(int p_tID) {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("That command cannot be used without a loaded map.");
+		}
+		else if (d_engine.getMap().deleteTerritory(p_tID)) {
+			d_engine.broadcastMessage("The territory was removed.");
+		}
+		else {
+			d_engine.broadcastMessage("Territory was not added. Please check the input ID.");
+		}
+	}
+	
+	@Override
+	public void addNeighbours(int p_firstID, int p_secondID) {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("That command cannot be used without a loaded map.");
+		}
+		else if (d_engine.getMap().addBorder(p_firstID, p_secondID)) {
+			d_engine.broadcastMessage("Neighbours successfuly linked.");
+		}
+		else {
+			d_engine.broadcastMessage("Invalid IDs or the territories were already neighbours.");
+		}
+	}
+	
+	@Override
+	public void removeNeighbours(int p_firstID, int p_secondID) {
+		if (d_engine.getMap() == null) {
+			d_engine.broadcastMessage("That command cannot be used without a loaded map.");
+		}
+		else if (d_engine.getMap().deleteBorder(p_firstID, p_secondID)) {
+			d_engine.broadcastMessage("Territories are no longer neighbours.");
+		}
+		else {
+			d_engine.broadcastMessage("Invalid IDs or the territories were not neighbours.");
+		}
+	}
+	
+	@Override
 	public void assignTerritories() {
 		// Print out an error message if we cannot start the game.
 		if (d_engine.getMap() == null || !d_engine.getMap().validateMap()) {

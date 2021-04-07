@@ -55,35 +55,11 @@ public class Controller {
 	public void setConsole(Console p_console) {
 		d_console = p_console;
 	}
-	
-	/**
-	*Will start the process for executing "editcontinent" command.
-	*@param p_add_remove_continent This parameter includes continent which is to be added or removed.
-	*/
-	public void editContinent(String p_add_remove_continent) {
-	//TODO
-	}
-
-	/**
-	*Will start the process for executing "editcountry" command.
-	*@param p_add_remove_country This parameter includes country which is to be added or removed.
-	*/
-	public void editCountry(String p_add_remove_country) {
-	//TODO
-	}
-
-	/**
-	*Will start the process for executing "editneighbor" command.
-	*@param p_add_remove_neighbor This parameter includes neighbor which is to be added or removed.
-	*/
-	public void editNeighbour(String p_add_remove_neighbor) {
-	//TODO
-	}
 
 	/**
 	 * Asks the game engine to print the map to the console.
 	 */
-	public void printMap() {
+	public void showMap() {
 		d_engine.showMap();
 	}
 
@@ -150,82 +126,52 @@ public class Controller {
 	 * Adds a new continent to the map.
 	 * @param p_cID The desired ID for this continent.
 	 * @param p_cValue The number of bonus armies for this new continent.
-	 * @return True if the continent was created, otherwise false.
 	 */
-	public boolean addContinent(int p_cID, int p_cValue) {
-		// TODO: Do gameplay check elsewhere.
-		if (d_engine.isGameInProgress()) {
-			return false;
-		}
-		return d_engine.getMap().createContinent(p_cID, p_cValue);
+	public void addContinent(int p_cID, int p_cValue) {
+		d_engine.addContinent(p_cID, p_cValue);
 	}
 	
 	/**
 	 * Removes a continent from the map.
 	 * @param p_cID The ID of the continent to remove.
-	 * @return True if a continent was removed, otherwise false.
 	 */
-	public boolean removeContinent(int p_cID) {
-		// TODO: Do gameplay check elsewhere.
-		if (d_engine.isGameInProgress()) {
-			return false;
-		}
-		return d_engine.getMap().deleteContinent(p_cID);
+	public void removeContinent(int p_cID) {
+		d_engine.removeContinent(p_cID);
 	}
 	
 	/**
 	 * Adds a territory to the map.
 	 * @param p_tID The desired ID for this territory.
 	 * @param p_cID The continent for this ID.
-	 * @return True if the territory was created, otherwise false.
 	 */
-	public boolean addTerritory(int p_tID, int p_cID) {
-		// TODO: Do gameplay check elsewhere.
-		if (d_engine.isGameInProgress()) {
-			return false;
-		}
-		return d_engine.getMap().createTerritory(p_tID, p_cID);
+	public void addTerritory(int p_tID, int p_cID) {
+		d_engine.addTerritory(p_tID, p_cID);
 	}
 	
 	/**
 	 * Removes the territory at the given index.
 	 * @param p_tID The ID of the territory to remove.
-	 * @return True if a territory was removed, false otherwise.
 	 */
-	public boolean removeTerritory(int p_tID) {
-		// TODO: Do gameplay check elsewhere.
-		if (d_engine.isGameInProgress()) {
-			return false;
-		}
-		return d_engine.getMap().deleteTerritory(p_tID);
+	public void removeTerritory(int p_tID) {
+		d_engine.removeTerritory(p_tID);
 	}
 	
 	/**
 	 * Makes two territories neighbours (if the were not already).
 	 * @param p_firstID The ID of the first territory.
 	 * @param p_secondID The ID of the second territory.
-	 * @return True if the territories are newly neighbours, false otherwise.
 	 */
-	public boolean addNeighbours(int p_firstID, int p_secondID) {
-		// TODO: Do gameplay check elsewhere.
-		if (d_engine.isGameInProgress()) {
-			return false;
-		}
-		return d_engine.getMap().addBorder(p_firstID, p_secondID);
+	public void addNeighbours(int p_firstID, int p_secondID) {
+		d_engine.addNeighbours(p_firstID, p_secondID);
 	}
 	
 	/**
 	 * Removes the link between two territories.
 	 * @param p_firstID The ID of the first territory.
 	 * @param p_secondID The ID of the second territory.
-	 * @return True if a link between them was removed, otherwise false.
 	 */
-	public boolean removeNeighbours(int p_firstID, int p_secondID) {
-		// TODO: Do gameplay check elsewhere.
-		if (d_engine.isGameInProgress()) {
-			return false;
-		}
-		return d_engine.getMap().deleteBorder(p_firstID, p_secondID);
+	public void removeNeighbours(int p_firstID, int p_secondID) {
+		d_engine.removeNeighbours(p_firstID, p_secondID);
 	}
 
 	/**

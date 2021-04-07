@@ -103,30 +103,6 @@ public class Console implements GameObserver {
 	public void onQuit() {
 		// Do nothing by default.
 	}
-	
-	/**
-	*Controller to execute "editcontinent" command.
-	*@param p_add_remove_cont This parameter includes continent which is to be added or removed.
-	*/
-	public void execEditcontinent(String p_add_remove_cont) {
-		d_controller.editContinent(p_add_remove_cont);
-	}
-
-	/**
-	*Controller to execute "editcountry" command.
-	*@param p_add_remove_coun This parameter includes country which is to be added or removed.
-	*/
-	public void execEditcountry(String p_add_remove_coun) {
-		d_controller.editCountry(p_add_remove_coun);
-	}
-
-	/**
-	*Controller to execute "editneighbor" command.
-	*@param p_add_remove_nei This parameter includes neighbor country which is to be placed next to other country.
-	*/
-	public void execEditneighbor(String p_add_remove_nei) {
-		d_controller.editNeighbour(p_add_remove_nei);
-	}
 
 	/**
 	 *Controller to execute "editmap" command.
@@ -134,87 +110,5 @@ public class Console implements GameObserver {
 	 */
 	public void execEditMap(String p_file) {
 		d_controller.editMap(p_file);
-	}
-	
-	/**
-	 * Adds a continent to the map.
-	 * @param p_cID The desired ID for the new continent. 
-	 * @param p_cValue The number of bonus armies controlling this continent awards.
-	 */
-	public void execAddContinent(int p_cID, int p_cValue) {
-		if (d_controller.addContinent(p_cID, p_cValue)) {
-			onAddMessage("New continent created. The number of continents is now " + d_engine.getMap().getNumContinents());
-		}
-		else {
-			onAddMessage("The continent could not be created.");
-		}
-	}
-	
-	/**
-	 * Removes a continent from the map.
-	 * @param p_cID The ID of the continent to remove.
-	 */
-	public void execRemoveContinent(int p_cID) {
-		if (d_controller.removeContinent(p_cID)) {
-			onAddMessage("Continent removed. The number of continents is now " + d_engine.getMap().getNumContinents());
-		}
-		else {
-			onAddMessage("No continents were removed. Please ensure a valid ID was entered.");
-		}
-	}
-	
-	/**
-	 * Adds a territory to the map.
-	 * @param p_tID The desired ID for the new territory.
-	 * @param p_cID The ID of the continent the territory will belong to.
-	 */
-	public void execAddTerritory(int p_tID, int p_cID) {
-		if (d_controller.addTerritory(p_tID, p_cID)) {
-			onAddMessage("New territory created. The number of territories is now " + d_engine.getMap().getNumTerritories());
-		}
-		else {
-			onAddMessage("Territory was not added. Please check your parameters.");
-		}
-	}
-	
-	/**
-	 * Removes a territory from the map.
-	 * @param p_tID The ID of the territory to remove.
-	 */
-	public void execRemoveTerritory(int p_tID) {
-		if (d_controller.removeTerritory(p_tID)) {
-			onAddMessage("Territory removed. The number of territories is now " + d_engine.getMap().getNumTerritories());
-		}
-		else {
-			onAddMessage("Territory was not added. Please check that there is a territory with the input ID.");
-		}
-	}
-	
-	/**
-	 * Creates a link between two territories.
-	 * @param p_firstID The ID of the first territory.
-	 * @param p_secondID The ID of the second territory.
-	 */
-	public void execAddNeighbour(int p_firstID, int p_secondID) {
-		if (d_controller.addNeighbours(p_firstID, p_secondID)) {
-			onAddMessage("Neighbours successfully added.");
-		}
-		else {
-			onAddMessage("Invalid IDs or the territories were already neighbours.");
-		}
-	}
-	
-	/**
-	 * Removes a link between two territories.
-	 * @param p_firstID The ID of the first territory.
-	 * @param p_secondID The ID of the second territory.
-	 */
-	public void execRemoveNeighbour(int p_firstID, int p_secondID) {
-		if (d_controller.removeNeighbours(p_firstID, p_secondID)) {
-			onAddMessage("Territories are no longer neighbours.");
-		}
-		else {
-			onAddMessage("Invalid IDs or the territories were not neighbours.");
-		}
 	}
 }

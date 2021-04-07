@@ -43,7 +43,6 @@ public class InputHandler extends Thread {
 			if (l_controllerClass != null) {
 				d_controllerMethods = l_controllerClass.getDeclaredMethods();
 				d_methodAliases.put("assigncountries", "assignterritories");
-				d_methodAliases.put("showmap", "printmap");
 				d_methodAliases.put("finish", "finishorders");
 				d_methodAliases.put("editcountry", "editterritory");
 				d_methodAliases.put("editneighbor", "editneighbour");
@@ -128,11 +127,11 @@ public class InputHandler extends Thread {
 									// Actually execute the actions.
 									for (int l_idx = 1; l_idx < l_splitInput.length; ) {
 										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-											getOwner().execAddContinent(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
+											getOwner().getController().addContinent(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
 											l_idx += 3;
 										}
 										else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
-											getOwner().execRemoveContinent(Integer.parseInt(l_splitInput[l_idx + 1]));
+											getOwner().getController().removeContinent(Integer.parseInt(l_splitInput[l_idx + 1]));
 											l_idx += 2;
 										}
 									}
@@ -180,11 +179,11 @@ public class InputHandler extends Thread {
 									// Actually execute the actions.
 									for (int l_idx = 1; l_idx < l_splitInput.length; ) {
 										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-											getOwner().execAddTerritory(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
+											getOwner().getController().addTerritory(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
 											l_idx += 3;
 										}
 										else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
-											getOwner().execRemoveTerritory(Integer.parseInt(l_splitInput[l_idx + 1]));
+											getOwner().getController().removeTerritory(Integer.parseInt(l_splitInput[l_idx + 1]));
 											l_idx += 2;
 										}
 									}
@@ -214,7 +213,7 @@ public class InputHandler extends Thread {
 									 * TODO: This is done very inefficiently. Refactor!
 									 */
 									for (int l_idx = 1; l_idx < l_splitInput.length; l_idx += 3) {
-										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
+										if (l_splitInput[l_idx].equalsIgnoreCase("-add") || l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
 											Integer.parseInt(l_splitInput[l_idx + 1]);
 											Integer.parseInt(l_splitInput[l_idx + 2]);
 										}
@@ -227,10 +226,10 @@ public class InputHandler extends Thread {
 									// Actually execute the actions.
 									for (int l_idx = 1; l_idx < l_splitInput.length; l_idx += 3) {
 										if (l_splitInput[l_idx].equalsIgnoreCase("-add")) {
-											getOwner().execAddNeighbour(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
+											getOwner().getController().addNeighbours(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
 										}
 										else if (l_splitInput[l_idx].equalsIgnoreCase("-remove")) {
-											getOwner().execRemoveNeighbour(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
+											getOwner().getController().removeNeighbours(Integer.parseInt(l_splitInput[l_idx + 1]), Integer.parseInt(l_splitInput[l_idx + 2]));
 										}
 									}
 								}

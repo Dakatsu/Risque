@@ -150,12 +150,66 @@ public class GameEngine {
 		return false;
 	}
 	
+	
+	
 	/**
 	 * Prints the map to the console.
 	 * If the game has begun, it prints a strategic gameplay view.
 	 */
 	public void showMap() {
 		d_currentPhase.showMap();
+	}
+	
+	/**
+	 * Adds a new continent to the map (if valid in this game phase).
+	 * @param p_cID The desired ID for this continent.
+	 * @param p_cValue The number of bonus armies for this new continent.
+	 */
+	public void addContinent(int p_cID, int p_cValue) {
+		d_currentPhase.addContinent(p_cID, p_cValue);
+	}
+	
+	/**
+	 * Removes a continent from the map (if valid in this game phase).
+	 * @param p_cID The ID of the continent to remove.
+	 */
+	public void removeContinent(int p_cID) {
+		d_currentPhase.removeContinent(p_cID);
+	}
+	
+	/**
+	 * Adds a territory to the map (if valid in this game phase).
+	 * @param p_tID The desired ID for this territory.
+	 * @param p_cID The continent for this ID.
+	 */
+	public void addTerritory(int p_tID, int p_cID) {
+		d_currentPhase.addTerritory(p_tID, p_cID);
+	}
+	
+	/**
+	 * Removes the territory at the given index (if valid in this game phase).
+	 * @param p_tID The ID of the territory to remove.
+	 */
+	public void removeTerritory(int p_tID) {
+		d_currentPhase.removeTerritory(p_tID);
+	}
+	
+	/**
+	 * Makes two territories neighbours (if the were not already and if valid in this game phase).
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 */
+	public void addNeighbours(int p_firstID, int p_secondID) {
+		d_currentPhase.addNeighbours(p_firstID, p_secondID);
+	}
+	
+	/**
+	 * Removes the link between two territories (if valid in this game phase).
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 */
+	public void removeNeighbours(int p_firstID, int p_secondID) {
+		d_currentPhase.removeNeighbours(p_firstID, p_secondID);
 	}
 	
 	/**

@@ -44,6 +44,58 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Adds a new continent to the map (if valid in this game phase).
+	 * @param p_cID The desired ID for this continent.
+	 * @param p_cValue The number of bonus armies for this new continent.
+	 */
+	public void addContinent(int p_cID, int p_cValue) {
+		printInvalidCommandMessage("addContinent");
+	}
+	
+	/**
+	 * Removes a continent from the map (if valid in this game phase).
+	 * @param p_cID The ID of the continent to remove.
+	 */
+	public void removeContinent(int p_cID) {
+		printInvalidCommandMessage("removeContinent");
+	}
+	
+	/**
+	 * Adds a territory to the map (if valid in this game phase).
+	 * @param p_tID The desired ID for this territory.
+	 * @param p_cID The continent for this ID.
+	 */
+	public void addTerritory(int p_tID, int p_cID) {
+		printInvalidCommandMessage("addTerritory");
+	}
+	
+	/**
+	 * Removes the territory at the given index (if valid in this game phase).
+	 * @param p_tID The ID of the territory to remove.
+	 */
+	public void removeTerritory(int p_tID) {
+		printInvalidCommandMessage("removeTerritory");
+	}
+	
+	/**
+	 * Makes two territories neighbours (if the were not already and if valid in this game phase).
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 */
+	public void addNeighbours(int p_firstID, int p_secondID) {
+		printInvalidCommandMessage("addNeighbours");
+	}
+	
+	/**
+	 * Removes the link between two territories (if valid in this game phase).
+	 * @param p_firstID The ID of the first territory.
+	 * @param p_secondID The ID of the second territory.
+	 */
+	public void removeNeighbours(int p_firstID, int p_secondID) {
+		printInvalidCommandMessage("removeNeighbours");
+	}
+	
+	/**
 	 * Implements the assignTerritories command.
 	 */
 	public void assignTerritories() {
