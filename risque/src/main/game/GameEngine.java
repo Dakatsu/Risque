@@ -1,5 +1,6 @@
 package main.game;
 
+import java.io.File;
 import java.util.LinkedList;
 
 import main.console.Console;
@@ -51,7 +52,7 @@ public class GameEngine {
 	public GameEngine() {
 		d_observers = new LinkedList<>();
 		d_players = new LinkedList<>();
-		d_map = onCreateEntity(new Map());
+		d_map = null;
 		d_currentPhase = new StartupPhase(this);
 	}
 	
@@ -97,8 +98,14 @@ public class GameEngine {
 	 * @return The entity.
 	 */
 	public <T extends GameEntity> T onCreateEntity(T p_entity) {
-		p_entity.setEngine(this);
-		return p_entity;
+		/**
+		 * Allow null returns in case this is used with an object that may not have been successfully created.
+		 */
+		if (p_entity != null) {
+			p_entity.setEngine(this);
+			return p_entity;
+		}
+		return null;
 	}
 	
 	/**
@@ -127,30 +134,28 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Changes the map to a new one.
+	 * @param p_map The new map.
+	 */
+	public void setMap(Map p_map) {
+		d_map = p_map;
+	}
+	
+	/**
 	 * Loads a map, replacing the current one.
 	 * @param p_mapName The name of the map to be loaded.
-	 * @return True if the map was successfully loaded, otherwise false.
 	 */
-	public boolean loadMap(String p_mapName) {
-		if (!isGameInProgress()) {
-			return d_map.loadFromFile(p_mapName);
-		}
-		return false;
+	public void loadMap(String p_mapName) {
+		d_currentPhase.loadMap(p_mapName);
 	}
 	
 	/**
 	 * Saves a map to a file name.
 	 * @param p_mapName The name for the new map.
-	 * @return True if the map was successfully saved, otherwise false.
 	 */
-	public boolean saveMap(String p_mapName) {
-		if (!isGameInProgress()) {
-			return d_map.saveToFile(p_mapName);
-		}
-		return false;
+	public void saveMap(String p_mapName) {
+		d_currentPhase.saveMap(p_mapName);
 	}
-	
-	
 	
 	/**
 	 * Prints the map to the console.
@@ -358,5 +363,6 @@ public class GameEngine {
 		Controller l_controller = new Controller(l_gameEngine);
 		Console l_console = new Console(l_gameEngine, l_controller);
 		LogEntryBuffer l_log = new LogEntryBuffer(l_gameEngine);
+		l_gameEngine.broadcastMessage("Welcome to Risque!");
 	}
 }

@@ -1,5 +1,7 @@
 package main.game;
 
+import java.io.File;
+
 /**
  * Represents the start of the game, before gameplay has begun.
  *
@@ -15,12 +17,58 @@ public class StartupPhase extends Phase {
 	}
 	
 	/**
+	 * Loads a map, replacing the current one.
+	 * @param p_mapName The name of the map to be loaded.
+	 */
+	@Override
+	public void loadMap(String p_mapName) {
+		File l_file = new File(p_mapName);
+		if (l_file.exists()) {
+			Map l_map = d_engine.onCreateEntity(Map.LoadFromFile(l_file));
+			if (l_map != null) {
+				d_engine.setMap(l_map);
+				d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded!");
+			}
+			else {
+				d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
+			}
+		}
+		else {
+			d_engine.broadcastMessage("The file \"" + p_mapName + "\" could not be loaded. Please check the file name.");
+		}
+	}
+	
+	/**
+	 * Saves a map to a file name.
+	 * @param p_mapName The name for the new map.
+	 */
+	@Override
+	public void saveMap(String p_mapName) {
+		Map l_map = d_engine.getMap();
+		if (l_map != null) {
+			if (l_map.validateMap()) {
+				Map.SaveToFile(d_engine.getMap(), p_mapName);
+				d_engine.broadcastMessage("Map saved to: " + p_mapName);
+			}
+			else {
+				d_engine.broadcastMessage("The map must be valid to save it.");
+			}
+		}
+		else {
+			d_engine.broadcastMessage("No map is loaded.");
+		}
+	}
+	
+	/**
 	 * Prints the map file to the screen.
 	 */
 	@Override
 	public void showMap() {
 		if (d_engine.getMap() != null) {
 			d_engine.broadcastMessage(d_engine.getMap().toText());
+		}
+		else {
+			d_engine.broadcastMessage("There is no map to show.");
 		}
 	}
 	

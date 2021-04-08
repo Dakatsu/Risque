@@ -1,5 +1,7 @@
 package main.game;
 
+import java.io.File;
+
 /**
  *	Phases represent the current state of the game engine, such as map editing and gameplay phases.
  *  The command in this abstract class will print that they are not implemented for that phase.
@@ -34,6 +36,22 @@ public abstract class Phase {
 	 */
 	public void onPhaseEnd(Phase p_nextPhase) {
 		// Do nothing by default.
+	}
+	
+	/**
+	 * Loads a map, replacing the current one (if valid in this game phase).
+	 * @param p_mapName The name of the map to be loaded.
+	 */
+	public void loadMap(String p_mapName) {
+		printInvalidCommandMessage("loadMap");
+	}
+	
+	/**
+	 * Saves a map to a file name (if valid in this game phase).
+	 * @param p_mapName The name for the new map.
+	 */
+	public void saveMap(String p_mapName) {
+		printInvalidCommandMessage("saveMap");
 	}
 
 	/**

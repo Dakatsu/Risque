@@ -64,7 +64,7 @@ public class LogEntryBuffer implements GameObserver {
 		try {
 			Date l_date = new Date();
 			SimpleDateFormat l_formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-			d_fileName = "GameLogs\\Risque-" + l_formatter.format(l_date) + ".log";
+			d_fileName = "Risque-" + l_formatter.format(l_date) + ".log";
 			d_fileWriter = new FileWriter(d_fileName, true);
 		}
 		catch (IOException l_exception) {

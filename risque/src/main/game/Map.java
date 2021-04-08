@@ -403,26 +403,22 @@ public class Map extends GameEntity {
 	}
 	
 	/**
-	 * Loads a map from a given file, deleting any existing map data before doing so.
+	 * Loads a map from a given file and returns it.
 	 * Note that attributes not used by this game are ignored and not loaded.
 	 * This means that those attributes will not be present when saving a map from this game.
 	 * 
-	 * @param l_fileName The name of the file to load from (including the extension).
+	 * @param p_file The file to load from (including the extension).
 	 * @return Whether a valid map was loaded.
 	 */
-	public boolean loadFromFile(String l_fileName) {
+	public static Map LoadFromFile(File p_file) {
 		// TODO: this could be turned into a static function that returns a new Map object.
-		d_continents.clear();
-		d_territories.clear();
-		d_borders.clear();
-		d_continentTerritories.clear();
+		Map l_map = new Map();
 		/**
 		 * Reference on what a .map file entails:
 		 * http://domination.sourceforge.net/makemaps.shtml
 		 */
 		try {
-			File l_file = new File(l_fileName);
-			Scanner l_reader = new Scanner(l_file);
+			Scanner l_reader = new Scanner(p_file);
 			String l_section = "";
 			while (l_reader.hasNextLine()) {
 				String l_line = l_reader.nextLine();
@@ -438,18 +434,18 @@ public class Map extends GameEntity {
 						switch(l_section) {
 							case "continents":
 								if (l_splitLine.length >= 2) {
-									createContinent(l_splitLine[0], Integer.parseInt(l_splitLine[1]), getNumContinents() + 1);
+									l_map.createContinent(l_splitLine[0], Integer.parseInt(l_splitLine[1]), l_map.getNumContinents() + 1);
 								}
 								break;
 							case "countries":
 								if (l_splitLine.length >= 3) {
-									createTerritory(Integer.parseInt(l_splitLine[0]), l_splitLine[1], Integer.parseInt(l_splitLine[2]));
+									l_map.createTerritory(Integer.parseInt(l_splitLine[0]), l_splitLine[1], Integer.parseInt(l_splitLine[2]));
 								}
 								break;
 							case "borders":
 								if (l_splitLine.length >= 2) {
 									for (int l_idx = 1; l_idx < l_splitLine.length; l_idx++) {
-										addBorder(Integer.parseInt(l_splitLine[0]), Integer.parseInt(l_splitLine[l_idx]));
+										l_map.addBorder(Integer.parseInt(l_splitLine[0]), Integer.parseInt(l_splitLine[l_idx]));
 									}
 								}
 								break;
@@ -460,69 +456,59 @@ public class Map extends GameEntity {
 				}
 			}
 			l_reader.close();
-			if (validateMap()) {
-				getEngine().broadcastMessage("The map \"" + l_fileName + "\" was successfully loaded.");
-				return true;
+			if (l_map.validateMap()) {
+				return l_map;
 			}
 			else {
-				getEngine().broadcastMessage("The file \"" + l_fileName + "\" is not a valid map.");
-				return false;
+				return null;
 			}
 		} 
-		catch (FileNotFoundException l_exception) {
-			getEngine().broadcastMessage("The map \"" + l_fileName + "\" could not be found.");
-			return false;
-		}
-		catch (NumberFormatException l_exception) {
-			getEngine().broadcastMessage("The file \"" + l_fileName + "\" is not a valid map.");
-			return false;
-			
+		catch (FileNotFoundException | NumberFormatException l_exception) {
+			return null;
 		}
 	}
 	
 	/**
-	 * Saves the map to a given file name. Overwrites any existing map with the same name.
+	 * Saves the input map to a given file name. Overwrites any existing map with the same name.
 	 * The map will only save if it is valid.
-	 * @param l_fileName The name of the file to save to, including the extension.
+	 * @param p_map The map to save.
+	 * @param p_fileName The name of the file to save to, including the extension.
 	 * @return Whether the file was successfully saved.
 	 */
-	public boolean saveToFile(String l_fileName) {
+	public static boolean SaveToFile(Map p_map, String p_fileName) {
 		/**
 		 * Reference on what a .map file entails:
 		 * http://domination.sourceforge.net/makemaps.shtml
 		 */
 		
 		// Do not allow us to save if the map is not valid.
-		if (!validateMap()) {
-			getEngine().broadcastMessage("Error: cannot save an invalid map.");
+		if (!p_map.validateMap()) {
 			return false;
 		}
 		
 		try {
 			// Attempt to create the file. Override it if it already exists.
-			File l_file = new File(l_fileName);
+			File l_file = new File(p_fileName);
 			if (l_file.exists()) {
 				l_file.delete();
 			}
 			
 			// Begin by writing a comment containing the file name and that it was made by this program.
-			FileWriter l_writer = new FileWriter(l_fileName);
-			l_writer.write("; map: " + l_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n\n");
+			FileWriter l_writer = new FileWriter(p_fileName);
+			l_writer.write("; map: " + p_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n\n");
 			
 			/**
 			 *  Write the contents of the map as text to the file.
 			 */
-			l_writer.write(toText());
+			l_writer.write(p_map.toText());
 			
 			/**
 			 * Close the file writer once we have finished.
 			 */
 			l_writer.close();
-			getEngine().broadcastMessage("Map successfully saved as: " + l_fileName);
 			return true;
 		} 
 		catch (IOException l_exception) {
-			getEngine().broadcastMessage("Error: the map could not be saved due to an IO exception: "  + l_exception.getMessage());
 			return false;
 		}
 	}

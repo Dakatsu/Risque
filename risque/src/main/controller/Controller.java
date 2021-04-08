@@ -98,10 +98,9 @@ public class Controller {
 	/**
 	 * Will start the process for executing "loadmap" command.
 	 * @param p_fileName File name from which a map is to be loaded.
-	 * @return True if the map was successfully loaded, otherwise false.
 	 */
-	public boolean loadMap(String p_fileName) {
-		return d_engine.loadMap(p_fileName);
+	public void loadMap(String p_fileName) {
+		d_engine.loadMap(p_fileName);
 	}
 	
 	/**

@@ -297,12 +297,9 @@ public class InputHandler extends Thread {
 										catch (IllegalArgumentException l_exception) {
 											l_areParametersInvalid = true;
 										}
-										catch (InvocationTargetException l_exception) {
-											getOwner().onAddMessage("Terminating program due to InvocationTargetException: " + l_exception.getMessage());
+										catch (InvocationTargetException | IllegalAccessException l_exception) {
+											getOwner().onAddMessage("Terminating program due to an exception: " + l_exception.getMessage());
 										}
-										catch (IllegalAccessException l_exception) {
-											getOwner().onAddMessage("Terminating program due to IllegalAccessException: " + l_exception.getMessage());
-										} 
 									}
 									else {
 										l_areParametersInvalid = true;

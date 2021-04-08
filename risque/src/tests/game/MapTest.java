@@ -2,6 +2,8 @@ package tests.game;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -176,35 +178,39 @@ public class MapTest {
 	 */
 	@Test
 	public void mapSavingLoadingTest() {
-		Map l_savedMap = new Map();
-		l_savedMap.setEngine(d_engine);
-		assertTrue(l_savedMap.createContinent(1, 5));
-		assertTrue(l_savedMap.createContinent(2, 5));
-		assertTrue(l_savedMap.createTerritory(1, 1));
-		assertTrue(l_savedMap.createTerritory(2, 1));
-		assertTrue(l_savedMap.createTerritory(3, 2));
-		assertTrue(l_savedMap.createTerritory(4, 2));
-		l_savedMap.addBorder(1, 2);
-		l_savedMap.addBorder(2, 3);
-		l_savedMap.addBorder(3, 4);
-		l_savedMap.addBorder(4, 1);
-		l_savedMap.saveToFile("JUnitTest.map");
+		Map l_mapToSave = new Map();
+		l_mapToSave.setEngine(d_engine);
+		assertTrue(l_mapToSave.createContinent(1, 5));
+		assertTrue(l_mapToSave.createContinent(2, 5));
+		assertTrue(l_mapToSave.createTerritory(1, 1));
+		assertTrue(l_mapToSave.createTerritory(2, 1));
+		assertTrue(l_mapToSave.createTerritory(3, 2));
+		assertTrue(l_mapToSave.createTerritory(4, 2));
+		l_mapToSave.addBorder(1, 2);
+		l_mapToSave.addBorder(2, 3);
+		l_mapToSave.addBorder(3, 4);
+		l_mapToSave.addBorder(4, 1);
+		Map.SaveToFile(l_mapToSave, "JUnitTest.map");
 		
-		Map l_loadedMap = new Map();
+		// Test that the file was saved to a file.
+		File l_savedFile = new File("JUnitTest.map");
+		assertTrue(l_savedFile.exists());
+		
+		Map l_loadedMap = Map.LoadFromFile(l_savedFile);
+		assertNotNull(l_loadedMap);
 		l_loadedMap.setEngine(d_engine);
-		l_loadedMap.loadFromFile("JUnitTest.map");
 		
-		assertEquals(l_savedMap.getNumContinents(), l_loadedMap.getNumContinents());
-		assertEquals(l_savedMap.getNumTerritories(), l_loadedMap.getNumTerritories());
+		assertEquals(l_mapToSave.getNumContinents(), l_loadedMap.getNumContinents());
+		assertEquals(l_mapToSave.getNumTerritories(), l_loadedMap.getNumTerritories());
 		
-		for (int l_idx = 1; l_idx <= l_savedMap.getNumContinents(); l_idx++) {
-			assertEquals(l_savedMap.getContinent(l_idx).getName(), l_loadedMap.getContinent(l_idx).getName());
-			assertEquals(l_savedMap.getContinent(l_idx).getBonusArmies(), l_loadedMap.getContinent(l_idx).getBonusArmies());
+		for (int l_idx = 1; l_idx <= l_mapToSave.getNumContinents(); l_idx++) {
+			assertEquals(l_mapToSave.getContinent(l_idx).getName(), l_loadedMap.getContinent(l_idx).getName());
+			assertEquals(l_mapToSave.getContinent(l_idx).getBonusArmies(), l_loadedMap.getContinent(l_idx).getBonusArmies());
 		}
 		
-		for (int l_idx = 1; l_idx <= l_savedMap.getNumTerritories(); l_idx++) {
-			assertEquals(l_savedMap.getTerritory(l_idx).getName(), l_loadedMap.getTerritory(l_idx).getName());
-			assertEquals(l_savedMap.getContinentID(l_savedMap.getTerritory(l_idx).getContinent()), l_loadedMap.getContinentID(l_loadedMap.getTerritory(l_idx).getContinent()));
+		for (int l_idx = 1; l_idx <= l_mapToSave.getNumTerritories(); l_idx++) {
+			assertEquals(l_mapToSave.getTerritory(l_idx).getName(), l_loadedMap.getTerritory(l_idx).getName());
+			assertEquals(l_mapToSave.getContinentID(l_mapToSave.getTerritory(l_idx).getContinent()), l_loadedMap.getContinentID(l_loadedMap.getTerritory(l_idx).getContinent()));
 		}
 		
 		// TODO: Check that borders are the same.
