@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import main.game.GameEngine;
+import main.game.Map;
 
 /**
  * Tests the {@link main.game.GameEngine} class.
@@ -27,12 +28,23 @@ public class GameEngineTest {
 	}
 
 	/**
-	 * Ensures that we always have a default blank map at start.
+	 * Ensures that there is no map loaded at start.
 	 */
 	@Test
 	public void getDefaultMap() {
 		assertNotNull(d_engine);
-		assertNotNull(d_engine.getMap());
+		assertNull(d_engine.getMap());
 	}
 
+	/**
+	 * Ensures that there is no map loaded at start.
+	 */
+	@Test
+	public void addNewMap() {
+		assertNotNull(d_engine);
+		Map l_testMap = new Map();
+		d_engine.setMap(l_testMap);
+		assertNotNull(d_engine.getMap());
+		assertEquals(l_testMap, d_engine.getMap());
+	}
 }
