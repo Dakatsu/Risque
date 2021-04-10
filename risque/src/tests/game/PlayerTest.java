@@ -23,4 +23,14 @@ public class PlayerTest {
 		l_player.setName(l_newName);
 		assertEquals(l_player.getName(), l_newName);
 	}
+	
+	/**
+	 * Test to show that class can be instantiated.
+	 */
+	@Test
+	public void classInstantiateTest() {
+		String l_name = "Sajan";
+		Player l_player = new Player(l_name);
+		assertNotNull(l_player);
+	}
 }
