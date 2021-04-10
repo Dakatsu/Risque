@@ -13,9 +13,14 @@ import main.game.Territory;
  */
 public class AdvanceOrderTest {
 
+	/**
+	 * Simple test to ensure we can instantiate this class.
+	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testInstantiate() {
+		int l_numArmiesAdvancing = 0;
+		AdvanceOrder l_advanceOrder = new AdvanceOrder(null, null, l_numArmiesAdvancing);
+		assertNotNull(l_advanceOrder);
 	}
 }
- 
+  
