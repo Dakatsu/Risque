@@ -24,4 +24,13 @@ public class TerritoryTest {
 		assertEquals(l_territory.getName(), l_newName);
 	}
 
+	/**
+	 * Test to show that class can be instantiated.
+	 */
+	@Test
+	public void territoryTest() {
+		String l_string = "Ontario";
+		Territory l_territory = new Territory(l_string, null);
+		assertNotNull(l_territory);
+	} 
 }
