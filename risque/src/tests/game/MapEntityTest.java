@@ -4,14 +4,21 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import main.game.GameEntity;
+import main.game.MapEntity;
+
 /**
  * Tests the {@link main.game.MapEntity} class.
  */
 public class MapEntityTest {
 
+	/**
+	 * Simple test to ensure we can instantiate this class.
+	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testInstantiate() {
+		MapEntity l_mapEntity = new MapEntity(null);
+		assertNotNull(l_mapEntity);
 	}
-
 }
+ 
