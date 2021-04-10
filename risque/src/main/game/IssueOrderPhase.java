@@ -27,7 +27,7 @@ public class IssueOrderPhase extends Phase {
 	 * Auto-generated constructor stub.
 	 * @param p_engine The game engine context.
 	 */
-	IssueOrderPhase(GameEngine p_engine) {
+	public IssueOrderPhase(GameEngine p_engine) {
 		super(p_engine);
 		d_minArmies = 3;
 		d_currentPlayer = null;

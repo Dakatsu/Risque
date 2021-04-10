@@ -11,7 +11,7 @@ public class ExecuteOrderPhase extends Phase {
 	 * Auto-generated constructor for this phase.
 	 * @param p_engine The game engine context.
 	 */
-	ExecuteOrderPhase(GameEngine p_engine) {
+	public ExecuteOrderPhase(GameEngine p_engine) {
 		super(p_engine);
 	}
 

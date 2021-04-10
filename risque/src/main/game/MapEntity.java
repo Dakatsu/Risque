@@ -15,7 +15,7 @@ public class MapEntity {
 	 * Initializes the item with a map.
 	 * @param p_map The map this item exists on.
 	 */
-	MapEntity(Map p_map) {
+	public MapEntity(Map p_map) {
 		setMap(p_map);
 	}
 	

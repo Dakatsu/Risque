@@ -16,7 +16,7 @@ public class GameEntity {
 	 * Creates a new entity linked to a game engine.
 	 * @param p_engine
 	 */
-	GameEntity(GameEngine p_engine) {
+	public GameEntity(GameEngine p_engine) {
 		setEngine(p_engine);
 	}
 	
