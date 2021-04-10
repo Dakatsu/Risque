@@ -62,6 +62,14 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Edits the map (if the phase allows it).
+	 * @param p_mapName The name of the map to edit. It is created if it does not exist.
+	 */
+	public void editMap(String p_mapName) {
+		printInvalidCommandMessage("editMap");
+	}
+	
+	/**
 	 * Adds a new continent to the map (if valid in this game phase).
 	 * @param p_cID The desired ID for this continent.
 	 * @param p_cValue The number of bonus armies for this new continent.

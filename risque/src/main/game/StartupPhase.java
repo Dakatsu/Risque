@@ -85,6 +85,31 @@ public class StartupPhase extends Phase {
 		}
 	}
 	
+	/**
+	 * Opens the map for editing, or creates a new one if it does not exist.
+	 * Note that while a new map will be created if one does not exist, it will not be saved to that file.
+	 * The saveMap command must be used to save a map after editing.
+	 * @param p_mapName The name of the map to edit. It is created if it does not exist.
+	 */
+	@Override
+	public void editMap(String p_mapName) {
+		boolean l_shouldCreateNewMap = true;
+		File l_file = new File(p_mapName);
+		if (l_file.exists()) {
+			Map l_map = d_engine.onCreateEntity(Map.LoadFromFile(l_file));
+			if (l_map != null) {
+				d_engine.setMap(l_map);
+				l_shouldCreateNewMap = false;
+				d_engine.broadcastMessage("Map \"" + p_mapName + "\" already exists and was successfully loaded!");
+			}
+		}
+		if (l_shouldCreateNewMap) {
+			Map l_map = d_engine.onCreateEntity(new Map());
+			d_engine.setMap(l_map);
+			d_engine.broadcastMessage("A blank map has been created for editing.");
+		}
+	}
+	
 	@Override
 	public void removeContinent(int p_cID) {
 		if (d_engine.getMap() == null) {

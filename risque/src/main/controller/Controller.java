@@ -74,10 +74,9 @@ public class Controller {
 	/**
 	 * Will start the process for executing "editmap" command.
 	 * @param p_fileName File name from which a map is to be edited.
-	 * @return TODO: This comman does nothing right now!
 	 */
-	public boolean editMap(String p_fileName) {
-		return false;
+	public void editMap(String p_fileName) {
+		d_engine.editMap(p_fileName);
 	}
 	
 	/**
