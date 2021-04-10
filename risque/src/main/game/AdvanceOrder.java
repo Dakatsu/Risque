@@ -27,7 +27,7 @@ public class AdvanceOrder extends Order {
 	 * @param p_toTerritory The destination territory. May or may not be owned by the same player.
 	 * @param p_numArmiesAdvancing The maximum armies to advance between the two territories.
 	 */
-	AdvanceOrder(Territory p_fromTerritory, Territory p_toTerritory, int p_numArmiesAdvancing) {
+	public AdvanceOrder(Territory p_fromTerritory, Territory p_toTerritory, int p_numArmiesAdvancing) {
 		d_numArmiesAdvancing = p_numArmiesAdvancing;
 		d_fromTerritory = p_fromTerritory;
 		d_toTerritory = p_toTerritory;
