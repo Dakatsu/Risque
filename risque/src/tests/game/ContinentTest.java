@@ -41,4 +41,15 @@ public class ContinentTest {
 		assertFalse(l_continent.setBonusArmies(l_negativeBonusArmies));
 		assertEquals(l_continent.getBonusArmies(), l_newNumBonusArmies);
 	}
+	
+	/**
+	 * Simple test to ensure we can instantiate this class.
+	 */ 
+	@Test
+	public void testClassObjectNotNull() {
+		int l_bonusArmy = 0;
+		String l_name = "Mansajan";
+		Continent l_continent = new Continent(l_name, l_bonusArmy);
+		assertNotNull(l_continent);
+	}
 }
