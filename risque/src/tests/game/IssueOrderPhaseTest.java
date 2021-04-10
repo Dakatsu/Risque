@@ -4,14 +4,20 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import main.game.GameEntity;
+import main.game.IssueOrderPhase;
+
 /**
  * Tests the {@link main.game.IssueOrderPhase} class.
  */
 public class IssueOrderPhaseTest {
 
+	/**
+	 * test to check that object of class is not empty.
+	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testIssueOrderPhaseNotEmpty() {
+		IssueOrderPhase l_issueOrder = new IssueOrderPhase(null);
+		assertNotNull(l_issueOrder);
 	}
-
-}
+} 
