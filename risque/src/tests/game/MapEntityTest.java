@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import main.game.GameEntity;
 import main.game.MapEntity;
 
 /**

@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import main.game.DeployOrder;
 import main.game.GameEntity;
 
 /**
@@ -17,8 +16,8 @@ public class GameEntityTest {
 	 */
 	@Test
 	public void testGameEntityNotNull() {
-		GameEntity l_GameEntity = new GameEntity(null);
-		assertNotNull(l_GameEntity);
+		GameEntity l_gameEntity = new GameEntity(null);
+		assertNotNull(l_gameEntity);
 	}
 }
  
