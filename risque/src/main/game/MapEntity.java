@@ -4,7 +4,7 @@ package main.game;
  * Superclass of entities that exist on a map and need common functionality.
  * @author Kyle
  */
-public class MapEntity {
+public abstract class MapEntity {
 
 	/**
 	 * The map this entity exists on.

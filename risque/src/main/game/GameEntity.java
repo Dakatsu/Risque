@@ -5,7 +5,7 @@ package main.game;
  * @author Kyle
  *
  */
-public class GameEntity {
+public abstract class GameEntity {
 	
 	/**
 	 * The game engine.
