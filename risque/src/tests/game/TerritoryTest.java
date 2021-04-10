@@ -12,14 +12,22 @@ import main.game.Territory;
 public class TerritoryTest {
 
 	/**
-	 * Tests functions related to the territory's name.
+	 * Tests function getName() of Territory class.
 	 */
 	@Test
-	public void nameTest() {
+	public void getNameTest() {
 		String l_testName = "Florida";
 		Territory l_territory = new Territory(l_testName);
 		assertEquals(l_territory.getName(), l_testName);
-		String l_newName = "Quebec";
+	} 
+	
+	/**
+	 * Tests function setName() of Territory class.
+	 */
+	@Test
+	public void setNameTest() {
+		String l_newName = "Vancouver"; 
+		Territory l_territory = new Territory(l_newName);
 		l_territory.setName(l_newName);
 		assertEquals(l_territory.getName(), l_newName);
 	}
