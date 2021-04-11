@@ -313,6 +313,18 @@ public class Map extends GameEntity {
 	}
 	
 	/**
+	 * Returns a (copied) list of the territories belonging to a specific continent.
+	 * @param p_continent The continent.
+	 * @return A linked list of the territories belonging to the continent.
+	 */
+	public LinkedList<Territory> getContinentTerritories(Continent p_continent) {
+		if (d_continentTerritories.containsKey(p_continent)) {
+			return new LinkedList<Territory>(d_continentTerritories.get(p_continent));
+		}
+		return null;
+	}
+	
+	/**
 	 * Checks the map for correctness (i.e. is a connected graph).
 	 * @return whether the map is valid.
 	 */

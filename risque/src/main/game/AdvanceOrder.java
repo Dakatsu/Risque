@@ -62,7 +62,7 @@ public class AdvanceOrder extends Order {
 			if (l_originOwner == l_destinationOwner) {
 				d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance);
 				d_toTerritory.setNumArmies(d_toTerritory.getNumArmies() + l_numToAdvance);
-				d_engine.broadcastMessage("A player advanced " + l_numToAdvance + " from " + d_fromTerritory.getDisplayName() + " to " + d_toTerritory.getDisplayName() + ".");
+				d_engine.broadcastMessage(getIssuer().getName() + " advanced " + l_numToAdvance + " from " + d_fromTerritory.getDisplayName() + " to " + d_toTerritory.getDisplayName() + ".");
 			}
 			// Case 2: war were declared. Fight!
 			else {
@@ -94,12 +94,14 @@ public class AdvanceOrder extends Order {
 				}
 				// If defenders have all been killed, take the territory.
 				if (l_numDefenders == 0) {
-					d_engine.broadcastMessage("The territory " + d_toTerritory.getDisplayName() + " () has been siezed by armies from " + d_fromTerritory.getDisplayName() + " ().");
+					d_engine.broadcastMessage("The territory " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory) + ") has been siezed by armies from " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ").\n"
+							+ "  Surviving Attackers: " + l_numAttackers);
 					d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance);
 					d_toTerritory.setNumArmies(l_numAttackers);
+					d_engine.changeTerritoryOwner(d_toTerritory, getIssuer());
 				}
 				else {
-					d_engine.broadcastMessage("The attack on " + d_toTerritory.getDisplayName() + " () by " + d_fromTerritory.getDisplayName() + " () did not succeed.\n"
+					d_engine.broadcastMessage("The attack on " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory) + ") by " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ") did not succeed.\n"
 							+ "  Surviving Attackers: " + l_numAttackers + "/" + l_numToAdvance + "\n"
 							+ "  Surviving Defenders: " + l_numDefenders + "/" + d_toTerritory.getNumArmies());
 					// The from territory will keep its initial army count, minus the number sent away, plus the attackers returning home.

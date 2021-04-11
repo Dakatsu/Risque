@@ -37,11 +37,6 @@ public class GameEngine {
 	private LinkedList<Player> d_players;
 	
 	/**
-	 * The index of the next player that gets to issue orders.
-	 */
-	private int d_nextPlayer;
-	
-	/**
 	 * The current phase the game is in.
 	 */
 	private Phase d_currentPhase;
@@ -384,6 +379,37 @@ public class GameEngine {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Handles the transfer of a territory to a new player.
+	 * @param p_territory The territory to transfer ownership of.
+	 * @param p_conqueror The new owner of the territory.
+	 */
+	public void changeTerritoryOwner(Territory p_territory, Player p_conqueror) {
+		if (p_territory != null) {
+			Player l_prevOwner = getTerritoryOwner(p_territory);
+			if (l_prevOwner != null) {
+				l_prevOwner.removeOwnedTerritory(p_territory);
+				l_prevOwner.removeOwnedContinent(p_territory.getContinent());
+			}
+			if (p_conqueror != null) {
+				p_conqueror.addOwnedTerritory(p_territory);
+				// Determine whether to mark the continent as owned by this player.
+				Continent l_continent = p_territory.getContinent();
+				boolean l_doesOwnContinent = true;
+				LinkedList<Territory> l_cTerritories = l_continent.getTerritories();
+				for (Territory l_cTerritory : l_cTerritories) {
+					if (!p_conqueror.ownsTerritory(l_cTerritory)) {
+						l_doesOwnContinent = false;
+						break;
+					}
+				}
+				if (l_doesOwnContinent) {
+					p_conqueror.addOwnedContinent(l_continent);
+				}
+			}
+		}
 	}
 	
 	/**

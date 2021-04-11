@@ -1,5 +1,7 @@
 package main.game;
 
+import java.util.LinkedList;
+
 /**
  * A collection of territories/countries.
  * @author Kyle
@@ -64,6 +66,13 @@ public class Continent extends MapEntity {
 	 */
 	public int getBonusArmies() {
 		return d_bonusArmies;
+	}
+	
+	/**
+	 * Gets the territories under this continent from the map.
+	 */
+	public LinkedList<Territory> getTerritories() {
+		return getMap().getContinentTerritories(this);
 	}
 	
 	/**

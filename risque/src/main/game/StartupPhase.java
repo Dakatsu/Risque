@@ -190,7 +190,7 @@ public class StartupPhase extends Phase {
 		// Otherwise, divvy up the territories between the players.
 		// TODO: Make this actually random and have some balance calculations.
 		for (int l_idx = 1; l_idx <= d_engine.getMap().getNumTerritories(); l_idx++) {
-			d_engine.getPlayerByID(l_idx % d_engine.getNumPlayers()).addOwnedTerritory(d_engine.getMap().getTerritory(l_idx));
+			d_engine.changeTerritoryOwner(d_engine.getMap().getTerritory(l_idx), d_engine.getPlayerByID(l_idx % d_engine.getNumPlayers()));
 		}
 		d_engine.broadcastMessage("Territories have been assigned and the game has started. Good luck!");
 		d_engine.setPhase(new IssueOrderPhase(this.d_engine));
