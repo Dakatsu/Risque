@@ -11,20 +11,16 @@ public class Adapter extends MapReaderWriter{
 	Adaptee adp = new Adaptee();
 
 	/**
-	 * Constructor to initialize ConquestReaderWriter object
+	 * Constructor to initialize adaptee object
 	 * 
-	 * @param crw Object of ConquestReaderWriter class
+	 * @param adp Object of adaptee class
 	 */
 	public Adapter(Adaptee adp) {
 		this.adp = adp;
 	}
 
 	/**
-	 * This method parses the map file in Conquest format
-	 * 
-	 * @param map  Map Object
-	 * @param file Map file to be parsed
-	 * @return 1 if successful else 0
+	 * This method loads the map file 
 	 */
 	@Override
 	public Map LoadFromFile(File p_file) {
