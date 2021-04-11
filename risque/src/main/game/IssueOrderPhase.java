@@ -52,14 +52,15 @@ public class IssueOrderPhase extends Phase {
 	
 	/**
 	 * Called when a player's turn has ended.
+	 * @param p_shouldRemovePlayer Should the player be removed from the queue, i.e. they finished all their moves?
 	 */
-	public void onEndTurn() {
-		// Calc next player.
+	public void onEndTurn(boolean l_removeCurPlayer) {
+		// Add the previous player to the end of the queue if they want to go again.
 		Player l_prevPlayer = d_currentPlayer;
-		// Add this player back to the list if they still have armies to deploy.
-		if (l_prevPlayer.getNumUndeployedArmies() > 0) {
+		if (!l_removeCurPlayer) {
 			d_playerRotation.add(l_prevPlayer);
 		}
+		// Add this player back to the list if they still have armies to deploy.
 		d_currentPlayer = d_playerRotation.isEmpty() ? null : d_playerRotation.pop();
 		if (d_currentPlayer != null) {
 			d_engine.broadcastMessage("It is now " + d_currentPlayer.getName() + "\'s turn.");
@@ -106,7 +107,7 @@ public class IssueOrderPhase extends Phase {
 				int l_numArmies = d_currentPlayer.removeUndeployedArmies(p_num);
 				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new DeployOrder(l_territory, l_numArmies)));
 				d_engine.broadcastMessage(d_currentPlayer.getName() + " will deploy " + l_numArmies + " to " + l_territory.getDisplayName() + ".");
-				onEndTurn();
+				onEndTurn(false);
 			}
 		}
 		else {
@@ -122,6 +123,15 @@ public class IssueOrderPhase extends Phase {
 	 */
 	@Override
 	public void createAdvanceOrder(int p_fromID, int p_toID, int p_num) {
+		/*
+		 * TODO: There is no check that the armies moved were existing/deployed this turn and did not come from another territory.
+		 * E.g. player A has 5 armies on territory B and C.
+		 * The player issues an advance of 4 from territory B to territory C.
+		 * They also issue an advance of 4 from territory C to another territory, D.
+		 * Before the B->C command is executed, lets say all armies on territory C are killed.
+		 * The B->C command is executed and 4 armies are now on C.
+		 * There is no method to determine that C->D is now invalid since those armies already moved.
+		 */
 		if (!d_engine.getMap().doesBorderExist(p_toID, p_fromID)) {
 			d_engine.broadcastMessage("Error: territories do not border each other.");
 		}
@@ -147,11 +157,9 @@ public class IssueOrderPhase extends Phase {
 			else {
 				Territory l_toTerritory = d_engine.getMap().getTerritory(p_toID);
 				// Calc next player.
-				// Cannot advance more armies than currently exist in the territory.
-				int l_numArmies = Math.min(p_num, l_fromTerritory.getNumArmies());
-				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new AdvanceOrder(l_fromTerritory, l_toTerritory, l_numArmies)));
-				d_engine.broadcastMessage(d_currentPlayer.getName() + " will advance " + l_numArmies + " from " + l_fromTerritory.getDisplayName() + " to " + l_toTerritory.getDisplayName() + ".");
-				onEndTurn();
+				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new AdvanceOrder(l_fromTerritory, l_toTerritory, p_num)));
+				d_engine.broadcastMessage(d_currentPlayer.getName() + " will advance " + p_num + " from " + l_fromTerritory.getDisplayName() + " to " + l_toTerritory.getDisplayName() + ".");
+				onEndTurn(false);
 			}
 		}
 	}
@@ -176,6 +184,16 @@ public class IssueOrderPhase extends Phase {
 				}
 			}
 			d_engine.broadcastMessage(l_mapView);
+		}
+	}
+	
+	@Override
+	public void finishOrders() {
+		if (d_currentPlayer.getNumUndeployedArmies() > 0) {
+			d_engine.broadcastMessage("You must deploy all available armies to end your turn.");
+		}
+		else {
+			onEndTurn(true);
 		}
 	}
 }

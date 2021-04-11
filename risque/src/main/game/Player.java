@@ -213,6 +213,9 @@ public class Player extends GameEntity {
 	 * @return True if the order was added successfully, otherwise false.
 	 */
 	public boolean issueOrder(Order p_order) {
+		if (p_order != null) {
+			p_order.setIssuer(this);
+		}
 		return d_orders.add(p_order);
 	}
 	

@@ -69,6 +69,13 @@ public class Continent extends MapEntity {
 	}
 	
 	/**
+	 * Gets the territories under this continent from the map.
+	 */
+	public LinkedList<Territory> getTerritories() {
+		return getMap().getContinentTerritories(this);
+	}
+	
+	/**
 	 * Sets the number of bonus armies given for complete continental control to a new number.
 	 * @param p_bonusArmies The new number of bonus armies to award.
 	 * @return True if the bonus army number was changed, false if a number less than zero was entered.
