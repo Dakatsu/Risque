@@ -359,6 +359,34 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Gets the owner of a specific territory.
+	 * @param p_territory The territory in question.
+	 * @return The owner of p_territory (or null if unowned).
+	 */
+	public Player getTerritoryOwner(Territory p_territory) {
+		for (Player l_player : d_players) {
+			if (l_player.ownsTerritory(p_territory)) {
+				return l_player;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Gets the owner of a specific continent.
+	 * @param p_continent The continent in question.
+	 * @return The owner of p_continent (or null if unowned).
+	 */
+	public Player getContinentOwner(Continent p_continent) {
+		for (Player l_player : d_players) {
+			if (l_player.ownsContinent(p_continent)) {
+				return l_player;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * The main function that will start the key modules for the program.
 	 * The console will create an InputHandler as a separate thread.
 	 * The program terminates when that thread finishes, which happens after the "quit" command

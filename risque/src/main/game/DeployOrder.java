@@ -32,8 +32,13 @@ public class DeployOrder extends Order {
 	 * @return Whether the order was executed successfully.
 	 */
 	public boolean execute() {
-		d_territory.setNumArmies(d_territory.getNumArmies() + d_numArmiesToDeploy);
-		return true;
+		// Ensure we own the territory we are deploying to (in case it was somehow conquered before this can be executed).
+		if (d_engine.getTerritoryOwner(d_territory) == getIssuer()) {
+			d_territory.setNumArmies(d_territory.getNumArmies() + d_numArmiesToDeploy);
+			d_engine.broadcastMessage(getIssuer().getName() +  " deployed " + d_numArmiesToDeploy + " to " + d_territory.getDisplayName());
+			return true;
+		}
+		return false;
 	}
 	
 	/**

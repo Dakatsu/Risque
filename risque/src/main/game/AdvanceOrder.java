@@ -37,8 +37,12 @@ public class AdvanceOrder extends Order {
 	
 	@Override
 	public boolean execute() {
-		// We can execute this order if there is at least one army on the from territory.
-		if (d_fromTerritory.getNumArmies() > 0) {
+		/*
+		 *  We can execute this order if there is at least one army on the from territory.
+		 *  Note that the player may have lost this territory before this order could be executed.
+		 *  If so, do not do anything.
+		 */
+		if (d_fromTerritory.getNumArmies() > 0 && d_engine.getTerritoryOwner(d_fromTerritory) == getIssuer()) {
 			Player l_originOwner = null;
 			Player l_destinationOwner = null;
 			for (int l_idx = 0; l_idx < getEngine().getNumPlayers(); l_idx++) {
@@ -53,8 +57,8 @@ public class AdvanceOrder extends Order {
 					break;
 				}
 			}
-			// Case 1: we own both territories. Just transfer armies.
 			int l_numToAdvance = Math.min(d_numArmiesAdvancing, d_fromTerritory.getNumArmies());
+			// Case 1: we own both territories. Just transfer armies.
 			if (l_originOwner == l_destinationOwner) {
 				d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance);
 				d_toTerritory.setNumArmies(d_toTerritory.getNumArmies() + l_numToAdvance);
