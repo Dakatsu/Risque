@@ -1,6 +1,10 @@
 package main.game;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Represents the start of the game, before gameplay has begun.
@@ -21,17 +25,43 @@ public class StartupPhase extends Phase {
 	 * @param p_mapName The name of the map to be loaded.
 	 */
 	@Override
-	public void loadMap(String p_mapName) {
+	public void loadMap(String p_mapName){
 		File l_file = new File(p_mapName);
 		if (l_file.exists()) {
-			Map l_map = d_engine.onCreateEntity(Map.LoadFromFile(l_file));
-			if (l_map != null) {
-				d_engine.setMap(l_map);
-				d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded!");
+			MapReaderWriter mrw = new MapReaderWriter();
+			Adaptee adptee = new Adaptee();
+			Adapter adp = new Adapter(adptee);
+			BufferedReader bufferReader;
+			try {
+				bufferReader = new BufferedReader(new FileReader(l_file));
+				String firstLine = bufferReader.readLine();
+				
+				if (firstLine.startsWith(";")) {				
+					Map l_map = d_engine.onCreateEntity(mrw.LoadFromFile(l_file));
+				if (l_map != null) {
+					d_engine.setMap(l_map);
+					d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded!");
+				}
+				else {
+					d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
+				}
+			  }else if(firstLine.startsWith("[")){
+				  Map l_map = d_engine.onCreateEntity(adp.LoadFromFile(l_file));
+					if (l_map != null) {
+						d_engine.setMap(l_map);
+						d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded! con type");
+					}
+					else {
+						d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
+					}
+			  }
+			  else {
+					d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			else {
-				d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
-			}
+			
 		}
 		else {
 			d_engine.broadcastMessage("The file \"" + p_mapName + "\" could not be loaded. Please check the file name.");
@@ -91,24 +121,26 @@ public class StartupPhase extends Phase {
 	 * The saveMap command must be used to save a map after editing.
 	 * @param p_mapName The name of the map to edit. It is created if it does not exist.
 	 */
-	@Override
-	public void editMap(String p_mapName) {
-		boolean l_shouldCreateNewMap = true;
-		File l_file = new File(p_mapName);
-		if (l_file.exists()) {
-			Map l_map = d_engine.onCreateEntity(Map.LoadFromFile(l_file));
-			if (l_map != null) {
-				d_engine.setMap(l_map);
-				l_shouldCreateNewMap = false;
-				d_engine.broadcastMessage("Map \"" + p_mapName + "\" already exists and was successfully loaded!");
-			}
-		}
-		if (l_shouldCreateNewMap) {
-			Map l_map = d_engine.onCreateEntity(new Map());
-			d_engine.setMap(l_map);
-			d_engine.broadcastMessage("A blank map has been created for editing.");
-		}
-	}
+//	@Override
+//	public void editMap(String p_mapName) {
+//		boolean l_shouldCreateNewMap = true;
+//		File l_file = new File(p_mapName);
+//		if (l_file.exists()) {
+//			MapReaderWriter mrw = new MapReaderWriter();
+//			
+//			//Map l_map = d_engine.onCreateEntity(mrw.LoadFromFile(l_file));
+//			if (d_engine.onCreateEntity(mrw.LoadFromFile(l_file)) != null) {
+//				d_engine.setMap(l_map);
+//				l_shouldCreateNewMap = false;
+//				d_engine.broadcastMessage("Map \"" + p_mapName + "\" already exists and was successfully loaded!");
+//			}
+//		}
+//		if (l_shouldCreateNewMap) {
+//			Map l_map = d_engine.onCreateEntity(new Map());
+//			d_engine.setMap(l_map);
+//			d_engine.broadcastMessage("A blank map has been created for editing.");
+//		}
+//	}
 	
 	@Override
 	public void removeContinent(int p_cID) {
@@ -190,7 +222,7 @@ public class StartupPhase extends Phase {
 		// Otherwise, divvy up the territories between the players.
 		// TODO: Make this actually random and have some balance calculations.
 		for (int l_idx = 1; l_idx <= d_engine.getMap().getNumTerritories(); l_idx++) {
-			d_engine.getPlayerByID(l_idx % d_engine.getNumPlayers()).addOwnedTerritory(d_engine.getMap().getTerritory(l_idx));
+			d_engine.changeTerritoryOwner(d_engine.getMap().getTerritory(l_idx), d_engine.getPlayerByID(l_idx % d_engine.getNumPlayers()));
 		}
 		d_engine.broadcastMessage("Territories have been assigned and the game has started. Good luck!");
 		d_engine.setPhase(new IssueOrderPhase(this.d_engine));

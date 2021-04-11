@@ -1,5 +1,7 @@
 package main.controller;
 
+import java.io.IOException;
+
 import main.console.Console;
 import main.game.GameEngine;
 
@@ -98,7 +100,7 @@ public class Controller {
 	 * Will start the process for executing "loadmap" command.
 	 * @param p_fileName File name from which a map is to be loaded.
 	 */
-	public void loadMap(String p_fileName) {
+	public void loadMap(String p_fileName) throws IOException {
 		d_engine.loadMap(p_fileName);
 	}
 	

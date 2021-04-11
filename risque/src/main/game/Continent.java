@@ -1,5 +1,7 @@
 package main.game;
 
+import java.util.LinkedList;
+
 /**
  * A collection of territories/countries.
  * @author Kyle
@@ -77,5 +79,10 @@ public class Continent extends MapEntity {
 			return true;
 		}
 		return false;
+	}
+
+	public LinkedList<Territory> getTerritories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

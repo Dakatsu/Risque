@@ -1,6 +1,7 @@
 package main.game;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import main.console.Console;
@@ -35,11 +36,6 @@ public class GameEngine {
 	 * All players in the game.
 	 */
 	private LinkedList<Player> d_players;
-	
-	/**
-	 * The index of the next player that gets to issue orders.
-	 */
-	private int d_nextPlayer;
 	
 	/**
 	 * The current phase the game is in.
@@ -141,11 +137,11 @@ public class GameEngine {
 		d_map = p_map;
 	}
 	
-	/**
+	/** 
 	 * Loads a map, replacing the current one.
-	 * @param p_mapName The name of the map to be loaded.
+	 * @param p_mapName The name of the map to be loaded. 
 	 */
-	public void loadMap(String p_mapName) {
+	public void loadMap(String p_mapName) throws IOException {
 		d_currentPhase.loadMap(p_mapName);
 	}
 	
@@ -335,7 +331,7 @@ public class GameEngine {
 	 * Signals that the current player does not want to issue any more orders.
 	 */
 	public void finishOrders() {
-		
+		d_currentPhase.finishOrders();
 	}
 	
 	/**
@@ -355,6 +351,65 @@ public class GameEngine {
 		for (GameObserver d_observer : d_observers) {
 			d_observer.onAddMessage("...Quitting Risque...");
 			d_observer.onQuit();
+		}
+	}
+	
+	/**
+	 * Gets the owner of a specific territory.
+	 * @param p_territory The territory in question.
+	 * @return The owner of p_territory (or null if unowned).
+	 */
+	public Player getTerritoryOwner(Territory p_territory) {
+		for (Player l_player : d_players) {
+			if (l_player.ownsTerritory(p_territory)) {
+				return l_player;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Gets the owner of a specific continent.
+	 * @param p_continent The continent in question.
+	 * @return The owner of p_continent (or null if unowned).
+	 */
+	public Player getContinentOwner(Continent p_continent) {
+		for (Player l_player : d_players) {
+			if (l_player.ownsContinent(p_continent)) {
+				return l_player;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Handles the transfer of a territory to a new player.
+	 * @param p_territory The territory to transfer ownership of.
+	 * @param p_conqueror The new owner of the territory.
+	 */
+	public void changeTerritoryOwner(Territory p_territory, Player p_conqueror) {
+		if (p_territory != null) {
+			Player l_prevOwner = getTerritoryOwner(p_territory);
+			if (l_prevOwner != null) {
+				l_prevOwner.removeOwnedTerritory(p_territory);
+				l_prevOwner.removeOwnedContinent(p_territory.getContinent());
+			}
+			if (p_conqueror != null) {
+				p_conqueror.addOwnedTerritory(p_territory);
+				// Determine whether to mark the continent as owned by this player.
+				Continent l_continent = p_territory.getContinent();
+				boolean l_doesOwnContinent = true;
+				LinkedList<Territory> l_cTerritories = l_continent.getTerritories();
+				for (Territory l_cTerritory : l_cTerritories) {
+					if (!p_conqueror.ownsTerritory(l_cTerritory)) {
+						l_doesOwnContinent = false;
+						break;
+					}
+				}
+				if (l_doesOwnContinent) {
+					p_conqueror.addOwnedContinent(l_continent);
+				}
+			}
 		}
 	}
 	

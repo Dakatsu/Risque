@@ -1,6 +1,7 @@
 package main.game;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  *	Phases represent the current state of the game engine, such as map editing and gameplay phases.
