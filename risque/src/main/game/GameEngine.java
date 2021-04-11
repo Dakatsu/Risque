@@ -330,7 +330,7 @@ public class GameEngine {
 	 * Signals that the current player does not want to issue any more orders.
 	 */
 	public void finishOrders() {
-		
+		d_currentPhase.finishOrders();
 	}
 	
 	/**
