@@ -87,9 +87,4 @@ public class Continent extends MapEntity {
 		}
 		return false;
 	}
-
-	public LinkedList<Territory> getTerritories() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
