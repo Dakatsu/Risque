@@ -121,8 +121,8 @@ public class StartupPhase extends Phase {
 	 * The saveMap command must be used to save a map after editing.
 	 * @param p_mapName The name of the map to edit. It is created if it does not exist.
 	 */
-//	@Override
-//	public void editMap(String p_mapName) {
+	@Override
+	public void editMap(String p_mapName) {
 //		boolean l_shouldCreateNewMap = true;
 //		File l_file = new File(p_mapName);
 //		if (l_file.exists()) {
@@ -140,7 +140,7 @@ public class StartupPhase extends Phase {
 //			d_engine.setMap(l_map);
 //			d_engine.broadcastMessage("A blank map has been created for editing.");
 //		}
-//	}
+	}
 	
 	@Override
 	public void removeContinent(int p_cID) {

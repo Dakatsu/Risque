@@ -54,10 +54,10 @@ public class IssueOrderPhase extends Phase {
 	 * Called when a player's turn has ended.
 	 * @param p_shouldRemovePlayer Should the player be removed from the queue, i.e. they finished all their moves?
 	 */
-	public void onEndTurn(boolean l_removeCurPlayer) {
+	public void onEndTurn(boolean p_shouldRemovePlayer) {
 		// Add the previous player to the end of the queue if they want to go again.
 		Player l_prevPlayer = d_currentPlayer;
-		if (!l_removeCurPlayer) {
+		if (!p_shouldRemovePlayer) {
 			d_playerRotation.add(l_prevPlayer);
 		}
 		// Add this player back to the list if they still have armies to deploy.

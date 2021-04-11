@@ -70,6 +70,7 @@ public class Continent extends MapEntity {
 	
 	/**
 	 * Gets the territories under this continent from the map.
+	 * @return The list of territories for this continent.
 	 */
 	public LinkedList<Territory> getTerritories() {
 		return getMap().getContinentTerritories(this);
