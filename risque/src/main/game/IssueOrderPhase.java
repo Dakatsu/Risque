@@ -147,10 +147,8 @@ public class IssueOrderPhase extends Phase {
 			else {
 				Territory l_toTerritory = d_engine.getMap().getTerritory(p_toID);
 				// Calc next player.
-				// Cannot advance more armies than currently exist in the territory.
-				int l_numArmies = Math.min(p_num, l_fromTerritory.getNumArmies());
-				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new AdvanceOrder(l_fromTerritory, l_toTerritory, l_numArmies)));
-				d_engine.broadcastMessage(d_currentPlayer.getName() + " will advance " + l_numArmies + " from " + l_fromTerritory.getDisplayName() + " to " + l_toTerritory.getDisplayName() + ".");
+				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new AdvanceOrder(l_fromTerritory, l_toTerritory, p_num)));
+				d_engine.broadcastMessage(d_currentPlayer.getName() + " will advance " + p_num + " from " + l_fromTerritory.getDisplayName() + " to " + l_toTerritory.getDisplayName() + ".");
 				onEndTurn();
 			}
 		}
