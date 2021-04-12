@@ -29,8 +29,8 @@ public class StartupPhase extends Phase {
 		File l_file = new File(p_mapName);
 		if (l_file.exists()) {
 			MapReaderWriter mrw = new MapReaderWriter();
-			Adaptee adptee = new Adaptee();
-			Adapter adp = new Adapter(adptee);
+			Adaptee d_adptee = new Adaptee();
+			Adapter d_adp = new Adapter(d_adptee);
 			BufferedReader bufferReader;
 			try {
 				bufferReader = new BufferedReader(new FileReader(l_file));
@@ -46,7 +46,7 @@ public class StartupPhase extends Phase {
 					d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
 				}
 			  }else if(firstLine.startsWith("[")){
-				  Map l_map = d_engine.onCreateEntity(adp.LoadFromFile(l_file));
+				  Map l_map = d_engine.onCreateEntity(d_adp.LoadFromFile(l_file));
 					if (l_map != null) {
 						d_engine.setMap(l_map);
 						d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded! con type");
