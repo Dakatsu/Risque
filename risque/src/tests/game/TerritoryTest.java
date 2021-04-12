@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import main.game.Continent;
 import main.game.Territory;
 
 /**
@@ -41,4 +42,16 @@ public class TerritoryTest {
 		Territory l_territory = new Territory(l_string, null);
 		assertNotNull(l_territory);
 	} 
+	
+	/**
+	 * Tests getDisplayName() function. 
+	 */
+	@Test
+	public void getDisplayNameTest() { 
+		String l_testName = "Van_couv_er";
+		Territory l_territory = new Territory(l_testName);
+		l_territory.getName();
+		assertEquals(l_territory.getDisplayName(), "Van couv er");
+	}
 }
+
