@@ -60,4 +60,15 @@ public class MapReaderWriterTest {
 		
 		// TODO: Check that borders are the same.
 	}
+	
+	/**
+	 * Ensures that class can be instantiated.
+	 */
+	@Test
+	public void testClassObjectNotEmpty() {
+		MapReaderWriter mrw = new MapReaderWriter();
+		assertNotNull(mrw);
+	}
 }
+
+	

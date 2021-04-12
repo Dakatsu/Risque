@@ -144,6 +144,15 @@ public class MapTest {
 	}
 	
 	/**
+	 * Test to show that class can be instantiated.
+	 */
+	@Test
+	public void testMapClass() {
+		Map l_map = new Map();
+		assertNotNull(l_map);
+	}
+	
+	/**
 	 * Tests that an unconnected map is invalidated.
 	 */
 	@Test

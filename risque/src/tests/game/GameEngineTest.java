@@ -41,10 +41,17 @@ public class GameEngineTest {
 	 */
 	@Test
 	public void addNewMap() {
-		assertNotNull(d_engine);
 		Map l_testMap = new Map();
 		d_engine.setMap(l_testMap);
 		assertNotNull(d_engine.getMap());
 		assertEquals(l_testMap, d_engine.getMap());
+	}
+	
+	/**
+	 * Ensures that class can be instantiated.
+	 */
+	@Test
+	public void testClassObjectNotEmpty() {
+		assertNotNull(d_engine);
 	}
 }
