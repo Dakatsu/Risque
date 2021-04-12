@@ -53,5 +53,24 @@ public class TerritoryTest {
 		l_territory.getName();
 		assertEquals(l_territory.getDisplayName(), "Van couv er");
 	}
+	
+	/**
+	 * Tests function getNumArmies() of Territory class.
+	 */ 
+	@Test
+	public void getNumArmiesTest() {
+		Territory l_territory = new Territory("str", null);
+		assertEquals(l_territory.getNumArmies(), 0);
+	} 
+	
+	/**
+	 * Tests function setNumArmies() of Territory class.
+	 */
+	@Test
+	public void setNumArmiesTest() {
+		Territory l_territory = new Territory("str", null);
+		l_territory.setNumArmies(8);
+		assertEquals(l_territory.getNumArmies(),8);
+	}
 }
 
