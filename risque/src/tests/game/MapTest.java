@@ -204,7 +204,7 @@ public class MapTest {
 		
 		// Test that the file was saved to a file.
 		File l_savedFile = new File("JUnitTest.map");
-		assertTrue(l_savedFile.exists());
+		assertTrue(l_savedFile.exists()); 
 		
 		
 		MapReaderWriter d_mrw = new MapReaderWriter();

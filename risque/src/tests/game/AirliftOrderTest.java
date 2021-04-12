@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import main.game.AirliftOrder;
-import main.game.BombOrder;
 
 /**
  * Tests the {@link main.game.AirliftOrder} class.
