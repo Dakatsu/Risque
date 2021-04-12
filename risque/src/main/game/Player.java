@@ -1,5 +1,7 @@
 package main.game;
 
+import main.strategy.*;
+
 import java.util.LinkedList;
 
 /**
@@ -15,7 +17,28 @@ import java.util.LinkedList;
  * @author Kyle
  *
  */
-public class Player extends GameEntity {	
+public class Player extends GameEntity {
+	
+	private PlayerStrategy strategy;
+	
+	/**
+	 * This method returns the strategy
+	 *
+	 * @return Strategy
+	 */
+	public PlayerStrategy getStrategy() {
+		return strategy;
+	}
+	
+	/**
+	 * This method sets the strategy
+	 * 
+	 * @param strategy Strategy to be set
+	 */
+	public void setStrategy(PlayerStrategy strategy) {
+		this.strategy = strategy;
+	}
+	
 	/**
 	 * The player's name.
 	 */
