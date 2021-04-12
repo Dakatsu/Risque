@@ -73,6 +73,11 @@ public class Player extends GameEntity {
 	private LinkedList<String> d_cards;
 	
 	/**
+	 * The allies that this player has (i.e. they cannot attack each other).
+	 */
+	private LinkedList<Player> d_allies;
+	
+	/**
 	 * Default constructor for player.
 	 * @param p_name The player's starting name.
 	 */
@@ -83,6 +88,7 @@ public class Player extends GameEntity {
 		d_ownedContinents = new LinkedList<>();
 		d_orders = new LinkedList<>();
 		d_cards = new LinkedList<>();
+		d_allies = new LinkedList<>();
 	}
 	
 	/**
@@ -294,5 +300,48 @@ public class Player extends GameEntity {
 	 */
 	public boolean removeCard(String p_card) {
 		return d_cards.remove(p_card.toLowerCase());
+	}
+	
+	/**
+	 * Is this player allied with this player?
+	 * @param p_player The player to check.
+	 * @return True if we are allies.
+	 */
+	public boolean isAllyWith(Player p_player) {
+		if (p_player != null) {
+			return d_allies.contains(p_player);
+		}
+		return false;
+	}
+	
+	/**
+	 * Adds an ally to this player's ally list.
+	 * @param p_player The player to ally with.
+	 * @return True if the player was added.
+	 */
+	public boolean addAlly(Player p_player) {
+		if (p_player != null) {
+			return d_allies.add(p_player);
+		}
+		return false;
+	}
+	
+	/**
+	 * Removes a player from the allies list.
+	 * @param p_player The player to unally with.
+	 * @return True if the player was an ally and was removed.
+	 */
+	public boolean removeAlly(Player p_player) {
+		if (p_player != null) {
+			return d_allies.remove(p_player);
+		}
+		return false;
+	}
+	
+	/**
+	 * Gets rid of all this player's allies.
+	 */
+	public void clearAllies() {
+		d_allies.clear();
 	}
 }

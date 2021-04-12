@@ -25,7 +25,7 @@ public class BombOrder extends Order {
 	 */
 	@Override
 	public boolean execute() {
-		if (d_target != null) {
+		if (d_target != null && d_engine.getPhase().canAttackTerritory(d_target, getIssuer())) {
 			int l_prevNumArmies = d_target.getNumArmies();
 			d_target.setNumArmies(l_prevNumArmies / 2);
 			getEngine().broadcastMessage(getIssuer().getName() + " bombed " + d_target.getDisplayName() + "(" + getEngine().getTerritoryOwner(d_target).getName() + "). The garrison of " + l_prevNumArmies + " was reduced to " + d_target.getNumArmies() + ".");

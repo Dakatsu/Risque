@@ -180,4 +180,15 @@ public abstract class Phase {
 	public void printInvalidCommandMessage(String p_commandName) {
 		d_engine.broadcastMessage("Command " + p_commandName + " is not valid in state " + this.getClass().getSimpleName() + ".");
 	}
+	
+	/**
+	 * Can an attack on a territory proceed?
+	 * If not, broadcasts the reason why it cannot.
+	 * @param p_territory The territory to attack.
+	 * @param p_attacker The player attacking the territory.
+	 * @return True if the attack can proceed.
+	 */
+	public boolean canAttackTerritory(Territory p_territory, Player p_attacker) {
+		return true;
+	}
 }

@@ -38,6 +38,8 @@ public class IssueOrderPhase extends Phase {
 	public void onPhaseStart(Phase p_prevPhase) {
 		calculateAndSetArmies();
 		for (Player l_player : d_engine.getPlayers()) {
+			// Get rid of allies from last round.
+			l_player.clearAllies();
 			if (l_player.getNumUndeployedArmies() > 0) {
 				if (d_currentPlayer == null) {
 					d_currentPlayer = l_player;
