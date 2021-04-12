@@ -8,7 +8,7 @@ import java.io.File;
  *
  */
 public class Adapter extends MapReaderWriter{
-	Adaptee adp = new Adaptee();
+	Adaptee d_adp = new Adaptee();
 
 	/**
 	 * Constructor to initialize adaptee object
@@ -16,7 +16,7 @@ public class Adapter extends MapReaderWriter{
 	 * @param adp Object of adaptee class
 	 */
 	public Adapter(Adaptee adp) {
-		this.adp = adp;
+		this.d_adp = adp;
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class Adapter extends MapReaderWriter{
 	 */
 	@Override
 	public Map LoadFromFile(File p_file) {
-		return adp.LoadFromFile(p_file);
+		return d_adp.LoadFromFile(p_file);
 	}
 
 

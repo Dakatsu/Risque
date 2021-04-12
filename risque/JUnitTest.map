@@ -1,0 +1,18 @@
+; map: JUnitTest.map
+; created in Risque, a game project for Concordia University's SOEN 6441 class
+
+[continents]
+Continentia789 5 purple
+Continentia173 5 purple
+
+[countries]
+1 Testlandia274 1 0 0
+2 Testlandia710 1 0 0
+3 Testlandia229 2 0 0
+4 Testlandia926 2 0 0
+
+[borders]
+1 2 4
+2 1 3
+3 2 4
+4 3 1
