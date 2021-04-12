@@ -118,7 +118,7 @@ public class PlayerTest {
 	
 	/**
 	 * Tests ownsContinent() function of Player class.
-	 */
+	 */ 
 	@Test
 	public void ownsContinentTest() { 
 		Continent l_continent = new Continent("Asia");
@@ -128,45 +128,5 @@ public class PlayerTest {
 		assertEquals(l_player.ownsContinent(l_continent), true);
 		assertEquals(l_player.ownsContinent(l_continent2), false);	
 	}
-	
-	/**
-	 * Tests getNumUndeployedArmies() function of Player class.
-	 */
-	@Test
-	public void getNumUndeployedArmiesTest() { 
-		Player l_player = new Player("str");
-		assertEquals(l_player.getNumUndeployedArmies(), 0);
-	}
-	
-	/**
-	 * Tests setNumUndeployedArmies() function of Player class.
-	 */
-	@Test
-	public void setNumUndeployedArmiesTest() { 
-		Player l_player = new Player("str");
-		assertEquals(l_player.setNumUndeployedArmies(4), 4);
-	}
-	
-	/**
-	 * Tests addUndeployedArmies() function of Player class.
-	 */
-	@Test
-	public void addUndeployedArmiesTest() { 
-		Player l_player = new Player("str");
-		l_player.setNumUndeployedArmies(4);
-		l_player.addUndeployedArmies(5);
-		assertEquals(l_player.getNumUndeployedArmies(), 9);
-	}
-	
-	/**
-	 * Tests removeUndeployedArmies() function of Player class.
-	 */
-	@Test
-	public void removeUndeployedArmiesTest() { 
-		Player l_player = new Player("str");
-		l_player.setNumUndeployedArmies(4);
-		assertEquals(l_player.removeUndeployedArmies(5), 4);
-		l_player.setNumUndeployedArmies(4);
-		assertEquals(l_player.removeUndeployedArmies(2), 2);
-	}
 }
+	

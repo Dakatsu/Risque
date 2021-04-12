@@ -26,7 +26,7 @@ public class GameEngineTest {
 	public void before() {
 		d_engine = new GameEngine();
 	}
-
+ 
 	/**
 	 * Ensures that there is no map loaded at start.
 	 */
