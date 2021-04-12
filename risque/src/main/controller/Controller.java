@@ -209,6 +209,16 @@ public class Controller {
 	}
 	
 	/**
+	 * Uses the airlift card to transfer armies from one territory to another.
+	 * @param p_sourceID The ID of the source territory of the armies.
+	 * @param p_destinationID The ID of the destination territory for the armies.
+	 * @param p_numArmies The number of armies to transfer.
+	 */
+	public void airlift(int p_sourceID, int p_destinationID, int p_numArmies) {
+		d_engine.airlift(p_sourceID, p_destinationID, p_numArmies);
+	}
+	
+	/**
 	 * Ends this current player's turn without issuing any orders, and signals that they have no more orders to issue.
 	 */
 	public void finishOrders() {

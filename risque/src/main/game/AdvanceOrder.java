@@ -109,7 +109,7 @@ public class AdvanceOrder extends Order {
 				// If defenders have all been killed, take the territory.
 				if (l_numSurvivingDefenders <= 0) {
 					d_engine.broadcastMessage("The territory " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory).getName() + ") has been siezed by armies from " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ").\n"
-							+ "  Surviving Attackers: " + l_numSurvivingAttackers);
+							+ "  Surviving Attackers: " + l_numSurvivingAttackers + "/" + l_numToAdvance);
 					d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance);
 					d_toTerritory.setNumArmies(l_numSurvivingAttackers);
 					d_engine.changeTerritoryOwner(d_toTerritory, getIssuer());

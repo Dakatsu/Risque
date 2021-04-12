@@ -43,6 +43,11 @@ public class GameEngine {
 	private Phase d_currentPhase;
 	
 	/**
+	 * The list of cards the game can give players.
+	 */
+	private LinkedList<String> d_cardOptions;
+	
+	/**
 	 * Default constructor for the GameEngine.
 	 */
 	public GameEngine() {
@@ -50,6 +55,9 @@ public class GameEngine {
 		d_players = new LinkedList<>();
 		d_map = null;
 		d_currentPhase = new StartupPhase(this);
+		d_cardOptions = new LinkedList<>();
+		d_cardOptions.add("bomb");
+		d_cardOptions.add("airlift");
 	}
 	
 	/**
@@ -336,6 +344,16 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Uses the airlift card to transfer armies from one territory to another.
+	 * @param p_sourceID The ID of the source territory of the armies.
+	 * @param p_destinationID The ID of the destination territory for the armies.
+	 * @param p_numArmies The number of armies to transfer.
+	 */
+	public void airlift(int p_sourceID, int p_destinationID, int p_numArmies) {
+		d_currentPhase.createAirliftOrder(p_sourceID, p_destinationID, p_numArmies);
+	}
+	
+	/**
 	 * Signals that the current player does not want to issue any more orders.
 	 */
 	public void finishOrders() {
@@ -406,7 +424,7 @@ public class GameEngine {
 				p_conqueror.addOwnedTerritory(p_territory);
 				// Give the player a card if they took this territory from someone.
 				if (l_prevOwner != null) {
-					p_conqueror.addCard("bomb");
+					p_conqueror.addCard("airlift");
 				}
 				// Determine whether to mark the continent as owned by this player.
 				Continent l_continent = p_territory.getContinent();

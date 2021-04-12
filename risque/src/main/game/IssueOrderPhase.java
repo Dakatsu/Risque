@@ -186,6 +186,31 @@ public class IssueOrderPhase extends Phase {
 			d_engine.broadcastMessage("That ID is invalid. Please try again.");
 		}
 	}
+	
+	/**
+	 * Uses the airlift card to transfer armies from one territory to another.
+	 * @param p_sourceID The ID of the source territory of the armies.
+	 * @param p_destinationID The ID of the destination territory for the armies.
+	 * @param p_numArmies The number of armies to transfer.
+	 */
+	public void createAirliftOrder(int p_sourceID, int p_destinationID, int p_numArmies) {
+		if (d_currentPlayer.hasCard("airlift")) {
+			Territory l_source = d_engine.getMap().getTerritory(p_sourceID);
+			Territory l_destination = d_engine.getMap().getTerritory(p_destinationID);
+			if (d_engine.getTerritoryOwner(l_source) == d_currentPlayer && d_engine.getTerritoryOwner(l_destination) == d_currentPlayer) {
+				d_currentPlayer.removeCard("airlift");
+				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new AirliftOrder(l_source, l_destination, p_numArmies)));
+				d_engine.broadcastMessage(d_currentPlayer.getName() + " will airlift " + p_numArmies + " from " + l_source.getDisplayName() + " to " + l_destination.getDisplayName() + ".");
+				onEndTurn(false);
+			}
+			else {
+				d_engine.broadcastMessage("Cannot airlift between territories not controlled by " + d_currentPlayer.getName() + ".");
+			}
+		}
+		else {
+			d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have an airlift card.");
+		}
+	}
 
 	/**
 	 * Prints a player-friendly view of the map to the screen.
