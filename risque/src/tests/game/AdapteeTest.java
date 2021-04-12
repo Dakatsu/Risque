@@ -1,22 +1,22 @@
 package tests.game;
+
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import main.game.Adaptee;
-import main.game.Adapter;
 
 /**
  * Tests the {@link main.game.Adapter} class.
  */
-public class AdapterTest {
-	
+public class AdapteeTest {
+
 	/**
 	 * Simple test to ensure we can instantiate this class.
 	 */
 	@Test
-	public void testInstantiate() {
+	public void testAdaptee() {
 		Adaptee l_adaptee = new Adaptee();
-		Adapter l_adapter = new Adapter(l_adaptee);
-		assertNotNull(l_adapter);
+		assertNotNull(l_adaptee);
 	}
 }
