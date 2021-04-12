@@ -149,6 +149,14 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Implements the creation of a bomb order in this phase.
+	 * @param p_targetID The ID of the territory to bomb.
+	 */
+	public void createBombOrder(int p_targetID) {
+		printInvalidCommandMessage("bomb");
+	}
+	
+	/**
 	 * Implements the finish(orders) command.
 	 */
 	public void finishOrders() {

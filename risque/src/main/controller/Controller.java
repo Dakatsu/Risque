@@ -201,6 +201,14 @@ public class Controller {
 	}
 	
 	/**
+	 * Uses the bomb card on a specific territory.
+	 * @param p_targetID The ID of the territory to bomb.
+	 */
+	public void bomb(int p_targetID) {
+		d_engine.bomb(p_targetID);
+	}
+	
+	/**
 	 * Ends this current player's turn without issuing any orders, and signals that they have no more orders to issue.
 	 */
 	public void finishOrders() {

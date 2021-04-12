@@ -44,6 +44,12 @@ public class Player extends GameEntity {
 	private int d_numUndeployedArmies;
 	
 	/**
+	 * A list of cards the player has available.
+	 * A card is represented as a string, e.g. "bomb" or "airlift".
+	 */
+	private LinkedList<String> d_cards;
+	
+	/**
 	 * Default constructor for player.
 	 * @param p_name The player's starting name.
 	 */
@@ -53,6 +59,7 @@ public class Player extends GameEntity {
 		d_ownedTerritories = new LinkedList<>();
 		d_ownedContinents = new LinkedList<>();
 		d_orders = new LinkedList<>();
+		d_cards = new LinkedList<>();
 	}
 	
 	/**
@@ -237,5 +244,32 @@ public class Player extends GameEntity {
 	 */
 	public boolean hasOrdersLeftToExecute() {
 		return !d_orders.isEmpty();
+	}
+	
+	/**
+	 * Does the player have a specific card?
+	 * @param p_card The card (string) to check.
+	 * @return True if the player has the card.
+	 */
+	public boolean hasCard(String p_card) {
+		return d_cards.contains(p_card.toLowerCase());
+	}
+	
+	/**
+	 * Adds a card to the player's card collection.
+	 * @param p_card The card to add (as a string).
+	 * @return True if the card was added.
+	 */
+	public boolean addCard(String p_card) {
+		return d_cards.add(p_card.toLowerCase());
+	}
+	
+	/**
+	 * Removes a card from the list of cards.
+	 * @param p_card The card (string) to remove.
+	 * @return True if the card existed and was removed, false otherwise.
+	 */
+	public boolean removeCard(String p_card) {
+		return d_cards.remove(p_card.toLowerCase());
 	}
 }

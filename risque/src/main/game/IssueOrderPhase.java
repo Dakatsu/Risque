@@ -163,6 +163,29 @@ public class IssueOrderPhase extends Phase {
 			}
 		}
 	}
+	
+	/**
+	 * Implements the creation of a bomb order in this phase.
+	 * @param p_targetID The ID of the territory to bomb.
+	 */
+	public void createBombOrder(int p_targetID) {
+		Territory l_target = d_engine.getMap().getTerritory(p_targetID);
+		// We check for the card, but we do not use it yet.
+		if (l_target != null) {
+			if (d_currentPlayer.hasCard("bomb")) {
+				d_currentPlayer.removeCard("bomb");
+				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new BombOrder(l_target)));
+				d_engine.broadcastMessage(d_currentPlayer.getName() + " will bomb " + l_target.getDisplayName());
+				onEndTurn(false);
+			}
+			else {
+				d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have a bomb card.");
+			}
+		}
+		else {
+			d_engine.broadcastMessage("That ID is invalid. Please try again.");
+		}
+	}
 
 	/**
 	 * Prints a player-friendly view of the map to the screen.

@@ -328,6 +328,14 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Uses the bomb card on a territory.
+	 * @param p_targetID The territory to bomb.
+	 */
+	public void bomb(int p_targetID) {
+		d_currentPhase.createBombOrder(p_targetID);
+	}
+	
+	/**
 	 * Signals that the current player does not want to issue any more orders.
 	 */
 	public void finishOrders() {
@@ -396,6 +404,10 @@ public class GameEngine {
 			}
 			if (p_conqueror != null) {
 				p_conqueror.addOwnedTerritory(p_territory);
+				// Give the player a card if they took this territory from someone.
+				if (l_prevOwner != null) {
+					p_conqueror.addCard("bomb");
+				}
 				// Determine whether to mark the continent as owned by this player.
 				Continent l_continent = p_territory.getContinent();
 				boolean l_doesOwnContinent = true;
