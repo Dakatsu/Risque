@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import main.game.AdvanceOrder;
+import main.game.Territory;
 
 /**
  * Tests the {@link main.game.AdvanceOrder} class.
@@ -19,8 +20,9 @@ public class AdvanceOrderTest {
 		int l_numArmiesAdvancing = 0;
 		AdvanceOrder l_advanceOrder = new AdvanceOrder(null, null, l_numArmiesAdvancing);
 		assertNotNull(l_advanceOrder);
-	}
-	
+	} 
+
+  
 	/**
 	 * Basic test of the random casualty function.
 	 */
@@ -45,5 +47,15 @@ public class AdvanceOrderTest {
 		int l_allKillResult = l_advanceOrder.calcNumCasualties(l_numRounds, 1.0f, l_numRounds * 1000);
 		assertEquals(l_allKillResult, l_numRounds);
 	}
+	
+	/**
+	 * Basic test to check functioning of execute function.
+	 */
+	@Test
+	public void testexecute() {
+		Territory l_fromTerritory = new Territory("string",null);
+		Territory l_toTerritory = new Territory("full",null);
+		AdvanceOrder l_advanceOrder = new AdvanceOrder(l_fromTerritory, l_toTerritory , 0);
+		assertEquals(l_advanceOrder.execute(), false); 
+	}
 }
-  

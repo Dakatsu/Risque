@@ -12,14 +12,22 @@ import main.game.Player;
 public class PlayerTest {
 
 	/**
-	 * Tests functions related to the player's name.
+	 * Tests getName() function of Player class.
 	 */
 	@Test
-	public void nameTest() {
+	public void getNameTest() {
 		String l_testName = "Kyle";
 		Player l_player = new Player(l_testName);
 		assertEquals(l_player.getName(), l_testName);
-		String l_newName = "Swaggins";
+	}
+	
+	/** 
+	 * Tests setName() function of Player class.
+	 */
+	@Test
+	public void setNameTest() {
+		String l_newName = "Mansajan";
+		Player l_player = new Player(l_newName);
 		l_player.setName(l_newName);
 		assertEquals(l_player.getName(), l_newName);
 	}
