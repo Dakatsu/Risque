@@ -35,7 +35,7 @@ public class DeployOrder extends Order {
 		// Ensure we own the territory we are deploying to (in case it was somehow conquered before this can be executed).
 		if (d_engine.getTerritoryOwner(d_territory) == getIssuer()) {
 			d_territory.setNumArmies(d_territory.getNumArmies() + d_numArmiesToDeploy);
-			d_engine.broadcastMessage(getIssuer().getName() +  " deployed " + d_numArmiesToDeploy + " to " + d_territory.getDisplayName());
+			d_engine.broadcastMessage(getIssuer().getName() +  " deployed " + d_numArmiesToDeploy + " to " + d_territory.getDisplayName() + ", for a total of " + d_territory.getNumArmies() + ".");
 			return true;
 		}
 		return false;

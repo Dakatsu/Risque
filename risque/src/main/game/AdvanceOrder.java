@@ -24,6 +24,16 @@ public class AdvanceOrder extends Order {
 	private Territory d_toTerritory;
 	
 	/**
+	 * The chance that a defender will kill an attacker.
+	 */
+	private float d_defenderKillChance;
+	
+	/**
+	 * The chance that an attacker will kill a defender.
+	 */
+	private float d_attackerKillChance;
+	
+	/**
 	 * Init the advance order.
 	 * @param p_fromTerritory The origin territory for the armies.
 	 * @param p_toTerritory The destination territory. May or may not be owned by the same player.
@@ -33,6 +43,29 @@ public class AdvanceOrder extends Order {
 		d_numArmiesAdvancing = p_numArmiesAdvancing;
 		d_fromTerritory = p_fromTerritory;
 		d_toTerritory = p_toTerritory;
+		d_defenderKillChance = 0.7f;
+		d_attackerKillChance = 0.6f;
+	}
+	
+	/**
+	 * Calculates the number of casualties during combat.
+	 * @param p_numRounds The number of times we "roll the dice" on a kill.
+	 * @param p_killChance The chance of a kill for each round, as a percent.
+	 * @param p_maxCasualties The maximum number of kills we can achieve.
+	 * @return The number of kills.
+	 */
+	public int calcNumCasualties(int p_numRounds, float p_killChance, int p_maxCasualties) {
+		Random l_rand = new Random();
+		int l_kills = 0;
+		for (int l_idx = 0; l_idx < p_numRounds; l_idx++) {
+			if (p_killChance >= l_rand.nextFloat()) {
+				l_kills++;
+				if (l_kills == p_maxCasualties) {
+					return p_maxCasualties;
+				}
+			}
+		}
+		return l_kills;
 	}
 	
 	@Override
@@ -71,43 +104,24 @@ public class AdvanceOrder extends Order {
 				 * Each attacking unit has a 60% chance of killing a defender.
 				 * Each defending unit has a 70% chance of killing an attacker.
 				 */
-				Random l_rand = new Random();
-				// Calculate defender casualties first.
-				int l_numDefenders = d_toTerritory.getNumArmies();
-				for (int l_idx = 0; l_idx < l_numToAdvance; l_idx++) {
-					if (l_rand.nextFloat() >= 0.4f) {
-						l_numDefenders--;
-						if (l_numDefenders == 0) {
-							break;
-						}
-					}
-				}
-				// Then calculate number of attacker casualties.
-				int l_numAttackers = l_numToAdvance;
-				for (int l_idx = 0; l_idx < l_numToAdvance; l_idx++) {
-					if (l_rand.nextFloat() >= 0.3f) {
-						l_numAttackers--;
-						if (l_numAttackers == 0) {
-							break;
-						}
-					}
-				}
+				int l_numSurvivingDefenders = d_toTerritory.getNumArmies() - calcNumCasualties(l_numToAdvance, d_attackerKillChance, d_toTerritory.getNumArmies());
+				int l_numSurvivingAttackers = l_numToAdvance - calcNumCasualties(d_toTerritory.getNumArmies(), d_defenderKillChance, l_numToAdvance);
 				// If defenders have all been killed, take the territory.
-				if (l_numDefenders == 0) {
+				if (l_numSurvivingDefenders <= 0) {
 					d_engine.broadcastMessage("The territory " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory).getName() + ") has been siezed by armies from " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ").\n"
-							+ "  Surviving Attackers: " + l_numAttackers);
+							+ "  Surviving Attackers: " + l_numSurvivingAttackers);
 					d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance);
-					d_toTerritory.setNumArmies(l_numAttackers);
+					d_toTerritory.setNumArmies(l_numSurvivingAttackers);
 					d_engine.changeTerritoryOwner(d_toTerritory, getIssuer());
 				}
 				else {
 					d_engine.broadcastMessage("The attack on " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory).getName() + ") by " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ") did not succeed.\n"
-							+ "  Surviving Attackers: " + l_numAttackers + "/" + l_numToAdvance + "\n"
-							+ "  Surviving Defenders: " + l_numDefenders + "/" + d_toTerritory.getNumArmies());
+							+ "  Surviving Attackers: " + l_numSurvivingAttackers + "/" + l_numToAdvance + "\n"
+							+ "  Surviving Defenders: " + l_numSurvivingDefenders + "/" + d_toTerritory.getNumArmies());
 					// The from territory will keep its initial army count, minus the number sent away, plus the attackers returning home.
-					d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance + l_numAttackers);
+					d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance + l_numSurvivingAttackers);
 					// All armies in this territory were defending, so the number of defenders after combat is the number left in the territory.
-					d_toTerritory.setNumArmies(l_numDefenders);
+					d_toTerritory.setNumArmies(l_numSurvivingDefenders);
 				}
 			}
 			return true;
