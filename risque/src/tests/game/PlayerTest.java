@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import main.game.Continent;
+import main.game.Order;
 import main.game.Player;
 import main.game.Territory;
 
@@ -168,6 +169,38 @@ public class PlayerTest {
 		assertEquals(l_player.removeUndeployedArmies(5), 4);
 		l_player.setNumUndeployedArmies(4);
 		assertEquals(l_player.removeUndeployedArmies(2), 2);
+	}
+	
+	/**
+	 * Tests addCard() function of Player class.
+	 */
+	@Test
+	public void addCardTest() { 
+		String l_card= "card";
+		Player l_player = new Player("str");	
+		assertEquals(l_player.addCard(l_card), true);
+	}
+	
+	/**
+	 * Tests removeCard() function of Player class.
+	 */
+	@Test
+	public void removeCardTest() { 
+		String l_card= "card";
+		Player l_player = new Player("str");	
+		l_player.addCard(l_card);
+		assertEquals(l_player.removeCard(l_card), true);
+	}
+	 
+	/**
+	 * Tests hasCard() function of Player class.
+	 */
+	@Test
+	public void hasCardTest() { 
+		String l_card= "card";
+		Player l_player = new Player("str");	
+		l_player.addCard(l_card);
+		assertEquals(l_player.hasCard(l_card), true);
 	}
 }
 
