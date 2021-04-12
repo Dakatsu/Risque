@@ -29,16 +29,16 @@ public interface PlayerStrategy {
 	 * @param p_map Map Object
 	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
-	 * 
+	 * @return 1 if the game is over otherwise 0
 	 */
 	int attack(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
 	
 	/**
 	 * This method is for reinforcement
 	 * 
-	 * @param p_map
+	 * @param p_map Map Object
 	 * @param p_listPlayer List of Players
-	 * @param p_player
+	 * @param p_player Current Player
 	 */
 	void reinforcement(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
 	

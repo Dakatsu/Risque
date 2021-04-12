@@ -56,8 +56,7 @@ public class AggressiveStrategy implements PlayerStrategy{
 	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
 	 * @param p_territory Current Territory
-	 * @return 1 if success
-	 * @return 0 if fail
+	 * @return 1 if success otherwise 0
 	 */
 	public int workableAttack(Map p_map, LinkedList<Player> p_listPlayer, Player p_player, Territory p_territory) {
 		
@@ -69,7 +68,7 @@ public class AggressiveStrategy implements PlayerStrategy{
 	 * This method is for deploy on player's weakest Territory
 	 * 
 	 * @param p_map Map Object
-	 * @param p_listplayer List of Players
+	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
 	 */
 	public void deploy(Map p_map, LinkedList<Player> p_listPlayer, Player p_player) {
@@ -97,7 +96,7 @@ public class AggressiveStrategy implements PlayerStrategy{
 	/**
 	 * This method is for reinforcement phase
 	 * 
-	 * @param p_map
+	 * @param p_map Map Object
 	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
 	 */
