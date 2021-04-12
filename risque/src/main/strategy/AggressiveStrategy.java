@@ -8,6 +8,11 @@ import main.game.Territory;
 import main.game.Continent;
 import main.game.Player;
 
+/**
+ * Class for Aggressive Strategy
+ * @author Protim
+ *
+ */
 public class AggressiveStrategy implements PlayerStrategy{
 	
 	/**
@@ -79,8 +84,8 @@ public class AggressiveStrategy implements PlayerStrategy{
 	 * @param p_map Map Object
 	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
-	 * @return 1 if the game is over
-	 * @return 0 if the game is not over
+	 * @return 1 if the game is over otherwise 0
+	 * 
 	 */
 	public int attack(Map p_map, LinkedList<Player> p_listPlayer, Player p_player) {
 		
@@ -92,7 +97,7 @@ public class AggressiveStrategy implements PlayerStrategy{
 	/**
 	 * This method is for reinforcement phase
 	 * 
-	 * @param map
+	 * @param p_map
 	 * @param p_listPlayer List of Players
 	 * @param p_player
 	 */

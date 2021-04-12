@@ -7,7 +7,11 @@ import main.game.Map;
 import main.game.Territory;
 import main.game.Continent;
 import main.game.Player;
-
+/**
+ * Class for Benevolent Strategy
+ * @author Protim
+ *
+ */
 public class BenevolentStrategy implements PlayerStrategy{
 	
 	
@@ -50,7 +54,7 @@ public class BenevolentStrategy implements PlayerStrategy{
 	 * This method is for deploy on player's weakest Territory
 	 * 
 	 * @param p_map Map Object
-	 * @param p_listplayer List of Players
+	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
 	 */
 	
@@ -64,9 +68,9 @@ public class BenevolentStrategy implements PlayerStrategy{
 	/**
 	 * This method is for reinforcement phase
 	 * 
-	 * @param map
+	 * @param p_map Map Object
 	 * @param p_listPlayer List of Players
-	 * @param p_player
+	 * @param p_player Current Player
 	 */
 	
 	public void reinforcement(Map p_map, LinkedList<Player> p_listPlayer, Player p_player) {
