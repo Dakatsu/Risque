@@ -99,7 +99,7 @@ public class AggressiveStrategy implements PlayerStrategy{
 	 * 
 	 * @param p_map
 	 * @param p_listPlayer List of Players
-	 * @param p_player
+	 * @param p_player Current Player
 	 */
 	
 	public void reinforcement(Map p_map, LinkedList<Player> p_listPlayer, Player p_player) {
