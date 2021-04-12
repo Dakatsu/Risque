@@ -12,26 +12,43 @@ import main.game.Continent;
 public class ContinentTest {
 
 	/**
-	 * Tests functions related to the continent's name.
+	 * Tests getname() function.
 	 */
 	@Test
-	public void nameTest() { 
+	public void getNameTest() { 
 		String l_testName = "Ontario";
 		Continent l_continent = new Continent(l_testName);
 		assertEquals(l_continent.getName(), l_testName);
-		String l_newName = "California";
+	}
+		
+	/**
+	 * Tests setname() function.
+	 */
+	@Test
+	public void setNameTest() {
+		String l_newName = "Quebec";
+		Continent l_continent = new Continent(l_newName);
 		l_continent.setName(l_newName);
 		assertEquals(l_continent.getName(), l_newName);
 	}
 	 
 	/**
-	 * Tests functions related to the continent's bonus armies.
+	 * Test getBonusArmies() function.
 	 */
 	@Test
-	public void bonusArmyTest() {
+	public void getBonusArmyTest() {
 		int l_numBonusArmies = 5;
 		Continent l_continent = new Continent("Testlandia", l_numBonusArmies);
 		assertEquals(l_continent.getBonusArmies(), l_numBonusArmies);
+	}
+	
+	/**
+	 * Test setBonusArmies() function.
+	 */
+	@Test
+	public void setBonusArmyTest() {
+		int l_numBonusArmies = 3;
+		Continent l_continent = new Continent("Testlandia", l_numBonusArmies);
 		// Ensure we can set it to a new positive number.
 		int l_newNumBonusArmies = 9;
 		assertTrue(l_continent.setBonusArmies(l_newNumBonusArmies));

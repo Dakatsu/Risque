@@ -16,7 +16,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void getNameTest() {
-		String l_testName = "Funny";
+		String l_testName = "Kyle";
 		Player l_player = new Player(l_testName);
 		assertEquals(l_player.getName(), l_testName);
 	}
@@ -26,7 +26,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void setNameTest() {
-		String l_newName = "Sir";
+		String l_newName = "Mansajan";
 		Player l_player = new Player(l_newName);
 		l_player.setName(l_newName);
 		assertEquals(l_player.getName(), l_newName);

@@ -19,6 +19,6 @@ public class AdvanceOrderTest {
 		int l_numArmiesAdvancing = 0;
 		AdvanceOrder l_advanceOrder = new AdvanceOrder(null, null, l_numArmiesAdvancing);
 		assertNotNull(l_advanceOrder);
-	}
+	} 
 }
   
