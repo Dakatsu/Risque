@@ -12,7 +12,7 @@ import main.game.Continent;
 public class ContinentTest {
 
 	/**
-	 * Tests getname() function.
+	 * Tests getName() function.
 	 */
 	@Test
 	public void getNameTest() { 
@@ -22,7 +22,7 @@ public class ContinentTest {
 	}
 		
 	/**
-	 * Tests setname() function.
+	 * Tests setName() function.
 	 */
 	@Test
 	public void setNameTest() {
@@ -32,6 +32,17 @@ public class ContinentTest {
 		assertEquals(l_continent.getName(), l_newName);
 	}
 	 
+	/**
+	 * Tests getDisplayName() function. 
+	 */
+	@Test
+	public void getDisplayNameTest() { 
+		String l_testName = "On_tar_io";
+		Continent l_continent = new Continent(l_testName);
+		l_continent.getName();
+		assertEquals(l_continent.getDisplayName(), "On tar io");
+	}
+	
 	/**
 	 * Test getBonusArmies() function.
 	 */
