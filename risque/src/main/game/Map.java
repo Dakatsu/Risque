@@ -256,30 +256,38 @@ public class Map extends GameEntity {
 	}
 	
 	/**
-	 * Adds a border between two territories.
+	 * Adds a border between two territories by ID.
 	 * @param p_firstID The first territory's ID.
 	 * @param p_secondID The second territory's ID.
 	 * @return True if the border was added, false otherwise.
 	 */
 	public boolean addBorder(int p_firstID, int p_secondID) {
+		return addBorder(getTerritory(p_firstID), getTerritory(p_secondID));
+	}
+	
+	/**
+	 * Adds a border between two territories.
+	 * @param p_first The first territory.
+	 * @param p_second The second territory.
+	 * @return True if the border was added, false otherwise.
+	 */
+	public boolean addBorder(Territory p_first, Territory p_second) {
 		// Don't allow us to border ourself.
-		if (p_firstID == p_secondID) {
+		if (p_first == p_second) {
 			return false;
 		}
-		Territory l_firstTerritory = getTerritory(p_firstID);
-		Territory l_secondTerritory = getTerritory(p_secondID);
-		if (l_firstTerritory != null && l_secondTerritory != null) {
+		if (p_first != null && p_second != null) {
 			// There should already exist an empty LinkedList upon creation of the territory, so this should always work.
 			// Do not add duplicates.
 			boolean bAddedBorders = false;
-			LinkedList<Territory> l_firstBorders = d_borders.get(l_firstTerritory);
-			if (!l_firstBorders.contains(l_secondTerritory)) {
-				l_firstBorders.add(l_secondTerritory);
+			LinkedList<Territory> l_firstBorders = d_borders.get(p_first);
+			if (!l_firstBorders.contains(p_second)) {
+				l_firstBorders.add(p_second);
 				bAddedBorders = true;
 			}
-			LinkedList<Territory> l_secondBorders = d_borders.get(l_secondTerritory);
-			if (!l_secondBorders.contains(l_firstTerritory)) {
-				l_secondBorders.add(l_firstTerritory);
+			LinkedList<Territory> l_secondBorders = d_borders.get(p_second);
+			if (!l_secondBorders.contains(p_first)) {
+				l_secondBorders.add(p_first);
 				bAddedBorders = true;
 			}
 			return bAddedBorders;
@@ -288,23 +296,31 @@ public class Map extends GameEntity {
 	}
 	
 	/**
-	 * Removes a border between two territories.
+	 * Removes a border between two territories by ID.
 	 * @param p_firstID The first territory's ID.
 	 * @param p_secondID The second territory's ID.
 	 * @return True if a border was deleted, false otherwise.
 	 */
 	public boolean deleteBorder(int p_firstID, int p_secondID) {
+		return deleteBorder(getTerritory(p_firstID), getTerritory(p_secondID));
+	}
+	
+	/**
+	 * Removes a border between two territories.
+	 * @param p_first The first territory.
+	 * @param p_second The second territory.
+	 * @return True if a border was deleted, false otherwise.
+	 */
+	public boolean deleteBorder(Territory p_first, Territory p_second) {
 		// A border with ourself should have never been created.
-		if (p_firstID == p_secondID) {
+		if (p_first == p_second) {
 			return false;
 		}
-		Territory l_firstTerritory = getTerritory(p_firstID);
-		Territory l_secondTerritory = getTerritory(p_secondID);
-		if (l_firstTerritory != null && l_secondTerritory != null) {
-			LinkedList<Territory> l_firstNeighbours = d_borders.get(l_firstTerritory);
-			boolean l_removedFromFirst = l_firstNeighbours.remove(l_secondTerritory);
-			LinkedList<Territory> l_secondNeighbours = d_borders.get(l_secondTerritory);
-			boolean l_removedFromSecond = l_secondNeighbours.remove(l_firstTerritory);
+		if (p_first != null && p_second != null) {
+			LinkedList<Territory> l_firstNeighbours = d_borders.get(p_first);
+			boolean l_removedFromFirst = l_firstNeighbours.remove(p_second);
+			LinkedList<Territory> l_secondNeighbours = d_borders.get(p_second);
+			boolean l_removedFromSecond = l_secondNeighbours.remove(p_first);
 			// TODO: output an error if just one territory had the other as its neighbour.
 			// That implies that there is a fault in the creation process.
 			return l_removedFromFirst || l_removedFromSecond;
