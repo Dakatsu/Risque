@@ -293,6 +293,20 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Gets a player by their name if a player exists with that name.
+	 * @param p_playerName The ID of the player.
+	 * @return The first player with that name, if there is one.
+	 */
+	public Player getPlayerByName(String p_playerName) {
+		for (Player l_player : d_players) {
+			if (l_player.getName().equalsIgnoreCase(p_playerName)) {
+				return l_player;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Gets a shallow copy of the list of players.
 	 * @return The list of players.
 	 */
@@ -351,6 +365,19 @@ public class GameEngine {
 	 */
 	public void airlift(int p_sourceID, int p_destinationID, int p_numArmies) {
 		d_currentPhase.createAirliftOrder(p_sourceID, p_destinationID, p_numArmies);
+	}
+	
+	/**
+	 * Uses the negotiate card to prevent the current player and another player from fighting.
+	 * @param p_player The the player to negotiate cease-fire with.
+	 */
+	public void negotiate(Player p_player) {
+		if (p_player != null) {
+			d_currentPhase.createNegotiateOrder(p_player);
+		}
+		else {
+			broadcastMessage("Invalid parameters for the negotiate command.~");
+		}
 	}
 	
 	/**
@@ -424,7 +451,7 @@ public class GameEngine {
 				p_conqueror.addOwnedTerritory(p_territory);
 				// Give the player a card if they took this territory from someone.
 				if (l_prevOwner != null) {
-					p_conqueror.addCard("airlift");
+					p_conqueror.addCard("diplomacy");
 				}
 				// Determine whether to mark the continent as owned by this player.
 				Continent l_continent = p_territory.getContinent();

@@ -9,7 +9,11 @@ import main.game.GameEngine;
 import main.game.Map;
 import main.game.MapReaderWriter;
 
-
+/**
+ * 
+ * Test for Reading and saving the map
+ *
+ */
 public class MapReaderWriterTest {
 	/**
 	 * Reference to the game engine the map uses.

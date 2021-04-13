@@ -219,6 +219,22 @@ public class Controller {
 	}
 	
 	/**
+	 * Uses the negotiate card to prevent the current player and another player from fighting.
+	 * @param p_playerID The ID of the player to negotiate cease-fire with.
+	 */
+	public void negotiate(int p_playerID) {
+		d_engine.negotiate(d_engine.getPlayerByID(p_playerID));
+	}
+	
+	/**
+	 * Uses the negotiate card to prevent the current player and another player from fighting.
+	 * @param p_playerName The name of the player to negotiate cease-fire with.
+	 */
+	public void negotiate(String p_playerName) {
+		d_engine.negotiate(d_engine.getPlayerByName(p_playerName));
+	}
+	
+	/**
 	 * Ends this current player's turn without issuing any orders, and signals that they have no more orders to issue.
 	 */
 	public void finishOrders() {
