@@ -58,7 +58,8 @@ public class GameEngine {
 		d_cardOptions = new LinkedList<>();
 		d_cardOptions.add("bomb");
 		d_cardOptions.add("airlift");
-		d_cardOptions.add("negotiate");
+		d_cardOptions.add("diplomacy");
+		d_cardOptions.add("blockade");
 	}
 	
 	/**
@@ -377,8 +378,16 @@ public class GameEngine {
 			d_currentPhase.createNegotiateOrder(p_player);
 		}
 		else {
-			broadcastMessage("Invalid parameters for the negotiate command.~");
+			broadcastMessage("Invalid parameters for the negotiate command.");
 		}
+	}
+	
+	/**
+	 * Uses the blockade card to make a territory neutral and triple its army count.
+	 * @param p_territoryID The ID of the territory to blockade.
+	 */
+	public void blockade(int p_territoryID) {
+		d_currentPhase.createBlockadeOrder(p_territoryID);
 	}
 	
 	/**

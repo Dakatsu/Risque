@@ -175,6 +175,14 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Uses the blockade card to make a territory neutral and triple its army count.
+	 * @param p_territoryID The ID of the territory to blockade.
+	 */
+	public void createBlockadeOrder(int p_territoryID) {
+		printInvalidCommandMessage("blockade");
+	}
+	
+	/**
 	 * Implements the finish(orders) command.
 	 */
 	public void finishOrders() {

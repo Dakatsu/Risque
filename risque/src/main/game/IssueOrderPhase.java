@@ -170,6 +170,7 @@ public class IssueOrderPhase extends Phase {
 	 * Implements the creation of a bomb order in this phase.
 	 * @param p_targetID The ID of the territory to bomb.
 	 */
+	@Override
 	public void createBombOrder(int p_targetID) {
 		Territory l_target = d_engine.getMap().getTerritory(p_targetID);
 		// We check for the card, but we do not use it yet.
@@ -195,6 +196,7 @@ public class IssueOrderPhase extends Phase {
 	 * @param p_destinationID The ID of the destination territory for the armies.
 	 * @param p_numArmies The number of armies to transfer.
 	 */
+	@Override
 	public void createAirliftOrder(int p_sourceID, int p_destinationID, int p_numArmies) {
 		if (d_currentPlayer.hasCard("airlift")) {
 			Territory l_source = d_engine.getMap().getTerritory(p_sourceID);
@@ -218,6 +220,7 @@ public class IssueOrderPhase extends Phase {
 	 * Use the negotiate card to prevent two players from fighting.
 	 * @param p_player The target player.
 	 */
+	@Override
 	public void createNegotiateOrder(Player p_player) {
 		if (d_currentPlayer.hasCard("diplomacy")) {
 			if (p_player != null && p_player != d_currentPlayer) {
@@ -231,7 +234,30 @@ public class IssueOrderPhase extends Phase {
 			}
 		}
 		else {
-			d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have an airlift card.");
+			d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have a diplomacy card.");
+		}
+	}
+	
+	/**
+	 * Uses the blockade card to make a territory neutral and triple its army count.
+	 * @param p_territoryID The ID of the territory to blockade.
+	 */
+	@Override
+	public void createBlockadeOrder(int p_territoryID) {
+		if (d_currentPlayer.hasCard("blockade")) {
+			Territory l_territory = d_engine.getMap().getTerritory(p_territoryID);
+			if (l_territory != null) {
+				d_currentPlayer.removeCard("blockade");
+				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new BlockadeOrder(l_territory)));
+				d_engine.broadcastMessage(d_currentPlayer.getName() + " will blockade " + l_territory.getName() + ".");
+				onEndTurn(false);
+			}
+			else {
+				d_engine.broadcastMessage("Invalid territory for the blockade order.");
+			}
+		}
+		else {
+			d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have a blockade card.");
 		}
 	}
 

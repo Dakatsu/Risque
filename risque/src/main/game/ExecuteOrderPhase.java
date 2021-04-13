@@ -67,7 +67,7 @@ public class ExecuteOrderPhase extends Phase {
 	public boolean canAttackTerritory(Territory p_territory, Player p_attacker) {
 		Player l_territoryOwner = d_engine.getTerritoryOwner(p_territory);
 		if (p_attacker != null && l_territoryOwner != null && (p_attacker.isAllyWith(l_territoryOwner) || l_territoryOwner.isAllyWith(p_attacker))) {
-			d_engine.broadcastMessage("An attack on " + p_territory.getName() + " (" + l_territoryOwner.getName() + ") by " + p_attacker.getName() + " cannot proceed due to a cease-fire.");
+			d_engine.broadcastMessage("An attack on " + p_territory.getDisplayName() + " (" + l_territoryOwner.getName() + ") by " + p_attacker.getName() + " cannot proceed due to a cease-fire.");
 			return false;
 		}
 		return true;
@@ -96,12 +96,17 @@ public class ExecuteOrderPhase extends Phase {
 	 * Give every player owed a card a random one.
 	 */
 	public void awardCardsToPlayers() {
-		for (Player l_player : d_playersToAwardCards) {
-			Random l_rand = new Random();
-			LinkedList<String> l_cardOptions = d_engine.getCardOptions();
-			String l_randCard = l_cardOptions.get(l_rand.nextInt(l_cardOptions.size() - 1));
-			l_player.addCard(l_randCard);
-			d_engine.broadcastMessage(l_player.getName() + " was awarded a " + l_randCard + " card.");
+		// Check that we actually have cards to award first.
+		Random l_rand = new Random();
+		LinkedList<String> l_cardOptions = d_engine.getCardOptions();
+		if (!l_cardOptions.isEmpty()) {
+			for (Player l_player : d_playersToAwardCards) {
+				// Note: nextInt's parameter cannot be zero. If we only have one card, just return 0.
+				int l_randIdx = l_cardOptions.size() == 1 ? 0 : l_rand.nextInt(l_cardOptions.size() - 1);
+				String l_randCard = l_cardOptions.get(l_randIdx);
+				l_player.addCard(l_randCard);
+				d_engine.broadcastMessage(l_player.getName() + " was awarded a " + l_randCard + " card.");
+			}
 		}
 	}
 }
