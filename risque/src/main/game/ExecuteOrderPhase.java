@@ -1,11 +1,16 @@
 package main.game;
 
+import java.util.LinkedList;
+import java.util.Random;
+
 /**
  * Phase that represents the game executing the issued orders.
  * @author Kyle
  *
  */
 public class ExecuteOrderPhase extends Phase {
+	
+	private LinkedList<Player> d_playersToAwardCards;
 
 	/**
 	 * Auto-generated constructor for this phase.
@@ -13,6 +18,7 @@ public class ExecuteOrderPhase extends Phase {
 	 */
 	public ExecuteOrderPhase(GameEngine p_engine) {
 		super(p_engine);
+		d_playersToAwardCards = new LinkedList<>();
 	}
 
 	/**
@@ -26,9 +32,14 @@ public class ExecuteOrderPhase extends Phase {
 			l_areThereUnexecutedOrders = false;
 			for (Player l_player : d_engine.getPlayers()) {
 				if (l_player.hasOrdersLeftToExecute()) {
+					int l_numTerritoriesBeforeOrder = l_player.getNumTerritoriesOwned();
 					l_player.nextOrder().execute();
 					if (l_player.hasOrdersLeftToExecute()) {
 						l_areThereUnexecutedOrders = true;
+					}
+					// Check whether we should be awarded a card for gaining a territory.
+					if (l_player.getNumTerritoriesOwned() > l_numTerritoriesBeforeOrder && !d_playersToAwardCards.contains(l_player)) {
+						d_playersToAwardCards.add(l_player);
 					}
 				}
 			}
@@ -36,6 +47,7 @@ public class ExecuteOrderPhase extends Phase {
 		// Check for a winner; end the game if someone won, otherwise go back to issuing orders.
 		Player l_winner = checkForWinner();
 		if (l_winner == null) {
+			awardCardsToPlayers();
 			// Loop back to the issue orders phase.
 			d_engine.setPhase(new IssueOrderPhase(d_engine));
 		}
@@ -78,5 +90,18 @@ public class ExecuteOrderPhase extends Phase {
 			}
 		}
 		return l_winner;
+	}
+	
+	/**
+	 * Give every player owed a card a random one.
+	 */
+	public void awardCardsToPlayers() {
+		for (Player l_player : d_playersToAwardCards) {
+			Random l_rand = new Random();
+			LinkedList<String> l_cardOptions = d_engine.getCardOptions();
+			String l_randCard = l_cardOptions.get(l_rand.nextInt(l_cardOptions.size() - 1));
+			l_player.addCard(l_randCard);
+			d_engine.broadcastMessage(l_player.getName() + " was awarded a " + l_randCard + " card.");
+		}
 	}
 }

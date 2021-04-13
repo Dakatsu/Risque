@@ -58,6 +58,7 @@ public class GameEngine {
 		d_cardOptions = new LinkedList<>();
 		d_cardOptions.add("bomb");
 		d_cardOptions.add("airlift");
+		d_cardOptions.add("negotiate");
 	}
 	
 	/**
@@ -436,6 +437,14 @@ public class GameEngine {
 	}
 	
 	/**
+	 * Returns a shallow copy of the list of card options.
+	 * @return The card options list.
+	 */
+	public LinkedList<String> getCardOptions() {
+		return new LinkedList<String>(d_cardOptions);
+	}
+	
+	/**
 	 * Handles the transfer of a territory to a new player.
 	 * @param p_territory The territory to transfer ownership of.
 	 * @param p_conqueror The new owner of the territory.
@@ -449,10 +458,6 @@ public class GameEngine {
 			}
 			if (p_conqueror != null) {
 				p_conqueror.addOwnedTerritory(p_territory);
-				// Give the player a card if they took this territory from someone.
-				if (l_prevOwner != null) {
-					p_conqueror.addCard("diplomacy");
-				}
 				// Determine whether to mark the continent as owned by this player.
 				Continent l_continent = p_territory.getContinent();
 				boolean l_doesOwnContinent = true;

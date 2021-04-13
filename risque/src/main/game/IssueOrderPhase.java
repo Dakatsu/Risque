@@ -22,7 +22,7 @@ public class IssueOrderPhase extends Phase {
 	 * The IDs of players that take turns in this phase.
 	 */
 	private LinkedList<Player> d_playerRotation;
-
+	
 	/**
 	 * Auto-generated constructor stub.
 	 * @param p_engine The game engine context.
