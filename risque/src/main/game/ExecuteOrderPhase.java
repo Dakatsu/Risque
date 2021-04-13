@@ -46,6 +46,22 @@ public class ExecuteOrderPhase extends Phase {
 	}
 	
 	/**
+	 * Can an attack on a territory proceed?
+	 * If not, broadcasts the reason why it cannot.
+	 * @param p_territory The territory to attack.
+	 * @param p_attacker The player attacking the territory.
+	 * @return True if the attack can proceed.
+	 */
+	public boolean canAttackTerritory(Territory p_territory, Player p_attacker) {
+		Player l_territoryOwner = d_engine.getTerritoryOwner(p_territory);
+		if (p_attacker.isAllyWith(l_territoryOwner) || l_territoryOwner.isAllyWith(p_attacker)) {
+			d_engine.broadcastMessage("An attack on " + p_territory.getName() + " (" + l_territoryOwner.getName() + ") by " + p_attacker.getName() + " cannot proceed due to a cease-fire.");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * Checks if a player has one, and returns them if so.
 	 * @return The winning player, or null if nobody's won yet.
 	 */

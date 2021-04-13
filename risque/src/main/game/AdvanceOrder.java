@@ -98,7 +98,7 @@ public class AdvanceOrder extends Order {
 				d_engine.broadcastMessage(getIssuer().getName() + " advanced " + l_numToAdvance + " from " + d_fromTerritory.getDisplayName() + " to " + d_toTerritory.getDisplayName() + ".");
 			}
 			// Case 2: war were declared. Fight!
-			else if (d_engine.getPhase().canAttackTerritory(d_fromTerritory, getIssuer())) {
+			else if (d_engine.getPhase().canAttackTerritory(d_toTerritory, getIssuer())) {
 				/**
 				 * Casualty calculations are done per the project guidelines:
 				 * Each attacking unit has a 60% chance of killing a defender.
