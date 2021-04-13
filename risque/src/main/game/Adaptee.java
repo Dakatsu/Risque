@@ -54,14 +54,18 @@ public class Adaptee {
 								break;
 							case "Territories":
 								if (l_line.length() == 0) {
-									l_terrNum++;
+									continue;
 								}
 								String l_splitTerr[] = l_line.split(",");
 								String l_coname = l_splitTerr[0];
+								String l_contName = l_splitTerr[3];
+								if (l_contName.contains(" "))
+									l_contName = l_contName.replaceAll(" ", "_");
+								
 								if (l_coname.contains(" "))
 									l_coname = l_coname.replaceAll(" ", "_");
 								if (l_splitTerr.length >= 4) {
-									l_map.createTerritory(l_coname, l_splitTerr, l_map.getContinent(l_terrNum+1));
+									l_map.createTerritory(l_coname, l_splitTerr, l_map.getContinentByName(l_contName));
 								}
 							default:
 								// Do nothing. We do not care about any other sections.

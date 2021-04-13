@@ -74,6 +74,19 @@ public class Map extends GameEntity {
 	public int getContinentID(Continent l_continent) {
 		return d_continents.indexOf(l_continent) + 1;
 	}
+	/**
+	 * Returns the continent by its name.
+	 * @param l_continent The name.
+	 * @return The continent's ID if it exists, otherwise 0.
+	 */
+	public Continent getContinentByName(String l_contName) {
+		for (int i = 0; i < d_continents.size(); i++) {
+			if(d_continents.get(i).getName().equals(l_contName)) {
+				return d_continents.get(i);
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Creates a continent at the given ID or at the last ID, whichever is less.
@@ -168,21 +181,34 @@ public class Map extends GameEntity {
 	}
 	
 	/**
-	 * To Do javaDoc by riniyad
+	 * Creates territory and Neighbor .
+	 * @param p_conName The country name of the new territory.
+	 * @param p_neighbour array of country to find neighbors.
+	 * @param p_continent The continent this territory will belong to.
+	 * @return True if a territory was created, otherwise false.
 	 */
 	public boolean createTerritory(String p_conName, String[] p_neighbour, Continent p_continent) {
-		GameEngine l_gengine = new GameEngine();
 		if(p_continent != null) {
-//			int l_newIdx = getNumTerritories();
-			LinkedList<Territory>l_territory = new LinkedList<Territory>();
+			int l_newIdx = getNumTerritories();
 			Territory l_terr = new Territory(p_conName, p_continent);
-			// Make an empty list of neighbours to start.
+			l_terr.setMap(this);
+			// Make an empty list of neighbors to start.
+			d_borders.put(l_terr, new LinkedList<Territory>());
 			d_continentTerritories.get(p_continent).add(l_terr);
+			d_territories.add(l_newIdx, l_terr);
 			
-			for(int i = 1; i <= p_neighbour.length; i++) {
-				Territory l_newTerritory = new Territory(p_neighbour[i], p_continent);
-//				l_territory.add(l_newTerritory);
-				d_continentTerritories.get(p_continent).add(l_newTerritory);
+			for(int i = 4; i < p_neighbour.length; i++) {
+				String l_coname = p_neighbour[i];
+				if (l_coname.contains(" "))
+					l_coname = l_coname.replaceAll(" ", "_");
+				Territory l_secondterr = new Territory(l_coname, p_continent);
+				l_secondterr.setMap(this);
+				
+				d_borders.put(l_secondterr, new LinkedList<Territory>());
+				d_continentTerritories.get(p_continent).add(l_secondterr);
+				
+				d_territories.add(l_newIdx, l_terr);
+				addBorder(l_terr, l_secondterr);
 			}
 			return true;
 		}

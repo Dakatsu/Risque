@@ -49,7 +49,7 @@ public class StartupPhase extends Phase {
 				  Map l_map = d_engine.onCreateEntity(d_adp.LoadFromFile(l_file));
 					if (l_map != null) {
 						d_engine.setMap(l_map);
-						d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded! con type");
+						d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded!");
 					}
 					else {
 						d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
