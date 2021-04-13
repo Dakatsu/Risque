@@ -243,15 +243,26 @@ public class IssueOrderPhase extends Phase {
 		// Lists each player's name, then a display of their territories and the armies they control.
 		// TODO: Show number of fully-controlled continents?
 		if (d_engine.getMap() != null) {
+			// Determine which territories are neutral by removing the ones owned by the players.
+			LinkedList<Territory> l_neutralTerritories = new LinkedList<>(d_engine.getMap().getTerritories());
 			String l_mapView = "Risque Overview:\n";
+			// Print the player's name and their territories.
 			for (int l_idx = 0; l_idx < d_engine.getNumPlayers(); l_idx++) {
 				Player l_player = d_engine.getPlayerByID(l_idx);
 				LinkedList<Territory> l_ownedTerritories = l_player.getOwnedTerritories();
 				if (l_ownedTerritories.size() > 0) {
 					l_mapView += "  #" + l_idx + ": " + l_player.getName() + "\'s Empire and Garrisons:\n";
 					for (Territory l_territory : l_ownedTerritories) {
+						l_neutralTerritories.remove(l_territory);
 						l_mapView += "    #" + d_engine.getMap().getTerritoryID(l_territory) + ", " + l_territory.getDisplayName() + ": " + l_territory.getNumArmies() + "\n";
 					}
+				}
+			}
+			// Print neutral territories, if any exist.
+			if (!l_neutralTerritories.isEmpty()) {
+				l_mapView += "  Independent Territories:\n";
+				for (Territory l_territory : l_neutralTerritories) {
+					l_mapView += "    #" + d_engine.getMap().getTerritoryID(l_territory) + ", " + l_territory.getDisplayName() + ": " + l_territory.getNumArmies() + "\n";
 				}
 			}
 			d_engine.broadcastMessage(l_mapView);

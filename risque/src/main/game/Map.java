@@ -55,6 +55,14 @@ public class Map extends GameEntity {
 	}
 	
 	/**
+	 * Gets a shallow copy of the list of territories.
+	 * @return The list of territories.
+	 */
+	public LinkedList<Continent> getContinents() {
+		return new LinkedList<Continent>(d_continents);
+	}
+	
+	/**
 	 * Returns the continent by its ID if it exists.
 	 * @param l_continentID The continent's ID.
 	 * @return The continent at the ID, otherwise null.
@@ -144,6 +152,14 @@ public class Map extends GameEntity {
 	 */
 	public int getNumTerritories() {
 		return d_territories.size();
+	}
+	
+	/**
+	 * Gets a shallow copy of the list of territories.
+	 * @return The list of territories.
+	 */
+	public LinkedList<Territory> getTerritories() {
+		return new LinkedList<Territory>(d_territories);
 	}
 	
 	/**

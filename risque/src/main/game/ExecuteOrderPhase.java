@@ -66,7 +66,7 @@ public class ExecuteOrderPhase extends Phase {
 	 */
 	public boolean canAttackTerritory(Territory p_territory, Player p_attacker) {
 		Player l_territoryOwner = d_engine.getTerritoryOwner(p_territory);
-		if (p_attacker.isAllyWith(l_territoryOwner) || l_territoryOwner.isAllyWith(p_attacker)) {
+		if (p_attacker != null && l_territoryOwner != null && (p_attacker.isAllyWith(l_territoryOwner) || l_territoryOwner.isAllyWith(p_attacker))) {
 			d_engine.broadcastMessage("An attack on " + p_territory.getName() + " (" + l_territoryOwner.getName() + ") by " + p_attacker.getName() + " cannot proceed due to a cease-fire.");
 			return false;
 		}

@@ -76,6 +76,7 @@ public class AdvanceOrder extends Order {
 		 *  If so, do not do anything.
 		 */
 		if (d_fromTerritory.getNumArmies() > 0 && d_engine.getTerritoryOwner(d_fromTerritory) == getIssuer()) {
+			// Get the owners of the territories.
 			Player l_originOwner = null;
 			Player l_destinationOwner = null;
 			for (int l_idx = 0; l_idx < getEngine().getNumPlayers(); l_idx++) {
@@ -106,16 +107,19 @@ public class AdvanceOrder extends Order {
 				 */
 				int l_numSurvivingDefenders = d_toTerritory.getNumArmies() - calcNumCasualties(l_numToAdvance, d_attackerKillChance, d_toTerritory.getNumArmies());
 				int l_numSurvivingAttackers = l_numToAdvance - calcNumCasualties(d_toTerritory.getNumArmies(), d_defenderKillChance, l_numToAdvance);
+				// As neutral territories will have no owner, check for that when getting the owner names.
+				String l_defenderName = l_destinationOwner == null ? "Neutral" : l_destinationOwner.getName();
+				String l_attackerName = l_originOwner == null ? "Neutral" : l_originOwner.getName();
 				// If defenders have all been killed, take the territory.
 				if (l_numSurvivingDefenders <= 0) {
-					d_engine.broadcastMessage("The territory " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory).getName() + ") has been siezed by armies from " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ").\n"
+					d_engine.broadcastMessage("The territory " + d_toTerritory.getDisplayName() + " (" + l_defenderName + ") has been siezed by armies from " + d_fromTerritory.getDisplayName() + " (" + l_attackerName + ").\n"
 							+ "  Surviving Attackers: " + l_numSurvivingAttackers + "/" + l_numToAdvance);
 					d_fromTerritory.setNumArmies(d_fromTerritory.getNumArmies() - l_numToAdvance);
 					d_toTerritory.setNumArmies(l_numSurvivingAttackers);
 					d_engine.changeTerritoryOwner(d_toTerritory, getIssuer());
 				}
 				else {
-					d_engine.broadcastMessage("The attack on " + d_toTerritory.getDisplayName() + " (" + d_engine.getTerritoryOwner(d_toTerritory).getName() + ") by " + d_fromTerritory.getDisplayName() + " (" + getIssuer().getName() + ") did not succeed.\n"
+					d_engine.broadcastMessage("The attack on " + d_toTerritory.getDisplayName() + " (" + l_defenderName + ") by " + d_fromTerritory.getDisplayName() + " (" + l_attackerName + ") did not succeed.\n"
 							+ "  Surviving Attackers: " + l_numSurvivingAttackers + "/" + l_numToAdvance + "\n"
 							+ "  Surviving Defenders: " + l_numSurvivingDefenders + "/" + d_toTerritory.getNumArmies());
 					// The from territory will keep its initial army count, minus the number sent away, plus the attackers returning home.
