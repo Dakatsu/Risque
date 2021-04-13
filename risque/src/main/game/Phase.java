@@ -167,6 +167,14 @@ public abstract class Phase {
 	}
 	
 	/**
+	 * Use the negotiate card to prevent two players from fighting.
+	 * @param p_player The target player.
+	 */
+	public void createNegotiateOrder(Player p_player) {
+		printInvalidCommandMessage("negotiate");
+	}
+	
+	/**
 	 * Implements the finish(orders) command.
 	 */
 	public void finishOrders() {

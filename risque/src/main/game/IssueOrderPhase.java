@@ -213,6 +213,27 @@ public class IssueOrderPhase extends Phase {
 			d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have an airlift card.");
 		}
 	}
+	
+	/**
+	 * Use the negotiate card to prevent two players from fighting.
+	 * @param p_player The target player.
+	 */
+	public void createNegotiateOrder(Player p_player) {
+		if (d_currentPlayer.hasCard("diplomacy")) {
+			if (p_player != null && p_player != d_currentPlayer) {
+				d_currentPlayer.removeCard("diplomacy");
+				d_currentPlayer.issueOrder(d_engine.onCreateEntity(new NegotiateOrder(p_player)));
+				d_engine.broadcastMessage(d_currentPlayer.getName() + " will negotiate a cease-fire with " + p_player.getName() + ".");
+				onEndTurn(false);
+			}
+			else {
+				d_engine.broadcastMessage("Invalid players for the negotiate order.");
+			}
+		}
+		else {
+			d_engine.broadcastMessage(d_currentPlayer.getName() +  " does not have an airlift card.");
+		}
+	}
 
 	/**
 	 * Prints a player-friendly view of the map to the screen.
@@ -227,7 +248,7 @@ public class IssueOrderPhase extends Phase {
 				Player l_player = d_engine.getPlayerByID(l_idx);
 				LinkedList<Territory> l_ownedTerritories = l_player.getOwnedTerritories();
 				if (l_ownedTerritories.size() > 0) {
-					l_mapView += "  " + l_player.getName() + "\'s Empire and Garrisons:\n";
+					l_mapView += "  #" + l_idx + ": " + l_player.getName() + "\'s Empire and Garrisons:\n";
 					for (Territory l_territory : l_ownedTerritories) {
 						l_mapView += "    #" + d_engine.getMap().getTerritoryID(l_territory) + ", " + l_territory.getDisplayName() + ": " + l_territory.getNumArmies() + "\n";
 					}
