@@ -29,6 +29,7 @@ public class Adaptee {
 		try {
 			Scanner l_reader = new Scanner(p_file);
 			String l_section = "";
+			int l_terrNum = 0;
 			while (l_reader.hasNextLine()) {
 				String l_line = l_reader.nextLine();
 				
@@ -41,28 +42,27 @@ public class Adaptee {
 					else {
 						switch(l_section) {
 							case "Continents":
-								String l_splitLine[] = l_line.split("=");
-								String cname = l_splitLine[0];
+								String l_splitCont[] = l_line.split("=");
+								String l_cname = l_splitCont[0];
 								
-								if (l_splitLine[0].contains(" ")) {									
-									cname = l_splitLine[0].replaceAll(" ", "_");
+								if (l_splitCont[0].contains(" ")) {									
+									l_cname = l_splitCont[0].replaceAll(" ", "_");
 								}
-								if (l_splitLine.length >= 2) {
-									l_map.createContinent(cname, Integer.parseInt(l_splitLine[1]), l_map.getNumContinents() + 1);
+								if (l_splitCont.length >= 2) {
+									l_map.createContinent(l_cname, Integer.parseInt(l_splitCont[1]), l_map.getNumContinents() + 1);
 								}
 								break;
-//							case "countries":
-//								if (l_splitLine.length >= 3) {
-//									l_map.createTerritory(Integer.parseInt(l_splitLine[0]), l_splitLine[1], Integer.parseInt(l_splitLine[2]));
-//								}
-//								break;
-//							case "borders":
-//								if (l_splitLine.length >= 2) {
-//									for (int l_idx = 1; l_idx < l_splitLine.length; l_idx++) {
-//										l_map.addBorder(Integer.parseInt(l_splitLine[0]), Integer.parseInt(l_splitLine[l_idx]));
-//									}
-//								}
-//								break;
+							case "Territories":
+								if (l_line.length() == 0) {
+									l_terrNum++;
+								}
+								String l_splitTerr[] = l_line.split(",");
+								String l_coname = l_splitTerr[0];
+								if (l_coname.contains(" "))
+									l_coname = l_coname.replaceAll(" ", "_");
+								if (l_splitTerr.length >= 4) {
+									l_map.createTerritory(l_coname, l_splitTerr, l_map.getContinent(l_terrNum+1));
+								}
 							default:
 								// Do nothing. We do not care about any other sections.
 						}

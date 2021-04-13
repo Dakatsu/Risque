@@ -168,6 +168,29 @@ public class Map extends GameEntity {
 	}
 	
 	/**
+	 * To Do javaDoc by riniyad
+	 */
+	public boolean createTerritory(String p_conName, String[] p_neighbour, Continent p_continent) {
+		GameEngine l_gengine = new GameEngine();
+		if(p_continent != null) {
+//			int l_newIdx = getNumTerritories();
+			LinkedList<Territory>l_territory = new LinkedList<Territory>();
+			Territory l_terr = new Territory(p_conName, p_continent);
+			// Make an empty list of neighbours to start.
+			d_continentTerritories.get(p_continent).add(l_terr);
+			
+			for(int i = 1; i <= p_neighbour.length; i++) {
+				Territory l_newTerritory = new Territory(p_neighbour[i], p_continent);
+//				l_territory.add(l_newTerritory);
+				d_continentTerritories.get(p_continent).add(l_newTerritory);
+			}
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Creates a territory at the given ID or at the last ID, whichever is less.
 	 * @param p_territoryID The desired ID of the new territory.
 	 * @param p_name The human-readable name for this territory.
