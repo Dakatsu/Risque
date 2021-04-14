@@ -19,4 +19,5 @@ public class IssueOrderPhaseTest {
 		IssueOrderPhase l_issueOrder = new IssueOrderPhase(null);
 		assertNotNull(l_issueOrder);
 	}
+	
 } 

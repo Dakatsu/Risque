@@ -19,4 +19,5 @@ public class AdapteeTest {
 		Adaptee l_adaptee = new Adaptee();
 		assertNotNull(l_adaptee);
 	}
+	
 }

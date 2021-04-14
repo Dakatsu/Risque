@@ -227,4 +227,5 @@ public class MapTest {
 		
 		// TODO: Check that borders are the same.
 	}
+	
 }

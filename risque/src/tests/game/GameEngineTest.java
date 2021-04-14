@@ -54,4 +54,5 @@ public class GameEngineTest {
 	public void testClassObjectNotEmpty() {
 		assertNotNull(d_engine);
 	}
+	
 }
