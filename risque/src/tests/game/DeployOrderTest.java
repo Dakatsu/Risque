@@ -43,5 +43,6 @@ public class DeployOrderTest {
 		DeployOrder l_deployOrder = new DeployOrder(null, l_numArmies);
 		assertEquals(l_deployOrder.setNumArmies(l_numArmies), false);
 	}
+	
 }
   

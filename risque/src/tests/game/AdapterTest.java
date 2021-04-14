@@ -19,4 +19,5 @@ public class AdapterTest {
 		Adapter l_adapter = new Adapter(l_adaptee);
 		assertNotNull(l_adapter);
 	}
+	
 }

@@ -20,4 +20,5 @@ public class BombOrderTest {
 		BombOrder l_bomb = new BombOrder(null);
 		assertNotNull(l_bomb);
 	}
+	
 }

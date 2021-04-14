@@ -17,4 +17,5 @@ public class LogEntryBufferTest {
 		LogEntryBuffer l_logEntry = new LogEntryBuffer(null);
 		assertNotNull(l_logEntry);
 	}
+	
 }

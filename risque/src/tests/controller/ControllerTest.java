@@ -19,4 +19,5 @@ public class ControllerTest {
 		Controller l_controller = new Controller(null);
 		assertNotNull(l_controller);
 	}
+	
 }
