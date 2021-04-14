@@ -19,8 +19,7 @@ public class MapReaderWriter {
 	 * @param p_file The file to load from (including the extension).
 	 * @return Whether a valid map was loaded.
 	 */
-	public Map LoadFromFile(File p_file) {
-		// TODO: this could be turned into a static function that returns a new Map object.
+	public Map loadFromFile(File p_file) {
 		Map l_map = new Map();
 		/**
 		 * Reference on what a .map file entails:
@@ -68,13 +67,11 @@ public class MapReaderWriter {
 			if (l_map.validateMap()) {
 				return l_map;
 			}
-			else {
-				return null;
-			}
 		} 
 		catch (FileNotFoundException | NumberFormatException l_exception) {
-			return null;
+			// Do nothing; we'll just return null below.
 		}
+		// Return null if we did not load a valid map by this point.
+		return null;
 	}
-	
 }

@@ -45,7 +45,7 @@ public class MapReaderWriterTest {
 		
 		
 		MapReaderWriter mrw = new MapReaderWriter();
-		Map l_loadedMap = mrw.LoadFromFile(l_savedFile);
+		Map l_loadedMap = mrw.loadFromFile(l_savedFile);
 		assertNotNull(l_loadedMap);
 		l_loadedMap.setEngine(d_engine);
 		

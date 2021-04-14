@@ -25,44 +25,33 @@ public class StartupPhase extends Phase {
 	 * @param p_mapName The name of the map to be loaded.
 	 */
 	@Override
-	public void loadMap(String p_mapName){
+	public void loadMap(String p_mapName) {
 		File l_file = new File(p_mapName);
 		if (l_file.exists()) {
-			MapReaderWriter mrw = new MapReaderWriter();
-			Adaptee d_adptee = new Adaptee();
-			Adapter d_adp = new Adapter(d_adptee);
-			BufferedReader bufferReader;
+			boolean l_shouldUseConquestAdapter = false;
+			// If the map begins with [map], assume it's a conquest map file and load the proper reader instead.
 			try {
-				bufferReader = new BufferedReader(new FileReader(l_file));
-				String firstLine = bufferReader.readLine();
-				
-				if (firstLine.startsWith(";")) {				
-					Map l_map = d_engine.onCreateEntity(mrw.LoadFromFile(l_file));
-				if (l_map != null) {
-					d_engine.setMap(l_map);
-					d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded!");
+				BufferedReader l_bufferedReader = new BufferedReader(new FileReader(l_file));
+				String firstLine = l_bufferedReader.readLine();
+				if (firstLine.startsWith("[")) {
+					l_shouldUseConquestAdapter = true;
 				}
-				else {
-					d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
-				}
-			  }else if(firstLine.startsWith("[")){
-				  Map l_map = d_engine.onCreateEntity(d_adp.LoadFromFile(l_file));
-					if (l_map != null) {
-						d_engine.setMap(l_map);
-						d_engine.broadcastMessage("Map \"" + p_mapName + "\" successfully loaded! con type");
-					}
-					else {
-						d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
-					}
-			  }
-			  else {
-					d_engine.broadcastMessage("The file \"" + p_mapName +  "\" is not a valid map file.");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+				l_bufferedReader.close();
 			}
-			
-		}
+			catch (IOException e) {
+				// Do nothing.
+			}
+			MapReaderWriter l_mapReader = l_shouldUseConquestAdapter ?  new Adapter(new Adaptee()) : new MapReaderWriter();
+			Map l_map = d_engine.onCreateEntity(l_mapReader.loadFromFile(l_file));
+			// If we have a map, tell the game engine.
+			if (l_map != null) {
+				d_engine.setMap(l_map);
+				d_engine.broadcastMessage((l_shouldUseConquestAdapter ? "Conquest" : "Domination") + " map \"" + p_mapName + "\" successfully loaded!");
+			} 
+			else {
+				d_engine.broadcastMessage("The file \"" + p_mapName + "\" is not a valid map file.");
+			}
+		} 
 		else {
 			d_engine.broadcastMessage("The file \"" + p_mapName + "\" could not be loaded. Please check the file name.");
 		}
@@ -123,23 +112,36 @@ public class StartupPhase extends Phase {
 	 */
 	@Override
 	public void editMap(String p_mapName) {
-//		boolean l_shouldCreateNewMap = true;
-//		File l_file = new File(p_mapName);
-//		if (l_file.exists()) {
-//			MapReaderWriter mrw = new MapReaderWriter();
-//			
-//			//Map l_map = d_engine.onCreateEntity(mrw.LoadFromFile(l_file));
-//			if (d_engine.onCreateEntity(mrw.LoadFromFile(l_file)) != null) {
-//				d_engine.setMap(l_map);
-//				l_shouldCreateNewMap = false;
-//				d_engine.broadcastMessage("Map \"" + p_mapName + "\" already exists and was successfully loaded!");
-//			}
-//		}
-//		if (l_shouldCreateNewMap) {
-//			Map l_map = d_engine.onCreateEntity(new Map());
-//			d_engine.setMap(l_map);
-//			d_engine.broadcastMessage("A blank map has been created for editing.");
-//		}
+		boolean l_shouldCreateNewMap = true;
+		File l_file = new File(p_mapName);
+		if (l_file.exists()) {
+			boolean l_shouldUseConquestAdapter = false;
+			// If the map begins with [map], assume it's a conquest map file and load the proper reader instead.
+			try {
+				BufferedReader l_bufferedReader = new BufferedReader(new FileReader(l_file));
+				String firstLine = l_bufferedReader.readLine();
+				if (firstLine.startsWith("[")) {
+					l_shouldUseConquestAdapter = true;
+				}
+				l_bufferedReader.close();
+			}
+			catch (IOException e) {
+				// Do nothing.
+			}
+			MapReaderWriter l_mapReader = l_shouldUseConquestAdapter ?  new Adapter(new Adaptee()) : new MapReaderWriter();
+			Map l_map = d_engine.onCreateEntity(l_mapReader.loadFromFile(l_file));
+			// If we have a map, tell the game engine.
+			if (l_map != null) {
+				d_engine.setMap(l_map);
+				d_engine.broadcastMessage((l_shouldUseConquestAdapter ? "Conquest" : "Domination") + " map \"" + p_mapName + "\" already exists and was successfully loaded!");
+				l_shouldCreateNewMap = false;
+			} 
+		}
+		if (l_shouldCreateNewMap) {
+			Map l_map = d_engine.onCreateEntity(new Map());
+			d_engine.setMap(l_map);
+			d_engine.broadcastMessage("A blank map has been created for editing.");
+		}
 	}
 	
 	@Override

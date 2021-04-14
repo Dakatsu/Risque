@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import main.console.Console;
+import main.controller.Controller;
+import main.game.GameEngine;
 
 /**
  * Tests the {@link main.console.Console} class.
@@ -19,5 +21,4 @@ public class ConsoleTest {
 		Console l_console = new Console(null, null);
 		assertNotNull(l_console);
 	}
-
 }

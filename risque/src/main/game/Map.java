@@ -163,6 +163,20 @@ public class Map extends GameEntity {
 	}
 	
 	/**
+	 * Returns the first territory with the input name.
+	 * @param p_territoryName The territory's name.
+	 * @return The first territory with that name, otherwise null.
+	 */
+	public Territory getTerritory(String p_territoryName) {
+		for (Territory l_territory : d_territories) {
+			if (l_territory.getName().equals(p_territoryName) || l_territory.getDisplayName().equals(p_territoryName)) {
+				return l_territory;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Returns the territory by its ID if it exists.
 	 * @param l_territoryID The territory's ID.
 	 * @return The territory at the ID, otherwise null.

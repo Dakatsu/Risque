@@ -227,6 +227,14 @@ public class Controller {
 	}
 	
 	/**
+	 * Uses the blockade card to make a territory neutral and triple its army count.
+	 * @param p_territoryID The ID of the player to negotiate cease-fire with.
+	 */
+	public void blockade(int p_territoryID) {
+		d_engine.blockade(p_territoryID);
+	}
+	
+	/**
 	 * Uses the negotiate card to prevent the current player and another player from fighting.
 	 * @param p_playerName The name of the player to negotiate cease-fire with.
 	 */
