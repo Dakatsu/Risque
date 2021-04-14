@@ -30,5 +30,6 @@ public class ExecuteOrderPhaseTest {
 		ExecuteOrderPhase l_executeOrder = new ExecuteOrderPhase(l_game);
 		assertEquals(l_executeOrder.checkForWinner(), null);
 	}	
+	
 }
    

@@ -72,5 +72,6 @@ public class TerritoryTest {
 		l_territory.setNumArmies(8);
 		assertEquals(l_territory.getNumArmies(),8);
 	}
+	
 }
 

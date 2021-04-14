@@ -58,4 +58,5 @@ public class AdvanceOrderTest {
 		AdvanceOrder l_advanceOrder = new AdvanceOrder(l_fromTerritory, l_toTerritory , 0);
 		assertEquals(l_advanceOrder.execute(), false); 
 	}
+	
 }

@@ -19,4 +19,5 @@ public class AirliftOrderTest {
 		AirliftOrder l_air = new AirliftOrder(null, null, 4);
 		assertNotNull(l_air);
 	}
+	
 }  

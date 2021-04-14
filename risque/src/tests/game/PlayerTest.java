@@ -202,6 +202,7 @@ public class PlayerTest {
 		l_player.addCard(l_card);
 		assertEquals(l_player.hasCard(l_card), true);
 	}
+	
 }
 
 	

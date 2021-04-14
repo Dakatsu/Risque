@@ -80,4 +80,5 @@ public class ContinentTest {
 		Continent l_continent = new Continent(l_name, l_bonusArmy);
 		assertNotNull(l_continent);
 	}
+	
 }
