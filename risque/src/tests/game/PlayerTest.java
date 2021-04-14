@@ -203,6 +203,40 @@ public class PlayerTest {
 		assertEquals(l_player.hasCard(l_card), true);
 	}
 	
+	/**
+	 * Tests addAlly() function of Player class.
+	 */
+	@Test
+	public void addAllyTest() { 
+		String l_name= "Sajan";
+		Player l_player = new Player(l_name);	
+		assertEquals(l_player.addAlly(l_player), true);
+	}
+	
+	/**
+	 * Tests removeAlly() function of Player class.
+	 */
+	@Test
+	public void removeAllyTest() { 
+		String l_name= "Sajan";
+		Player l_player = new Player(l_name);	
+		assertEquals(l_player.removeAlly(l_player), false);
+		l_player.addAlly(l_player);
+		assertEquals(l_player.removeAlly(l_player), true);
+	}
+	
+	/**
+	 * Tests isAllyWith() function of Player class.
+	 */
+	@Test
+	public void isAllyWithTest() { 
+		String l_name= "Sajan";
+		Player l_player = new Player(l_name);	
+		assertEquals(l_player.isAllyWith(l_player), false);
+		l_player.addAlly(l_player);
+		assertEquals(l_player.isAllyWith(l_player), true);
+	} 
+	
 }
 
 	
