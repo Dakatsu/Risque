@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import main.console.Console;
 import main.console.LogEntryBuffer;
+import main.controller.BenevolentStrategy;
 import main.controller.Controller;
 
 /**
@@ -150,6 +151,7 @@ public class GameEngine {
 	/** 
 	 * Loads a map, replacing the current one.
 	 * @param p_mapName The name of the map to be loaded. 
+	 * @throws IOException if one occurred.
 	 */
 	public void loadMap(String p_mapName) throws IOException {
 		d_currentPhase.loadMap(p_mapName);
@@ -249,6 +251,9 @@ public class GameEngine {
 		if (!isGameInProgress()) {
 			Player l_newPlayer = onCreateEntity(new Player(p_name));
 			if (l_newPlayer != null && d_players.add(l_newPlayer)) {
+				if (p_name.startsWith("Benevolent")) {
+					l_newPlayer.setStrategy(new BenevolentStrategy(l_newPlayer));
+				}
 				broadcastMessage("Player \"" + p_name + "\" added. Total Players: " + getNumPlayers());
 				return true;
 			}

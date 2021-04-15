@@ -13,9 +13,17 @@ import main.game.Player;
 	/**
 	 * this is a random player strategy
 	 */
-public class RandomStrategy implements PlayerStrategy{
+public class RandomStrategy extends PlayerStrategy {
 	
-	Random random = new Random();
+	Random d_random = new Random();
+	
+	/**
+	 * Default constructor.
+	 * @param p_player The player for this strategy.
+	 */
+	public RandomStrategy(Player p_player) {
+		super(p_player);
+	}
 	
 	/**
 	 * This is the method for deploy
@@ -98,4 +106,10 @@ public class RandomStrategy implements PlayerStrategy{
 		return 0; // this would be return l_deployedArmies;
 	};
 
+	/**
+	 * Called by the Player class when the game engine notifies it of the player's turn starting.
+	 */
+	public void onNotifyTurn() {
+		// TODO: Logic.
+	}
 }

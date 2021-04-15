@@ -13,7 +13,7 @@ public class NegotiateOrder extends Order {
 	
 	/**
 	 * Creates the negotiation order with the temporary ally.
-	 * @param p_tempAlly
+	 * @param p_tempAlly The player we'll be "allying" with for a round.
 	 */
 	public NegotiateOrder(Player p_tempAlly) {
 		this.d_tempAlly = p_tempAlly;

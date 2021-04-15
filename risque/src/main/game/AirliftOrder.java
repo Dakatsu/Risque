@@ -1,5 +1,10 @@
 package main.game;
 
+/**
+ * An order to transfer armies between two territories, whether they're adjacent or not.
+ * @author Kyle
+ *
+ */
 public class AirliftOrder extends Order {
 
 	/**

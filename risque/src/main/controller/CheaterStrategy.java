@@ -9,7 +9,15 @@ import main.game.Player;
 	/**
 	 * This is cheater type player strategy
 	 */
-public class CheaterStrategy implements PlayerStrategy{
+public class CheaterStrategy extends PlayerStrategy {
+	
+	/**
+	 * Default constructor.
+	 * @param p_player The player for this strategy.
+	 */
+	public CheaterStrategy(Player p_player) {
+		super(p_player);
+	}
 	
 	/**
 	 * This is the method for deploy
@@ -56,4 +64,10 @@ public class CheaterStrategy implements PlayerStrategy{
 		return 0;
 	}
 	
+	/**
+	 * Called by the Player class when the game engine notifies it of the player's turn starting.
+	 */
+	public void onNotifyTurn() {
+		// TODO: Logic.
+	}
 }

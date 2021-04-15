@@ -12,13 +12,21 @@ import main.game.Player;
  * @author Protim
  *
  */
-public class BenevolentStrategy implements PlayerStrategy{
+public class BenevolentStrategy extends PlayerStrategy {
 	
 	
 	/**
 	 * Territory object stores weakest territory
 	 */
-	public Territory weakest;
+	public Territory d_weakest;
+	
+	/**
+	 * Default constructor.
+	 * @param p_player The player for this strategy.
+	 */
+	public BenevolentStrategy(Player p_player) {
+		super(p_player);
+	}
 	
 	/**
 	 * The number of deployed armies would be calculated in this method
@@ -85,6 +93,23 @@ public class BenevolentStrategy implements PlayerStrategy{
 		return 0;
 	}
 
-	
-	
+	/**
+	 * Called by the Player class when the game engine notifies it of the player's turn starting.
+	 */
+	public void onNotifyTurn() {
+		if (d_player.getNumUndeployedArmies() > 0) {
+			// Find the weakest territory, then deploy on it.
+			Territory l_weakest = null;
+			for (Territory l_territory : d_player.getOwnedTerritories()) {
+				if (l_weakest == null || l_weakest.getNumArmies() > l_territory.getNumArmies()) {
+					l_weakest = l_territory;
+				}
+			}
+			int l_terrID = d_player.getEngine().getMap().getTerritoryID(l_weakest);
+			d_player.getEngine().deployArmies(l_terrID, d_player.getNumUndeployedArmies());
+		}
+		else {
+			d_player.getEngine().finishOrders();
+		}
+	}
 }

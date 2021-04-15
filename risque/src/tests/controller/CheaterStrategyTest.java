@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import main.console.Console;
 import main.controller.CheaterStrategy;
+import main.game.Player;
 
 /**
  * Tests the {@link main.controller.CheaterStrategy} class.
@@ -17,7 +18,8 @@ public class CheaterStrategyTest {
 	 */
 	@Test
 	public void testNotNull() {
-		CheaterStrategy l_cheater = new CheaterStrategy();
+		Player l_player = new Player("Test");
+		CheaterStrategy l_cheater = new CheaterStrategy(l_player);
 		assertNotNull(l_cheater);
 	}
 

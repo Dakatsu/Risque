@@ -6,7 +6,9 @@ import org.junit.Test;
 
 import main.console.LogEntryBuffer;
 
-
+/**
+ * Tests the {@link main.console.LogEntryBuffer} class.
+ */
 public class LogEntryBufferTest {
 
 	/**

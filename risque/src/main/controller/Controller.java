@@ -108,6 +108,7 @@ public class Controller {
 	/**
 	 * Will start the process for executing "loadmap" command.
 	 * @param p_fileName File name from which a map is to be loaded.
+	 * @throws IOException if one has occurred.
 	 */
 	public void loadMap(String p_fileName) throws IOException {
 		d_engine.loadMap(p_fileName);

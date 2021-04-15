@@ -13,12 +13,20 @@ import main.game.Player;
  * @author Protim
  *
  */
-public class AggressiveStrategy implements PlayerStrategy{
+public class AggressiveStrategy extends PlayerStrategy {
 	
 	/**
 	 * Territory object stores strongest territory
 	 */
-	public Territory strongest;
+	public Territory d_strongest;
+	
+	/**
+	 * Default constructor.
+	 * @param p_player The player for this strategy.
+	 */
+	public AggressiveStrategy(Player p_player) {
+		super(p_player);
+	}
 	
 	/**
 	 * The number of deployed armies would be calculated in this method
@@ -107,4 +115,10 @@ public class AggressiveStrategy implements PlayerStrategy{
 		
 	}
 
+	/**
+	 * Called by the Player class when the game engine notifies it of the player's turn starting.
+	 */
+	public void onNotifyTurn() {
+		// TODO: Logic.
+	}
 }

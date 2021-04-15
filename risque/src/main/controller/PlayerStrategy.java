@@ -12,7 +12,17 @@ import main.game.Player;
 *
 */
 
-public interface PlayerStrategy {
+public abstract class PlayerStrategy {
+	
+	/**
+	 * The player this strategy acts for.
+	 */
+	Player d_player;
+	
+	public PlayerStrategy(Player p_player) {
+		this.d_player = p_player;
+	}
+	
 	
 	/**
 	 * This method is for deploy on player's Territory
@@ -21,7 +31,7 @@ public interface PlayerStrategy {
 	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
 	 */
-	void deploy(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
+	abstract void deploy(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
 	
 	/**
 	 * This method is for attack
@@ -31,7 +41,7 @@ public interface PlayerStrategy {
 	 * @param p_player Current Player
 	 * @return 1 if the game is over otherwise 0
 	 */
-	int attack(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
+	abstract int attack(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
 	
 	/**
 	 * This method is for reinforcement
@@ -40,7 +50,7 @@ public interface PlayerStrategy {
 	 * @param p_listPlayer List of Players
 	 * @param p_player Current Player
 	 */
-	void reinforcement(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
+	abstract void reinforcement(Map p_map, LinkedList<Player> p_listPlayer, Player p_player);
 	
 	
 	/**
@@ -50,5 +60,10 @@ public interface PlayerStrategy {
 	 * @param p_player Player object
 	 * @return Number of deployed armies
 	 */
-	int calculateDeployedArmies(Map p_map, Player p_player);
+	abstract int calculateDeployedArmies(Map p_map, Player p_player);
+	
+	/**
+	 * Called by the Player class when the game engine notifies it of the player's turn starting.
+	 */
+	public abstract void onNotifyTurn();
 }

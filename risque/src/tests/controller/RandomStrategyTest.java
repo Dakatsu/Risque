@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import main.console.Console;
 import main.controller.RandomStrategy;
+import main.game.Player;
 
 /**
  * Tests the {@link main.controller.RandomStrategy} class.
@@ -17,7 +18,8 @@ public class RandomStrategyTest {
 	 */
 	@Test
 	public void testNotNull() {
-		RandomStrategy l_random = new RandomStrategy();
+		Player l_player = new Player("Test");
+		RandomStrategy l_random = new RandomStrategy(l_player);
 		assertNotNull(l_random);
 	}
 

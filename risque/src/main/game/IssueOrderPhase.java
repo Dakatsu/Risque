@@ -65,7 +65,7 @@ public class IssueOrderPhase extends Phase {
 		// Add this player back to the list if they still have armies to deploy.
 		d_currentPlayer = d_playerRotation.isEmpty() ? null : d_playerRotation.pop();
 		if (d_currentPlayer != null) {
-			d_engine.broadcastMessage("It is now " + d_currentPlayer.getName() + "\'s turn.");
+			d_currentPlayer.notifyTurnStart();
 		}
 		else {
 			d_engine.setPhase(new ExecuteOrderPhase(d_engine));

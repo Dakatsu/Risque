@@ -356,4 +356,13 @@ public class Player extends GameEntity {
 	public boolean isAIPlayer() {
 		return d_strategy != null;
 	}
+	
+	public void notifyTurnStart() {
+		if (isAIPlayer()) {
+			d_strategy.onNotifyTurn();
+		}
+		else {
+			d_engine.broadcastMessage("It is now " + getName() + "\'s turn.");
+		}
+	}
 }
