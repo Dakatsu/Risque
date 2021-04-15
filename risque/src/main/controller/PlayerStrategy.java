@@ -19,6 +19,10 @@ public abstract class PlayerStrategy {
 	 */
 	Player d_player;
 	
+	/**
+	 * Constructs the strategy with the player so that, y'know, it can actually tell it to do stuff.
+	 * @param p_player The player.
+	 */
 	public PlayerStrategy(Player p_player) {
 		this.d_player = p_player;
 	}

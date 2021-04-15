@@ -357,6 +357,9 @@ public class Player extends GameEntity {
 		return d_strategy != null;
 	}
 	
+	/**
+	 * Called by the engine to notify the player that their turn has started.
+	 */
 	public void notifyTurnStart() {
 		if (isAIPlayer()) {
 			d_strategy.onNotifyTurn();
