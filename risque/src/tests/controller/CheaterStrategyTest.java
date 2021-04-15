@@ -1,14 +1,14 @@
-package tests.strategy;
+package tests.controller;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import main.console.Console;
-import main.strategy.CheaterStrategy;
+import main.controller.CheaterStrategy;
 
 /**
- * Tests the {@link main.strategy.CheaterStrategy} class.
+ * Tests the {@link main.controller.CheaterStrategy} class.
  */
 public class CheaterStrategyTest {
 

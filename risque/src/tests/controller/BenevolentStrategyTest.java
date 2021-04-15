@@ -1,14 +1,14 @@
-package tests.strategy;
+package tests.controller;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import main.console.Console;
-import main.strategy.BenevolentStrategy;
+import main.controller.BenevolentStrategy;
 
 /**
- * Tests the {@link main.strategy.BenevolentStrategy} class.
+ * Tests the {@link main.controller.BenevolentStrategy} class.
  */
 public class BenevolentStrategyTest {
 

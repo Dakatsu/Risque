@@ -1,14 +1,14 @@
-package tests.strategy;
+package tests.controller;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import main.console.Console;
-import main.strategy.RandomStrategy;
+import main.controller.RandomStrategy;
 
 /**
- * Tests the {@link main.strategy.RandomStrategy} class.
+ * Tests the {@link main.controller.RandomStrategy} class.
  */
 public class RandomStrategyTest {
 

@@ -1,6 +1,6 @@
 package main.game;
 
-import main.strategy.*;
+import main.controller.PlayerStrategy;
 
 import java.util.LinkedList;
 
@@ -19,25 +19,10 @@ import java.util.LinkedList;
  */
 public class Player extends GameEntity {
 	
-	private PlayerStrategy strategy;
-	
 	/**
-	 * This method returns the strategy
-	 *
-	 * @return Strategy
+	 * The current player's strategy, if one exists.
 	 */
-	public PlayerStrategy getStrategy() {
-		return strategy;
-	}
-	
-	/**
-	 * This method sets the strategy
-	 * 
-	 * @param strategy Strategy to be set
-	 */
-	public void setStrategy(PlayerStrategy strategy) {
-		this.strategy = strategy;
-	}
+	private PlayerStrategy d_strategy;
 	
 	/**
 	 * The player's name.
@@ -89,6 +74,7 @@ public class Player extends GameEntity {
 		d_orders = new LinkedList<>();
 		d_cards = new LinkedList<>();
 		d_allies = new LinkedList<>();
+		d_strategy = null;
 	}
 	
 	/**
@@ -343,5 +329,31 @@ public class Player extends GameEntity {
 	 */
 	public void clearAllies() {
 		d_allies.clear();
+	}
+	
+	/**
+	 * This method returns the strategy
+	 *
+	 * @return Strategy
+	 */
+	public PlayerStrategy getStrategy() {
+		return d_strategy;
+	}
+	
+	/**
+	 * This method sets the strategy
+	 * 
+	 * @param strategy Strategy to be set
+	 */
+	public void setStrategy(PlayerStrategy strategy) {
+		this.d_strategy = strategy;
+	}
+	
+	/**
+	 * Is this player controlled by an AI? True if they have a strategy.
+	 * @return Whether player is controlled by an AI.
+	 */
+	public boolean isAIPlayer() {
+		return d_strategy != null;
 	}
 }

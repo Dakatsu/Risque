@@ -1,4 +1,4 @@
-package main.strategy;
+package main.controller;
 
 import java.util.LinkedList;
 

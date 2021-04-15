@@ -1,14 +1,14 @@
-package tests.strategy;
+package tests.controller;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import main.console.Console;
-import main.strategy.AggressiveStrategy;
+import main.controller.AggressiveStrategy;
 
 /**
- * Tests the {@link main.strategy.AggressiveStrategy} class.
+ * Tests the {@link main.controller.AggressiveStrategy} class.
  */
 public class AggressiveStrategyTest {
 
