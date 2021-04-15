@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * Suite to run all JUnit tests for the {@link main.game} package.
  */
 @RunWith(Suite.class)
-@SuiteClasses({ AdapteeTest.class, AdapterTest.class, AirliftOrderTest.class, BombOrderTest.class, AdvanceOrderTest.class, ContinentTest.class, DeployOrderTest.class, ExecuteOrderPhaseTest.class, MapReaderWriterTest.class, IssueOrderPhaseTest.class, TerritoryTest.class, MapTest.class, PlayerTest.class, GameEngineTest.class })
+@SuiteClasses({ AdapteeTest.class, AdapterTest.class, AirliftOrderTest.class, BombOrderTest.class, AdvanceOrderTest.class, ContinentTest.class, DeployOrderTest.class, ExecuteOrderPhaseTest.class, MapReaderWriterTest.class, NegotiateOrderTest.class, BlockadeOrderTest.class, IssueOrderPhaseTest.class, TerritoryTest.class, MapTest.class, PlayerTest.class, GameEngineTest.class })
 public class GameTestSuite {
 }
  
