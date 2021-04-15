@@ -50,8 +50,9 @@ public abstract class Phase {
 	/**
 	 * Saves a map to a file name (if valid in this game phase).
 	 * @param p_mapName The name for the new map.
+	 * @param p_saveAsConquest Should the map be saved using the conquest map adapter?
 	 */
-	public void saveMap(String p_mapName) {
+	public void saveMap(String p_mapName, boolean p_saveAsConquest) {
 		printInvalidCommandMessage("saveMap");
 	}
 

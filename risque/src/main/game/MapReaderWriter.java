@@ -2,6 +2,8 @@ package main.game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -73,5 +75,50 @@ public class MapReaderWriter {
 		}
 		// Return null if we did not load a valid map by this point.
 		return null;
+	}
+	
+	/**
+	 * Saves the input map to a given file name. Overwrites any existing map with the same name.
+	 * The map will only save if it is valid.
+	 * @param p_map The map to save.
+	 * @param p_fileName The name of the file to save to, including the extension.
+	 * @return Whether the file was successfully saved.
+	 */
+	public boolean saveToFile(Map p_map, String p_fileName) {
+		/**
+		 * Reference on what a .map file entails:
+		 * http://domination.sourceforge.net/makemaps.shtml
+		 */
+		
+		// Do not allow us to save if the map is not valid.
+		if (!p_map.validateMap()) {
+			return false;
+		}
+		
+		try {
+			// Attempt to create the file. Override it if it already exists.
+			File l_file = new File(p_fileName);
+			if (l_file.exists()) {
+				l_file.delete();
+			}
+			
+			// Begin by writing a comment containing the file name and that it was made by this program.
+			FileWriter l_writer = new FileWriter(p_fileName);
+			l_writer.write("; map: " + p_fileName + "\n; created in Risque, a game project for Concordia University's SOEN 6441 class\n\n");
+			
+			/**
+			 *  Write the contents of the map as text to the file.
+			 */
+			l_writer.write(p_map.toText());
+			
+			/**
+			 * Close the file writer once we have finished.
+			 */
+			l_writer.close();
+			return true;
+		} 
+		catch (IOException l_exception) {
+			return false;
+		}
 	}
 }

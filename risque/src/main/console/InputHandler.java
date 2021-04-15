@@ -288,7 +288,10 @@ public class InputHandler extends Thread {
 											}
 											// Only invoke if we have the right amount of arguments.
 											if (l_parameters.size() == l_numMethodParams) {
+												l_areParametersInvalid = false;
 												l_method.invoke(getOwner().getController(), l_parameters.toArray());
+												// We found the method, so no need to check any others (even if we failed to execute it).
+												break;
 											}
 											else {
 												getOwner().onAddMessage("Command \"" + l_splitInput[0] + "\" cannot currently be used via the method reflection system. Please implement it manually.");
@@ -305,8 +308,6 @@ public class InputHandler extends Thread {
 									else {
 										l_areParametersInvalid = true;
 									}
-									// We found the method, so no need to check any others (even if we failed to execute it).
-									break;
 								}
 							}
 							// If the method was not found, go ahead and note that it was not recognized.

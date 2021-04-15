@@ -25,6 +25,7 @@ public class MapReaderWriterTest {
 	 */
 	@Test
 	public void mapSavingLoadingTest() {
+		MapReaderWriter l_mapReader = new MapReaderWriter();
 		Map l_mapToSave = new Map();
 		l_mapToSave.setEngine(d_engine);
 		assertTrue(l_mapToSave.createContinent(1, 5));
@@ -37,7 +38,7 @@ public class MapReaderWriterTest {
 		l_mapToSave.addBorder(2, 3);
 		l_mapToSave.addBorder(3, 4);
 		l_mapToSave.addBorder(4, 1);
-		Map.SaveToFile(l_mapToSave, "JUnitTest.map");
+		l_mapReader.saveToFile(l_mapToSave, "JUnitTest.map");
 		
 		// Test that the file was saved to a file.
 		File l_savedFile = new File("JUnitTest.map");

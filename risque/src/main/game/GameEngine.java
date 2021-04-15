@@ -158,9 +158,10 @@ public class GameEngine {
 	/**
 	 * Saves a map to a file name.
 	 * @param p_mapName The name for the new map.
+	 * @param p_saveAsConquest Should the map be saved using the conquest map adapter?
 	 */
-	public void saveMap(String p_mapName) {
-		d_currentPhase.saveMap(p_mapName);
+	public void saveMap(String p_mapName, boolean p_saveAsConquest) {
+		d_currentPhase.saveMap(p_mapName, p_saveAsConquest);
 	}
 	
 	/**

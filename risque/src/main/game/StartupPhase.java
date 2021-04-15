@@ -60,13 +60,15 @@ public class StartupPhase extends Phase {
 	/**
 	 * Saves a map to a file name.
 	 * @param p_mapName The name for the new map.
+	 * @param p_saveAsConquest Should the map be saved using the conquest map adapter?
 	 */
 	@Override
-	public void saveMap(String p_mapName) {
+	public void saveMap(String p_mapName, boolean p_saveAsConquest) {
 		Map l_map = d_engine.getMap();
 		if (l_map != null) {
 			if (l_map.validateMap()) {
-				Map.SaveToFile(d_engine.getMap(), p_mapName);
+				MapReaderWriter l_mapReader = p_saveAsConquest ?  new Adapter(new Adaptee()) : new MapReaderWriter();
+				l_mapReader.saveToFile(d_engine.getMap(), p_mapName);
 				d_engine.broadcastMessage("Map saved to: " + p_mapName);
 			}
 			else {

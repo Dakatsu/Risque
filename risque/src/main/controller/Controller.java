@@ -64,13 +64,22 @@ public class Controller {
 	public void showMap() {
 		d_engine.showMap();
 	}
+	
+	/**
+	* Will save the map as a conquest file if the input string begins with a c.
+	* @param p_fileName File name to which a map is to be saved.
+	* @param p_conquestStr The string to check for the c.
+	*/
+	public void saveMap(String p_fileName, String p_conquestStr) {
+		d_engine.saveMap(p_fileName, p_conquestStr.startsWith("c"));
+	}
 
 	/**
-	* Will start the process for executing "savemap" command.
+	* Will save the map as a domination file.
 	* @param p_fileName File name to which a map is to be saved.
 	*/
 	public void saveMap(String p_fileName) {
-		d_engine.saveMap(p_fileName);
+		d_engine.saveMap(p_fileName, false);
 	}
 
 	/**
